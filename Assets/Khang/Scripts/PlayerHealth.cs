@@ -17,11 +17,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        playerHealth =- damage;
+        playerHealth -= damage;
     }
 
     public void Heal(int amount)
     {
-        playerHealth = +amount;
+        playerHealth += amount;
     }
 }

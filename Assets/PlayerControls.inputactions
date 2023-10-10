@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "8b5f8710-82ca-4229-bcb0-92d6ad148dea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -271,6 +280,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c73b5f18-8994-4d98-8e2b-48eea9560faf",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
