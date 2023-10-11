@@ -10,7 +10,7 @@ public class AttackScript : MonoBehaviour
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
-    public LayerMask enemyLayers;
+    public LayerMask targetLayers;
 
     public PlayerInputActions playerControls;
     private InputAction meleeAttack;
@@ -51,12 +51,14 @@ public class AttackScript : MonoBehaviour
         //
 
         // detect enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
 
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("enemy hit: " + enemy.name);
+
+            enemy.GetComponent<PlayerHealth>().TakeDamage(10);
         }
     }
 }
