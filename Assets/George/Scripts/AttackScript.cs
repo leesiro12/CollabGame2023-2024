@@ -20,11 +20,9 @@ public class AttackScript : MonoBehaviour
     public PlayerInputActions playerControls;
     private InputAction meleeAttack;
     private InputAction rangedAttack;
-    //private InputAction block;
 
     public GameObject projectile;
     private float projectileSpeed = 5.0f;
-    //public GameObject blockPrefab;
 
     private void Awake()
     {
@@ -41,17 +39,12 @@ public class AttackScript : MonoBehaviour
         rangedAttack = playerControls.Player.RangedAttack;
         rangedAttack.Enable();
         rangedAttack.performed += RangedAttackInput;
-
-        //block = playerControls.Player.Block;
-        //block.Enable();
-        //block.performed += instBlock;
     }
 
     private void OnDisable()
     {
         meleeAttack.Disable();
         rangedAttack.Disable();
-        //block.Disable();
     }
 
     private void MeleeInput(InputAction.CallbackContext context)
@@ -105,14 +98,6 @@ public class AttackScript : MonoBehaviour
 
         pRB.velocity = new Vector2(1, 0) * projectileSpeed;
     }
-
-    //private void instBlock(InputAction.CallbackContext context)
-    //{
-    //    if (rb.transform.localScale.x > 0)
-    //    {
-    //        Instantiate(blockPrefab, transform.position + new Vector3(1,0,0), Quaternion.identity);
-    //    }
-    //}
 
 
     IEnumerator InputCheck(InputAction.CallbackContext context)
