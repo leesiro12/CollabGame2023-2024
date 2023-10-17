@@ -222,7 +222,6 @@ GameObject:
   - component: {fileID: 227803424}
   - component: {fileID: 227803421}
   - component: {fileID: 227803426}
-  - component: {fileID: 227803427}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -248,6 +247,7 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 256
+  projectile: {fileID: 4470001759152173979, guid: 08713adb313ab4043ae06f7b61c31a67, type: 3}
 --- !u!50 &227803422
 Rigidbody2D:
   serializedVersion: 4
@@ -313,7 +313,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 227803427}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SimpleMovement, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 227803427}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SimpleMovement, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
@@ -391,6 +391,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: eb9b631d-8bd7-46b2-b9ef-21b229d04a9a
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8b5f8710-82ca-4229-bcb0-92d6ad148dea
+    m_ActionName: Player/Dash[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -462,24 +466,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   playerHealth: 0
---- !u!114 &227803427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227803420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42696f014ea0b054ea88eab5120a582e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  groundCheck: {fileID: 1630968832}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  jumpingPower: 9.92
 --- !u!61 &227803428
 BoxCollider2D:
   m_ObjectHideFlags: 0
