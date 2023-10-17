@@ -112,7 +112,7 @@ public class AttackScript : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        Debug.Log("isPressed: ", meleeAttack.IsPressed());
+        //Debug.Log("isPressed: ", meleeAttack.IsPressed());
 
         if (context.started)
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class projectileScript : MonoBehaviour
+public class ProjectileScript : MonoBehaviour
 {
     private float elapsedTime = 0.0f;
     private float lifespan = 1.6f;
