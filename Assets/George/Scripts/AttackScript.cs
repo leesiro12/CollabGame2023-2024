@@ -8,11 +8,14 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class AttackScript : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask targetLayers;
+
+    public int lightDamage = 10;
+    public int heavyDamage = 20;
 
     public PlayerInputActions playerControls;
     private InputAction meleeAttack;
@@ -35,23 +38,13 @@ public class AttackScript : MonoBehaviour
 
         rangedAttack = playerControls.Player.RangedAttack;
         rangedAttack.Enable();
-        rangedAttack.performed += RangedAttack;
+        rangedAttack.performed += RangedAttackInput;
     }
 
     private void OnDisable()
     {
         meleeAttack.Disable();
         rangedAttack.Disable();
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 
     private void MeleeInput(InputAction.CallbackContext context)
@@ -61,7 +54,7 @@ public class AttackScript : MonoBehaviour
         StartCoroutine(InputCheck(context));
     }
 
-    private void Attack(bool attackIsLight)
+    private void MeleeAttack(bool attackIsLight)
     {
         // play attack animation
         // 
@@ -69,32 +62,41 @@ public class AttackScript : MonoBehaviour
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
 
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if(enemy.CompareTag("Block") == true)
+            {
+                return;
+            }
+        }
+
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log("enemy hit: " + enemy.name);
-
             switch (attackIsLight)
             {
             case true:
-                enemy.GetComponent<PlayerHealth>().TakeDamage(10);
+                enemy.GetComponent<PlayerHealth>().TakeDamage(lightDamage);
                 break;
             case false:
-                enemy.GetComponent<PlayerHealth>().TakeDamage(20);
+                enemy.GetComponent<PlayerHealth>().TakeDamage(heavyDamage);
                 break;
             }
         }
     }
     
-    private void RangedAttack(InputAction.CallbackContext context)
+    private void RangedAttackInput(InputAction.CallbackContext context)
     {
-        Debug.Log("Ranged Attack");
+        RangedAttack();
+    }
 
+    private void RangedAttack()
+    {
         GameObject p = Instantiate(projectile, this.transform.position, Quaternion.identity);
 
         Rigidbody2D pRB = p.GetComponent<Rigidbody2D>();
 
-        pRB.velocity = new Vector2(1,0) * projectileSpeed;
+        pRB.velocity = new Vector2(1, 0) * projectileSpeed;
     }
 
     IEnumerator InputCheck(InputAction.CallbackContext context)
@@ -103,14 +105,14 @@ public class AttackScript : MonoBehaviour
         {
             if (!meleeAttack.IsPressed())
             {
-                Attack(true);
+                MeleeAttack(true);
                 yield break;
             }
 
             yield return new WaitForSeconds(0.1f);
         }
 
-        Attack(false);
+        MeleeAttack(false);
         yield break;
     }
 }

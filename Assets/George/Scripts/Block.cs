@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileScript : MonoBehaviour
+public class Block : MonoBehaviour
 {
     private float elapsedTime = 0.0f;
-    private float lifespan = 1.6f;
+    private float lifespan = 2.0f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -22,19 +22,6 @@ public class ProjectileScript : MonoBehaviour
         if (elapsedTime > lifespan)
         {
             Destroy(gameObject);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Block"))
-        {
-            Destroy(gameObject);
-        }
-
-        if(collision.GetComponent<PlayerHealth>() != null)
-        {
-            collision.GetComponent<PlayerHealth>().TakeDamage(10);
         }
     }
 }
