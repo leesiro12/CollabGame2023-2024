@@ -99,47 +99,18 @@ public class AttackScript : MonoBehaviour
 
     IEnumerator InputCheck(InputAction.CallbackContext context)
     {
-        if (!meleeAttack.IsPressed())
-        { 
-            Attack(true);
-            yield break;
-        }
-
-        yield return new WaitForSeconds(0.1f);
-
-        if (!meleeAttack.IsPressed())
+        for (int i = 0; i < 6; i++)
         {
-            Attack(true);
-            yield break;
+            if (!meleeAttack.IsPressed())
+            {
+                Attack(true);
+                yield break;
+            }
+
+            yield return new WaitForSeconds(0.1f);
         }
 
-        yield return new WaitForSeconds(0.1f);
-
-        if (!meleeAttack.IsPressed())
-        {
-            Attack(true);
-            yield break;
-        }
-
-        yield return new WaitForSeconds(0.1f);
-
-        if (!meleeAttack.IsPressed())
-        {
-            Attack(true);
-            yield break;
-        }
-
-        yield return new WaitForSeconds(0.1f);
-
-        if (meleeAttack.IsPressed())
-        {
-            Attack(false);
-            yield break;
-        }
-        else
-        {
-            Attack(true);
-            yield break;
-        }
+        Attack(false);
+        yield break;
     }
 }
