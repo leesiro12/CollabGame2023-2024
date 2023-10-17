@@ -31,7 +31,7 @@ public class AttackScript : MonoBehaviour
     {
         meleeAttack = playerControls.Player.Attack;
         meleeAttack.Enable();
-        meleeAttack.performed += Attack;
+        meleeAttack.performed += MeleeInput;
 
         rangedAttack = playerControls.Player.RangedAttack;
         rangedAttack.Enable();
@@ -54,31 +54,17 @@ public class AttackScript : MonoBehaviour
         
     }
 
-    private void Attack(InputAction.CallbackContext context)
+    private void MeleeInput(InputAction.CallbackContext context)
     {
         Debug.Log("Attack");
 
         StartCoroutine(InputCheck(context));
+    }
 
+    private void Attack(bool attackIsLight)
+    {
         // play attack animation
-        //
-
-        if(context.started)
-        {
-            Debug.Log("started true");
-        }
-
-        if(context.performed)
-        {
-            Debug.Log("performed true");
-        }
-
-        if(context.canceled)
-        {
-            Debug.Log("canceled true");
-        }
-
-        
+        // 
 
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
@@ -88,9 +74,17 @@ public class AttackScript : MonoBehaviour
         {
             Debug.Log("enemy hit: " + enemy.name);
 
-            enemy.GetComponent<PlayerHealth>().TakeDamage(10);
+            switch (attackIsLight)
+            {
+            case true:
+                enemy.GetComponent<PlayerHealth>().TakeDamage(10);
+                break;
+            case false:
+                enemy.GetComponent<PlayerHealth>().TakeDamage(20);
+                break;
+            }
         }
-    } 
+    }
     
     private void RangedAttack(InputAction.CallbackContext context)
     {
@@ -101,32 +95,51 @@ public class AttackScript : MonoBehaviour
         Rigidbody2D pRB = p.GetComponent<Rigidbody2D>();
 
         pRB.velocity = new Vector2(1,0) * projectileSpeed;
-
-        Debug.Log(pRB.velocity);
-
     }
 
     IEnumerator InputCheck(InputAction.CallbackContext context)
     {
-        Debug.Log("coroutine running");
-
-        yield return new WaitForSeconds(1);
-
-        //Debug.Log("isPressed: ", meleeAttack.IsPressed());
-
-        if (context.started)
-        {
-            Debug.Log("started true");
+        if (!meleeAttack.IsPressed())
+        { 
+            Attack(true);
+            yield break;
         }
 
-        if (context.performed)
+        yield return new WaitForSeconds(0.1f);
+
+        if (!meleeAttack.IsPressed())
         {
-            Debug.Log("performed true");
+            Attack(true);
+            yield break;
         }
 
-        if (context.canceled)
+        yield return new WaitForSeconds(0.1f);
+
+        if (!meleeAttack.IsPressed())
         {
-            Debug.Log("canceled true");
+            Attack(true);
+            yield break;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (!meleeAttack.IsPressed())
+        {
+            Attack(true);
+            yield break;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (meleeAttack.IsPressed())
+        {
+            Attack(false);
+            yield break;
+        }
+        else
+        {
+            Attack(true);
+            yield break;
         }
     }
 }
