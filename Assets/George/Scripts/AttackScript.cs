@@ -8,14 +8,14 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class AttackScript : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask targetLayers;
 
-    public int lightDamage = 10;
-    public int heavyDamage = 20;
+    [SerializeField] int lightDamage = 10;
+    [SerializeField] int heavyDamage = 20;
 
     public PlayerInputActions playerControls;
     private InputAction meleeAttack;
@@ -62,24 +62,27 @@ public class AttackScript : MonoBehaviour
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
 
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            if(enemy.CompareTag("Block") == true)
-            {
-                return;
-            }
-        }
+        //foreach (Collider2D enemy in hitEnemies)
+        //{
+        //    if(enemy.CompareTag("Block") == true)
+        //    {
+        //        return;
+        //    }
+        //}
 
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
         {
+            Debug.Log("hit");
             switch (attackIsLight)
             {
             case true:
+                    Debug.Log("true");
                 enemy.GetComponent<PlayerHealth>().TakeDamage(lightDamage);
                 break;
             case false:
-                enemy.GetComponent<PlayerHealth>().TakeDamage(heavyDamage);
+                    Debug.Log("false");
+                    enemy.GetComponent<PlayerHealth>().TakeDamage(heavyDamage);
                 break;
             }
         }
@@ -114,6 +117,7 @@ public class AttackScript : MonoBehaviour
         }
 
         MeleeAttack(false);
+
         yield break;
     }
 }
