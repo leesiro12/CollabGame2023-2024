@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class SimpleMovement : MonoBehaviour
@@ -9,43 +11,58 @@ public class SimpleMovement : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
 
-    //dash variables
-    private bool canDash = true;
-    private bool isDashing;
-    private float dashPower = 24f;
-    private float dashTime = 0.2f;
-    private float dashCooldown = 1f;
-    [SerializeField] private TrailRenderer tr;
+    public PlayerInputActions playerControls;
+    public InputAction HorizontalMove;
+    private InputAction JumpAction;
 
+    float moveDirection = 0.0f;
 
-    private float horizontal;
     private float speed = 8f;
     [SerializeField] public float jumpingPower;
     private bool isFacingRight = true;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        playerControls = new PlayerInputActions();
+    }
 
+    private void OnEnable()
+    {
+
+        JumpAction = playerControls.Player.Jump;
+        JumpAction.Enable();
+        JumpAction.performed += Jump;
+
+        HorizontalMove.Enable();
+    }
+
+    private void OnDisable()
+    {
+        HorizontalMove.Disable();
+        JumpAction.Disable();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(isDashing)
-        {
-            return;
-        }
+        moveDirection = HorizontalMove.ReadValue<float>();
 
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-
-        if (!isFacingRight && horizontal > 0f)
+        if (!isFacingRight && moveDirection > 0f)
         {
             Flip();
         }
-        else
+        else if (isFacingRight && moveDirection < 0f)
         {
             Flip();
         }
     }
 
-    
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(moveDirection * speed, rb.velocity.y);
+    }
+
 
     public void Jump(InputAction.CallbackContext context)
     {
@@ -71,31 +88,5 @@ public class SimpleMovement : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
         transform.localScale = localScale;
-    }
-
-    public void Move(InputAction.CallbackContext context)
-    {
-        horizontal = context.ReadValue<Vector2>().x;
-    }
-
-    public void Dash(InputAction.CallbackContext context)
-    {
-        StartCoroutine(Dash());
-    }
-
-    private IEnumerator Dash()
-    {
-        canDash = false;
-        isDashing = true;
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashPower, 0f);
-        tr.emitting = true;
-        yield return new WaitForSeconds(dashTime);
-        tr.emitting = false;
-        rb.gravityScale = originalGravity;
-        isDashing = false;
-        yield return new WaitForSeconds(dashCooldown);
-        canDash = true;
     }
 }

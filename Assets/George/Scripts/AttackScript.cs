@@ -8,17 +8,12 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class AttackScript : MonoBehaviour
 {
-<<<<<<< Updated upstream
-    public Rigidbody2D rb;
-
-=======
->>>>>>> Stashed changes
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask targetLayers;
 
-    public int lightDamage = 10;
-    public int heavyDamage = 20;
+    [SerializeField] int lightDamage = 10;
+    [SerializeField] int heavyDamage = 20;
 
     public PlayerInputActions playerControls;
     private InputAction meleeAttack;
@@ -51,8 +46,6 @@ public class AttackScript : MonoBehaviour
 
     private void MeleeInput(InputAction.CallbackContext context)
     {
-        Debug.Log("Attack");
-
         StartCoroutine(InputCheck(context));
     }
 
@@ -64,24 +57,27 @@ public class AttackScript : MonoBehaviour
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
 
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            if(enemy.CompareTag("Block") == true)
-            {
-                return;
-            }
-        }
+        //foreach (Collider2D enemy in hitEnemies)
+        //{
+        //    if(enemy.CompareTag("Block") == true)
+        //    {
+        //        return;
+        //    }
+        //}
 
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
         {
+            Debug.Log("hit");
             switch (attackIsLight)
             {
             case true:
+                    Debug.Log("true");
                 enemy.GetComponent<PlayerHealth>().TakeDamage(lightDamage);
                 break;
             case false:
-                enemy.GetComponent<PlayerHealth>().TakeDamage(heavyDamage);
+                    Debug.Log("false");
+                    enemy.GetComponent<PlayerHealth>().TakeDamage(heavyDamage);
                 break;
             }
         }
@@ -98,7 +94,7 @@ public class AttackScript : MonoBehaviour
 
         Rigidbody2D pRB = p.GetComponent<Rigidbody2D>();
 
-        pRB.velocity = new Vector2(1, 0) * projectileSpeed;
+        pRB.velocity = new Vector2(1, 0) * projectileSpeed * RB.transform.localScale;
     }
 
 
@@ -116,6 +112,7 @@ public class AttackScript : MonoBehaviour
         }
 
         MeleeAttack(false);
+
         yield break;
     }
 }
