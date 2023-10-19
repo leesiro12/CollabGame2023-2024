@@ -8,6 +8,8 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class AttackScript : MonoBehaviour
 {
+    private Rigidbody2D rb;
+
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask targetLayers;
@@ -20,11 +22,12 @@ public class AttackScript : MonoBehaviour
     private InputAction rangedAttack;
 
     public GameObject projectile;
-    private float projectileSpeed = 5.0f;
+    private float projectileSpeed = 10.0f;
 
     private void Awake()
     {
         playerControls = new PlayerInputActions();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -68,7 +71,6 @@ public class AttackScript : MonoBehaviour
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log("hit");
             switch (attackIsLight)
             {
             case true:
@@ -92,9 +94,9 @@ public class AttackScript : MonoBehaviour
     {
         GameObject p = Instantiate(projectile, transform.position, Quaternion.identity);
 
-        Rigidbody2D pRB = p.GetComponent<Rigidbody2D>();
+        Rigidbody2D rbP = p.GetComponent<Rigidbody2D>();
 
-        pRB.velocity = new Vector2(1, 0) * projectileSpeed * RB.transform.localScale;
+        rbP.velocity = new Vector2(1, 0) * projectileSpeed * rb.transform.localScale;
     }
 
 
