@@ -52,7 +52,7 @@ public class SimpleMovement : MonoBehaviour
         {
             Flip();
         }
-        else
+        else if (isFacingRight && moveDirection < 0f)
         {
             Flip();
         }
