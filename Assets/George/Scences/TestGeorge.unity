@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 227803430}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -248,8 +248,8 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 256
-  lightDamage: 0
-  heavyDamage: 0
+  lightDamage: 10
+  heavyDamage: 20
   projectile: {fileID: 4470001759152173979, guid: 08713adb313ab4043ae06f7b61c31a67, type: 3}
 --- !u!50 &227803422
 Rigidbody2D:
@@ -518,12 +518,12 @@ MonoBehaviour:
     m_Name: Horizontal Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 396f2047-5b57-4c4e-90d9-d311c71af9b3
+    m_Id: 8676d7d3-3c2e-4d1a-b6b7-202b0425600a
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 1D Axis
-      m_Id: 82f6197d-ef5b-4a34-bde6-16bfb84be1b6
+      m_Id: 05504edb-a7e6-4eff-ae08-e88c148ea14a
       m_Path: 1DAxis
       m_Interactions: 
       m_Processors: 
@@ -531,7 +531,7 @@ MonoBehaviour:
       m_Action: Horizontal Move
       m_Flags: 4
     - m_Name: negative
-      m_Id: 3e81f7bf-40f0-465b-80a7-053bd8f3172a
+      m_Id: 7c03aa1e-df20-453a-b976-9575a28f4158
       m_Path: <Keyboard>/a
       m_Interactions: 
       m_Processors: 
@@ -539,7 +539,7 @@ MonoBehaviour:
       m_Action: Horizontal Move
       m_Flags: 8
     - m_Name: positive
-      m_Id: 3962b726-052f-4452-84b8-66e59bcd8d65
+      m_Id: 411d5312-8233-43a7-baf1-af35f84c8db8
       m_Path: <Keyboard>/d
       m_Interactions: 
       m_Processors: 

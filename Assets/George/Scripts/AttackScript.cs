@@ -8,7 +8,7 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class AttackScript : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private Rigidbody2D RB;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -26,7 +26,7 @@ public class AttackScript : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        RB = GetComponent<Rigidbody2D>();
         playerControls = new PlayerInputActions();
     }
 
@@ -49,8 +49,6 @@ public class AttackScript : MonoBehaviour
 
     private void MeleeInput(InputAction.CallbackContext context)
     {
-        Debug.Log("Attack");
-
         StartCoroutine(InputCheck(context));
     }
 
@@ -99,7 +97,7 @@ public class AttackScript : MonoBehaviour
 
         Rigidbody2D pRB = p.GetComponent<Rigidbody2D>();
 
-        pRB.velocity = new Vector2(1, 0) * projectileSpeed;
+        pRB.velocity = new Vector2(1, 0) * projectileSpeed * RB.transform.localScale;
     }
 
 
