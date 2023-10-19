@@ -8,8 +8,11 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class AttackScript : MonoBehaviour
 {
+<<<<<<< Updated upstream
     public Rigidbody2D rb;
 
+=======
+>>>>>>> Stashed changes
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask targetLayers;
@@ -26,7 +29,6 @@ public class AttackScript : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         playerControls = new PlayerInputActions();
     }
 

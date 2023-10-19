@@ -248,8 +248,8 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 256
-  lightDamage: 0
-  heavyDamage: 0
+  lightDamage: 10
+  heavyDamage: 20
   projectile: {fileID: 4470001759152173979, guid: 08713adb313ab4043ae06f7b61c31a67, type: 3}
 --- !u!50 &227803422
 Rigidbody2D:
