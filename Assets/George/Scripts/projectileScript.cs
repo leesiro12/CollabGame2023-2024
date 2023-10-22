@@ -31,8 +31,8 @@ public class ProjectileScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        if(collision.GetComponent<PlayerHealth>() != null)
+        
+        if(!collision.CompareTag("Player") && collision.GetComponent<PlayerHealth>() != null)
         {
             collision.GetComponent<PlayerHealth>().TakeDamage(10);
         }
