@@ -7,7 +7,7 @@ public class Block : MonoBehaviour
     private float elapsedTime = 0.0f;
     private float lifespan = 2.0f;
 
-    // Update is called once per frame
+    // destroy self after lifespan reached
     void Update()
     {
         elapsedTime += Time.deltaTime;
