@@ -32,8 +32,19 @@ public class DealDamage : MonoBehaviour
         // keep looping while routine is active
         while(true)
         {
-            // apply damage
-            collision.GetComponent<HealthScript>().TakeDamage(10);
+            // get health script
+            HealthScript script = collision.GetComponent<HealthScript>();
+            // if health script found
+            if (script != null)
+            { 
+                // apply damage
+                script.TakeDamage(10);
+            }
+            else
+            {
+                // otherwise, stop coroutine
+                yield return null;
+            }
             // delay
             yield return new WaitForSeconds(cooldown);
         }

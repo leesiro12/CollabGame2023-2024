@@ -14,6 +14,16 @@ public class SimpleMovement : MonoBehaviour
     public PlayerInputActions playerControls;
     public InputAction HorizontalMove;
     private InputAction JumpAction;
+    private InputAction DashAction;
+
+    private bool canDash = true;
+    private bool isDashing = false;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+    [SerializeField] private TrailRenderer tr;
+
+    private bool hasDoubleJumped;
 
     float moveDirection = 0.0f;
 
@@ -35,6 +45,10 @@ public class SimpleMovement : MonoBehaviour
         JumpAction.performed += Jump;
 
         HorizontalMove.Enable();
+
+        DashAction = playerControls.Player.Dash;
+        DashAction.Enable();
+        DashAction.performed += Dash;
     }
 
     private void OnDisable()
@@ -60,7 +74,10 @@ public class SimpleMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveDirection * speed, rb.velocity.y);
+        if (!isDashing)
+        {
+            rb.velocity = new Vector2(moveDirection * speed, rb.velocity.y);
+        }
     }
 
 
@@ -68,13 +85,15 @@ public class SimpleMovement : MonoBehaviour
     {
         if (context.performed && IsGrounded())
         {
+            hasDoubleJumped = false;
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+        }
+        else if (context.performed && !IsGrounded() && !hasDoubleJumped)
+        {
+            hasDoubleJumped = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        if (context.canceled && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower * 0.5f);
-        }
     }
 
     private bool IsGrounded()
@@ -88,5 +107,29 @@ public class SimpleMovement : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
         transform.localScale = localScale;
+    }
+
+    public void Dash(InputAction.CallbackContext context)
+    {
+        if (canDash)
+        {
+            StartCoroutine(ActivateDash());
+        }
+    }
+
+    private IEnumerator ActivateDash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 }
