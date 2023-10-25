@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CameraControler : MonoBehaviour
 {
-    public Transform Target;
-    public Vector3 offset;
-    public float damping;
+    public Transform target;
 
-    private Vector3 velocity = Vector3.zero;
-
+    private void Update()
+    {
+        Vector3 pos = transform.position;
+        pos.z = -1; // lock the z asix.
+        transform.position = pos;
+    }
     private void FixedUpdate()
     {
-        Vector3 MovePosition = Target.position + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, MovePosition, ref velocity, damping);
+        this.transform.position = target.position;
     }
 }

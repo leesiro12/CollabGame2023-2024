@@ -5,39 +5,59 @@ using UnityEngine.InputSystem;
 
 public class CameraPivotControler : MonoBehaviour
 {
-    private int speed = 10;
+    public float moveSpeed = 1f;
 
-    Vector2 pivotMovement;
-    //[SerializeField] bool FreeCamIsOn;
-    //GameObject player;
-    Rigidbody2D rb;
+    private Vector2 moveInput;
+    private Rigidbody2D rb;
 
-    private void Awake()
+    public Transform target;
+    public Vector3 offset;
+    public float damping;
+
+    private Vector2 velocity = Vector2.zero;
+
+    public bool FreeCamIsOn;
+
+    private void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
-        //FreeCamIsOn = false;
-        rb= GetComponent<Rigidbody2D>();
-    }
-
-
-    
-    public void OnMovement(InputValue value)
-    {
-        //FreeCamIsOn = true;
-        pivotMovement = value.Get<Vector2>();
-        Debug.Log("move check");
+        FreeCamIsOn = false;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
     {
 
-        //pivotMovement = transform.position;
-        //if (!FreeCamIsOn) 
-        //{
-        //    this.transform.position = player.transform.position;
-        //}
-        rb.MovePosition(rb.position + pivotMovement * speed * Time.deltaTime);
+        checkForFreeCam();
+
+        if (FreeCamIsOn == true)
+        {
+            rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            Vector2 movePosition = target.position + offset;
+            transform.position = Vector2.SmoothDamp(transform.position, movePosition, ref velocity, damping);
+        }
+
+
     }
 
+    private void OnFly(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
 
+    }
+
+    private void checkForFreeCam()
+    {
+
+        if (target.GetComponent<Rigidbody2D>().velocity == null)
+        {
+            FreeCamIsOn = true;
+        }
+        else
+        {
+            FreeCamIsOn = false;
+        }
+    }
 }

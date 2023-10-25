@@ -257,7 +257,15 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  tr: {fileID: 0}
+  HorizontalMove:
+    m_Name: Horizontal Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d90015c3-3159-4ed7-a5f9-406ccfd1e3ad
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   jumpingPower: 10
 --- !u!58 &788532004
 CircleCollider2D:
@@ -393,8 +401,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 788532003}
         m_TargetAssemblyTypeName: SimpleMovement, Assembly-CSharp
-        m_MethodName: Move
-        m_Mode: 0
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -579,9 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e716d45a21b0faa4aa4f118b0dd2e4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 1107309450}
-  offset: {x: 0, y: 0, z: -10}
-  damping: 0.5
+  target: {fileID: 1107309450}
 --- !u!1 &1025887158
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,7 +896,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e7277dd47276647a572e352eddc48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  moveSpeed: 5
+  target: {fileID: 788532008}
+  offset: {x: 0, y: 0, z: 0}
+  damping: 0.5
   FreeCamIsOn: 0
 --- !u!4 &1107309450
 Transform:

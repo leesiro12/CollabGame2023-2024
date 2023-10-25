@@ -875,7 +875,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
             ""id"": ""2f7144eb-256b-4838-8474-114518be07a0"",
             ""actions"": [
                 {
-                    ""name"": ""CamMovement"",
+                    ""name"": ""Fly"",
                     ""type"": ""Value"",
                     ""id"": ""c1d349c0-8cca-4b9a-917b-879817829c7b"",
                     ""expectedControlType"": ""Vector2"",
@@ -892,7 +892,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CamMovement"",
+                    ""action"": ""Fly"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -903,7 +903,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CamMovement"",
+                    ""action"": ""Fly"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -914,7 +914,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CamMovement"",
+                    ""action"": ""Fly"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -925,7 +925,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CamMovement"",
+                    ""action"": ""Fly"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -936,7 +936,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CamMovement"",
+                    ""action"": ""Fly"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -1031,7 +1031,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
-        m_Camera_CamMovement = m_Camera.FindAction("CamMovement", throwIfNotFound: true);
+        m_Camera_Fly = m_Camera.FindAction("Fly", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1293,12 +1293,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     // Camera
     private readonly InputActionMap m_Camera;
     private ICameraActions m_CameraActionsCallbackInterface;
-    private readonly InputAction m_Camera_CamMovement;
+    private readonly InputAction m_Camera_Fly;
     public struct CameraActions
     {
         private @PlayerInputActions m_Wrapper;
         public CameraActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CamMovement => m_Wrapper.m_Camera_CamMovement;
+        public InputAction @Fly => m_Wrapper.m_Camera_Fly;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1308,16 +1308,16 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_CameraActionsCallbackInterface != null)
             {
-                @CamMovement.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnCamMovement;
-                @CamMovement.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnCamMovement;
-                @CamMovement.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnCamMovement;
+                @Fly.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnFly;
+                @Fly.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnFly;
+                @Fly.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnFly;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @CamMovement.started += instance.OnCamMovement;
-                @CamMovement.performed += instance.OnCamMovement;
-                @CamMovement.canceled += instance.OnCamMovement;
+                @Fly.started += instance.OnFly;
+                @Fly.performed += instance.OnFly;
+                @Fly.canceled += instance.OnFly;
             }
         }
     }
@@ -1394,6 +1394,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     }
     public interface ICameraActions
     {
-        void OnCamMovement(InputAction.CallbackContext context);
+        void OnFly(InputAction.CallbackContext context);
     }
 }
