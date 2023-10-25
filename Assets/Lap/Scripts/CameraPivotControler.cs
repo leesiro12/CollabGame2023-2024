@@ -28,6 +28,7 @@ public class CameraPivotControler : MonoBehaviour
     {
 
         checkForFreeCam();
+        
 
         if (FreeCamIsOn == true)
         {
@@ -45,13 +46,12 @@ public class CameraPivotControler : MonoBehaviour
     private void OnFly(InputValue value)
     {
         moveInput = value.Get<Vector2>();
-
     }
 
     private void checkForFreeCam()
     {
 
-        if (target.GetComponent<Rigidbody2D>().velocity == null)
+        if (target.GetComponent<Rigidbody2D>().velocity == new Vector2(0, 0) && moveInput != new Vector2(0, 0))
         {
             FreeCamIsOn = true;
         }
