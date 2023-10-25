@@ -5,38 +5,37 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
-public class dealDamage : MonoBehaviour
+public class DealDamage : MonoBehaviour
 {
+    // defines time between attacks
     private float cooldown = 1.5f;
-    private float elapsedTime = 0.0f;
+    // will hold reference to coroutine
     private Coroutine coroutine;
 
+    // when overlap begins
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.GetComponent<HealthScript>().TakeDamage(10);
+        // start coroutine for timed attack and hold reference in coroutine variable
         coroutine = StartCoroutine(timedAttack(collision));
     }
 
+    // when overlap ends
     private void OnTriggerExit2D(Collider2D collision)
     {
-        elapsedTime = 0.0f;
+        // stop the coroutine form running
         StopCoroutine(coroutine);
     }
 
+    // apply damage at regular interval
     IEnumerator timedAttack(Collider2D collision)
     {
+        // keep looping while routine is active
         while(true)
         {
-            if (elapsedTime > cooldown)
-            {
-                elapsedTime = 0.0f;
-                collision.GetComponent<HealthScript>().TakeDamage(10);
-            }
-            else
-            {
-                elapsedTime += Time.deltaTime;
-            }
-            yield return null;
+            // apply damage
+            collision.GetComponent<HealthScript>().TakeDamage(10);
+            // delay
+            yield return new WaitForSeconds(cooldown);
         }
     }
 }
