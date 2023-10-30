@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] int maxHealth = 40;
+    [SerializeField] int maxHealth = 100;
     [SerializeField] int currentHealth;
 
     void Start()
@@ -14,6 +14,6 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth =- damage;
+        currentHealth -= damage;
     }
 }
