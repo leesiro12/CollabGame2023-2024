@@ -162,9 +162,9 @@ public class ChargeEnemy : MonoBehaviour
             // while not touching, wait charge time, charge, wait cooldown time
             if(!inContact)
             {
-                yield return new WaitForSeconds(0.7f);
-                warning.SetActive(true);
                 yield return new WaitForSeconds(0.3f);
+                warning.SetActive(true);
+                yield return new WaitForSeconds(0.7f);
 
                 rb.velocity = new Vector2(transform.localScale.x * 10, 0f);
 
