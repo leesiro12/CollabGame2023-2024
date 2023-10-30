@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class SimpleMovement : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask groundLayer;
 
