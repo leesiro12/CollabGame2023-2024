@@ -20,11 +20,13 @@ public class ChargeEnemy : MonoBehaviour
     // if touching player
     private bool inContact = false;
 
+    private GameObject warning;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        warning = transform.GetChild(0).gameObject;
     }
 
 
@@ -63,6 +65,7 @@ public class ChargeEnemy : MonoBehaviour
         }
 
         inContact = false;
+        warning.SetActive(false);
     }
 
 
@@ -106,6 +109,7 @@ public class ChargeEnemy : MonoBehaviour
         }
 
         inContact = false;
+        warning.SetActive(false);
     }
 
 
@@ -158,10 +162,13 @@ public class ChargeEnemy : MonoBehaviour
             // while not touching, wait charge time, charge, wait cooldown time
             if(!inContact)
             {
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(0.7f);
+                warning.SetActive(true);
+                yield return new WaitForSeconds(0.3f);
 
                 rb.velocity = new Vector2(transform.localScale.x * 10, 0f);
 
+                warning.SetActive(false);
                 yield return new WaitForSeconds(chargeCooldown);
             }
             else
