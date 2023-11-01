@@ -35,7 +35,7 @@ public class ShieldEnemy : MonoBehaviour
         miscHealth = currentHealth;
         if (currentHealth <= 0)
         {
-            GameObject.SetActive(false);
+            //GameObject.SetActive(false);
         }
     }
 
