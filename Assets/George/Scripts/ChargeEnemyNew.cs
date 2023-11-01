@@ -1,8 +1,7 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
-public class ChargeEnemy : MonoBehaviour
+public class ChargeEnemyNew : MonoBehaviour
 {
     // defines time between attacks
     private float attackCooldown = 1.5f;
@@ -12,7 +11,7 @@ public class ChargeEnemy : MonoBehaviour
     // reference to rb
     Rigidbody2D rb;
     // defines time between charges
-    private float chargeCooldown = 2.0f;
+    private float chargeCooldown = 1.5f;
     // will hold reference to charge coroutine
     private Coroutine chargeCoroutine;
     // how long the player will have double damage form the start of the charge
@@ -22,6 +21,8 @@ public class ChargeEnemy : MonoBehaviour
     private bool inContact = false;
     // if enemy is dashing
     private bool isCharging = false;
+
+    private bool enemyPresent = false;
 
     // holds reference to warning sign object
     private GameObject warning;
@@ -39,12 +40,18 @@ public class ChargeEnemy : MonoBehaviour
     {
         // get health script
         HealthScript script = collider.GetComponent<HealthScript>();
-
         // if health script found
         if (script != null)
         {
-            // start charging the enemy
-            chargeCoroutine = StartCoroutine(ChargePlayer());
+            // marks that player is in trigger area
+            enemyPresent = true;
+
+            // start coroutine is not already running
+            if (chargeCoroutine == null)
+            {
+                chargeCoroutine = StartCoroutine(ChargePlayer());
+            }
+
             // make sure enemy is facing player
             UpdateDirection(collider);
         }
@@ -65,13 +72,17 @@ public class ChargeEnemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(chargeCoroutine != null)
+        // attempt to capture a player script
+        HealthScript script = collision.gameObject.GetComponent<HealthScript>();
+        // if health script found
+        if (script != null)
         {
-            StopCoroutine(chargeCoroutine);
-        }
+            // marks player is not in trigger area
+            enemyPresent = false;
 
-        inContact = false;
-        warning.SetActive(false);
+            // clears coroutine variable - will not be running anymore
+            chargeCoroutine = null;
+        }
     }
 
 
@@ -108,7 +119,7 @@ public class ChargeEnemy : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (attackCoroutine != null)
-        { 
+        {
             // stop the coroutine form running
             StopCoroutine(attackCoroutine);
         }
@@ -162,10 +173,10 @@ public class ChargeEnemy : MonoBehaviour
     IEnumerator ChargePlayer()
     {
         // keep looping until routine is stopped
-        while(true)
+        while (enemyPresent)
         {
             // while not touching, wait charge time, charge, wait cooldown time
-            if(!inContact)
+            if (!inContact)
             {
                 // wait, apply warning, wait
                 yield return new WaitForSeconds(0.3f);
@@ -183,13 +194,16 @@ public class ChargeEnemy : MonoBehaviour
                 yield return new WaitForSeconds(chargeLength);
                 isCharging = false;
 
-                yield return new WaitForSeconds(chargeCooldown - chargeLength);
+                // delay until cooldown has been completed
+                yield return new WaitForSeconds(chargeCooldown);
             }
             else
             {
                 // wait for contact to end without causing infinite loop
                 yield return new WaitForSeconds(0.1f);
             }
-        }        
+        }
+
+        yield break;
     }
 }
