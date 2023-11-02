@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class ChargeEnemy : MonoBehaviour
@@ -10,16 +11,19 @@ public class ChargeEnemy : MonoBehaviour
 
     // reference to rb
     Rigidbody2D rb;
-    // set speed threshold for double damage
-    private float speedThreshold = 3.0f;
     // defines time between charges
     private float chargeCooldown = 2.0f;
     // will hold reference to charge coroutine
     private Coroutine chargeCoroutine;
+    // how long the player will have double damage form the start of the charge
+    private float chargeLength = 1.0f;
 
     // if touching player
     private bool inContact = false;
+    // if enemy is dashing
+    private bool isCharging = false;
 
+    // holds reference to warning sign object
     private GameObject warning;
 
 
@@ -35,9 +39,11 @@ public class ChargeEnemy : MonoBehaviour
     {
         // get health script
         HealthScript script = collider.GetComponent<HealthScript>();
+
         // if health script found
         if (script != null)
         {
+            // start charging the enemy
             chargeCoroutine = StartCoroutine(ChargePlayer());
             // make sure enemy is facing player
             UpdateDirection(collider);
@@ -79,13 +85,12 @@ public class ChargeEnemy : MonoBehaviour
         {
             inContact = true;
 
-            if (rb.velocity.x >= speedThreshold || rb.velocity.x <= -speedThreshold)
+            if (isCharging)
             {
                 // apply double damage
                 script.TakeDamage(20);
                 Debug.Log("dealt 20 damage");
             }
-
             else
             {
                 // apply damage
@@ -162,14 +167,23 @@ public class ChargeEnemy : MonoBehaviour
             // while not touching, wait charge time, charge, wait cooldown time
             if(!inContact)
             {
+                // wait, apply warning, wait
                 yield return new WaitForSeconds(0.3f);
                 warning.SetActive(true);
                 yield return new WaitForSeconds(0.7f);
 
+                // start charge
                 rb.velocity = new Vector2(transform.localScale.x * 10, 0f);
 
+                // remove warning
                 warning.SetActive(false);
-                yield return new WaitForSeconds(chargeCooldown);
+
+                // make isCharging true for a short time
+                isCharging = true;
+                yield return new WaitForSeconds(chargeLength);
+                isCharging = false;
+
+                yield return new WaitForSeconds(chargeCooldown - chargeLength);
             }
             else
             {

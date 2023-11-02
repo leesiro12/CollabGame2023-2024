@@ -98,7 +98,7 @@ Transform:
   m_Children:
   - {fileID: 9112827308405278224}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9112827308158072978
 SpriteRenderer:
@@ -201,11 +201,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42696f014ea0b054ea88eab5120a582e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 9112827308158072976}
   groundCheck: {fileID: 9112827307844670355}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  HorizontalMove:
+    m_Name: Horizontal Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4a0ebf12-181b-402e-bc4c-06c062af7433
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   tr: {fileID: 0}
   jumpingPower: 10
 --- !u!114 &9112827308158072988
@@ -317,6 +325,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 8b5f8710-82ca-4229-bcb0-92d6ad148dea
     m_ActionName: Player/Dash[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8d4a2825-e295-4cdf-9640-74c4ba4022e3
+    m_ActionName: Player/Block[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
