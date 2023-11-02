@@ -10,8 +10,10 @@ public class JumpEnemy : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float jumpDelay = 2f;
     [SerializeField] private float jumpRange = 2f;
+    [SerializeField] private float detectRange = 2f;
     [SerializeField] private float groundCheckDistance = 0.1f;
-    [SerializeField] private LayerMask groundLayer;
+    
+
 
     public GameObject Player;
     private Rigidbody2D rb2d;
@@ -19,6 +21,8 @@ public class JumpEnemy : MonoBehaviour
     private float lastJumpTime = 0f;
     private bool isJumping = false;
     private bool CanPatrol = true;
+    private bool isChasing = false;
+    private float faceDirection;
 
     private void Start()
     {
@@ -26,13 +30,32 @@ public class JumpEnemy : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (Vector2.Distance(transform.position, Player.transform.position) < detectRange)
+        {
+            isChasing = true;
+            CanPatrol = false;
+        } else isJumping = false;
+
+        if (isChasing)
+        {
+            if (transform.position.x > Player.transform.position.x)
+            {
+                transform.position += Vector3.left * chaseSpeed * Time.deltaTime;
+            }
+            if (transform.position.x < Player.transform.position.x)
+            {
+                transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
+            }
+        }
+
         if (!isJumping && Time.time - lastJumpTime > jumpDelay)
         {
             // Check if player is in jumping range
-            if (Vector2.Distance(transform.position, Player.transform.position) <= jumpRange && isJumping == false)            {
-                CanPatrol = false;
+            if (Vector2.Distance(transform.position, Player.transform.position) <= jumpRange && isJumping == false)
+            {
+                isChasing = false;
                 Jump();
             }
         }
@@ -50,8 +73,8 @@ public class JumpEnemy : MonoBehaviour
     private void Jump()
     {
         isJumping = true;
-        rb2d.velocity = Vector2.up * jumpForce;
-        rb2d.AddForce(transform.forward * 30);
+        //rb2d.velocity = Vector2.up * jumpForce;
+        rb2d.AddForce(new Vector2 ( , jumpForce) * 3000);
         lastJumpTime = Time.time;
         Invoke("ResetJumping", 1f);
     }

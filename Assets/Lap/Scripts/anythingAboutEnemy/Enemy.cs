@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
 
     public Transform playerTransform;
     public bool isChasing;
-    public float detechRange;
+    public float detectRange;
     public float chaseSpeed;
 
     public float attackRange;
@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
     {
         //chaseDistance = Mathf.Abs(Vector2.Distance(transform.position, playerTransform.position));
         
-        if ((Vector2.Distance(transform.position, playerTransform.position) > detechRange))
+        if ((Vector2.Distance(transform.position, playerTransform.position) > detectRange))
             {
             isChasing = false;
             }
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
         else
         {
-            if (Vector2.Distance(transform.position, playerTransform.position) < detechRange)
+            if (Vector2.Distance(transform.position, playerTransform.position) < detectRange)
             {
                 isChasing = true;
             }
@@ -93,7 +93,7 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(pointB.transform.position, 0.5f);
         Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(this.transform.position, detechRange);
+        Gizmos.DrawWireSphere(this.transform.position, detectRange);
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, attackRange);

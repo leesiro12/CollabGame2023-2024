@@ -348,7 +348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42696f014ea0b054ea88eab5120a582e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 788532005}
   groundCheck: {fileID: 313663526}
   groundLayer:
     serializedVersion: 2
@@ -386,6 +385,7 @@ MonoBehaviour:
       m_Action: Horizontal Move
       m_Flags: 8
     m_Flags: 0
+  tr: {fileID: 0}
   jumpingPower: 10
 --- !u!58 &788532004
 CircleCollider2D:
@@ -1117,7 +1117,8 @@ MonoBehaviour:
   chaseSpeed: 2
   jumpForce: 30
   jumpDelay: 2
-  jumpRange: 6.11
+  jumpRange: 5.87
+  detectRange: 2
   groundCheckDistance: 0.5
   groundLayer:
     serializedVersion: 2
