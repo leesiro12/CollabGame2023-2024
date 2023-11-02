@@ -74,7 +74,7 @@ public class JumpEnemy : MonoBehaviour
     {
         isJumping = true;
         //rb2d.velocity = Vector2.up * jumpForce;
-        rb2d.AddForce(new Vector2 ( , jumpForce) * 3000);
+        //rb2d.AddForce(new Vector2 ( , jumpForce) * 3000); Hao commented this line because it caused error
         lastJumpTime = Time.time;
         Invoke("ResetJumping", 1f);
     }
@@ -90,11 +90,11 @@ public class JumpEnemy : MonoBehaviour
         {
             //Player.TakeDamage();
         }
-        else if (Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer))
-        {
-            CanPatrol = true;
-            ResetJumping();
-        }
+        //else if (Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer))
+        //{
+        //    CanPatrol = true;
+        //    ResetJumping();
+        //} Hao commented this else if because it caused error
         
     }
 
