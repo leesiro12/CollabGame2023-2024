@@ -95,7 +95,7 @@ public class JumpEnemy : MonoBehaviour
         //    CanPatrol = true;
         //    ResetJumping();
         //} Hao commented this else if because it caused error
-        
+
     }
 
     private void OnDrawGizmos()
