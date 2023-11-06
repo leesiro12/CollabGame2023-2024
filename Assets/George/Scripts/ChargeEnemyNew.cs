@@ -49,7 +49,12 @@ public class ChargeEnemyNew : MonoBehaviour
             // start coroutine is not already running
             if (chargeCoroutine == null)
             {
+                Debug.Log("start coroutine");
                 chargeCoroutine = StartCoroutine(ChargePlayer());
+            }
+            else
+            {
+                Debug.Log("already running");
             }
 
             // make sure enemy is facing player
@@ -80,8 +85,8 @@ public class ChargeEnemyNew : MonoBehaviour
             // marks player is not in trigger area
             enemyPresent = false;
 
-            // clears coroutine variable - will not be running anymore
-            chargeCoroutine = null;
+            // stop coroutine
+            //StopCoroutine(chargeCoroutine);
         }
     }
 
@@ -172,13 +177,11 @@ public class ChargeEnemyNew : MonoBehaviour
     // regularly charge player while they are in the trigger range
     IEnumerator ChargePlayer()
     {
+        Debug.Log("charge coroutine started");
+
         // keep looping until routine is stopped
         while (enemyPresent)
         {
-            // while not touching, wait charge time, charge, wait cooldown time
-            if (!inContact)
-            {
-                // wait, apply warning, wait
                 yield return new WaitForSeconds(0.3f);
                 warning.SetActive(true);
                 yield return new WaitForSeconds(0.7f);
@@ -196,14 +199,12 @@ public class ChargeEnemyNew : MonoBehaviour
 
                 // delay until cooldown has been completed
                 yield return new WaitForSeconds(chargeCooldown);
-            }
-            else
-            {
-                // wait for contact to end without causing infinite loop
-                yield return new WaitForSeconds(0.1f);
-            }
         }
 
-        yield break;
+        Debug.Log("end of coroutine");
+
+        chargeCoroutine = null;
+
+        //yield break;
     }
 }
