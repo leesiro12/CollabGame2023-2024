@@ -4,118 +4,142 @@ using UnityEngine;
 
 public class JumpEnemy : MonoBehaviour
 {
-    [SerializeField] private Transform[] patrolPoints;
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float chaseSpeed = 20f;
-    [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float jumpDelay = 2f;
-    [SerializeField] private float jumpRange = 2f;
-    [SerializeField] private float detectRange = 2f;
-    [SerializeField] private float groundCheckDistance = 0.1f;
-    
+    [SerializeField] private float detectRange = 5f;
+    [SerializeField] private float jumpSpeed = 10f;
+    [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float walkingSpeed = 3f;
+    [SerializeField] public GameObject pointA;
+    [SerializeField] public GameObject pointB;
+    [SerializeField] public Transform aimPos;
 
-
-    public GameObject Player;
-    private Rigidbody2D rb2d;
-    private int currentPatrolIndex = 0;
-    private float lastJumpTime = 0f;
+    private Transform currentPoint;
+    private Transform player;
     private bool isJumping = false;
-    private bool CanPatrol = true;
-    private bool isChasing = false;
-    private float faceDirection;
+    private bool isPatrolling = true;
+    private Vector3 jumpStart;
+    private float jumpDuration;
+    private Rigidbody2D rb;
 
     private void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
-        Player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = this.transform.GetComponent<Rigidbody2D>(); 
+        currentPoint = pointB.transform;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (Vector2.Distance(transform.position, Player.transform.position) < detectRange)
-        {
-            isChasing = true;
-            CanPatrol = false;
-        } else isJumping = false;
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (isChasing)
-        {
-            if (transform.position.x > Player.transform.position.x)
+        if (distanceToPlayer <= detectRange)
+        {            
+            if (!isJumping)
             {
-                transform.position += Vector3.left * chaseSpeed * Time.deltaTime;
-            }
-            if (transform.position.x < Player.transform.position.x)
-            {
-                transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
+                StartCoroutine(JumpAfterDelay());
             }
         }
-
-        if (!isJumping && Time.time - lastJumpTime > jumpDelay)
+        else
         {
-            // Check if player is in jumping range
-            if (Vector2.Distance(transform.position, Player.transform.position) <= jumpRange && isJumping == false)
-            {
-                isChasing = false;
-                Jump();
-            }
-        }
-
-        // Patrol
-        if (!isJumping)
-        {
-            CanPatrol = true;
-            Patrolling();
-            Vector2 movementDirection = (patrolPoints[currentPatrolIndex].position - transform.position).normalized;
-            rb2d.velocity = movementDirection * moveSpeed;
+            StopCoroutine(JumpAfterDelay() );
+            StartCoroutine(PatrolAfterDelay()); 
         }
     }
 
-    private void Jump()
+    private IEnumerator JumpAfterDelay()
+    {
+        aimPos = player.transform;
+        yield return new WaitForSeconds(5f);
+        JumpToPlayer();
+    }
+
+    private IEnumerator PatrolAfterDelay()
+    {
+        if (isPatrolling == true && isJumping == false)
+        {
+            yield return new WaitForSeconds(5f);
+            Patrol();
+        }
+        else if (isPatrolling == false && isJumping == false)
+        {
+            isPatrolling = true;
+        }
+        
+    }
+
+    private void JumpToPlayer()
     {
         isJumping = true;
+        isPatrolling = false;
+        jumpStart = transform.position;
+        
+        jumpDuration = 2f * jumpHeight / jumpSpeed;
+        float horizontalDistance = aimPos.position.x - jumpStart.x;
+        float horizontalSpeed = horizontalDistance / jumpDuration;
+        float verticalSpeed = Mathf.Sqrt(2f * jumpHeight * Physics2D.gravity.magnitude);
+
+        GetComponent<Rigidbody2D>().velocity = new Vector2(horizontalSpeed, verticalSpeed);
+
+        Invoke("FinishJumping", jumpDuration);
+
         //rb2d.velocity = Vector2.up * jumpForce;
         //rb2d.AddForce(new Vector2 ( , jumpForce) * 3000); Hao commented this line because it caused error
-        lastJumpTime = Time.time;
-        Invoke("ResetJumping", 1f);
+        //lastJumpTime = Time.time;
+        Invoke("FinishJumping", 1f);
     }
 
-    private void ResetJumping()
+    private void FinishJumping()
     {
         isJumping = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void Patrol()
     {
-        if (other.gameObject.CompareTag("Player"))
+        Vector2 point = currentPoint.position - transform.position;
+
+        if (currentPoint == pointB.transform)
         {
-            //Player.TakeDamage();
+            rb.velocity = new Vector2(walkingSpeed, 0);
         }
+        else
+        {
+            rb.velocity = new Vector2(-walkingSpeed, 0);
+        }
+
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
+        {
+            Flip();
+            currentPoint = pointA.transform;
+        }
+
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
+        {
+            Flip();
+            currentPoint = pointB.transform;
+        }
+    }
+
+    private void Flip()
+    {
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+
         //else if (Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer))
         //{
         //    CanPatrol = true;
         //    ResetJumping();
         //} Hao commented this else if because it caused error
 
+
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(this.transform.position,jumpRange);
+        Gizmos.DrawWireSphere(this.transform.position,detectRange);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, groundCheckDistance);
+        Gizmos.DrawWireSphere(pointB.transform.position, 2f);
+        Gizmos.DrawWireSphere(pointA.transform.position, 2f);
+        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
     }
-
-    private void Patrolling()
-    {
-        if (Vector2.Distance(transform.position, patrolPoints[currentPatrolIndex].position) <= 0.5f && CanPatrol == true)
-        {
-            currentPatrolIndex++;
-            if (currentPatrolIndex >= patrolPoints.Length)
-            {
-                currentPatrolIndex = 0;
-            }
-        }
-    }
-
 }
