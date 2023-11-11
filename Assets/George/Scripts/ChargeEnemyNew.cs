@@ -17,11 +17,9 @@ public class ChargeEnemyNew : MonoBehaviour
     // how long the player will have double damage form the start of the charge
     private float chargeLength = 1.0f;
 
-    // if touching player
-    private bool inContact = false;
     // if enemy is dashing
     private bool isCharging = false;
-
+    // if enemy is wihtin detection range
     private bool enemyPresent = false;
 
     // holds reference to warning sign object
@@ -99,7 +97,6 @@ public class ChargeEnemyNew : MonoBehaviour
         // if health script found
         if (script != null)
         {
-            inContact = true;
 
             if (isCharging)
             {
@@ -129,7 +126,6 @@ public class ChargeEnemyNew : MonoBehaviour
             StopCoroutine(attackCoroutine);
         }
 
-        inContact = false;
         warning.SetActive(false);
     }
 
