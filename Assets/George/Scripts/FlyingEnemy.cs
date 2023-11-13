@@ -12,6 +12,9 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeField] private Transform pointB;
     private Transform currentPoint;
 
+    // holds reference to warning sign object
+    private GameObject warning;
+
     // reference to rigidbody
     private Rigidbody2D rb;
     // reference to enemy movement speed while patrolling
@@ -38,6 +41,7 @@ public class FlyingEnemy : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        warning = transform.GetChild(0).gameObject;
 
         currentPoint = pointA;
 
@@ -81,10 +85,11 @@ public class FlyingEnemy : MonoBehaviour
             {
                 isRushing = false;
                 StopCoroutine(rushCoroutine);
-            }    
+                warning.SetActive(false);
+            }
 
             // if not patrolling, start
-            if(!isPatrolling)
+            if (!isPatrolling)
             {
                 StartCoroutine(StartPatrol());
             }
@@ -135,13 +140,17 @@ public class FlyingEnemy : MonoBehaviour
         while(isRushing)
         {
             // make sure the enemy is facing towards the player
-            if ((((transform.position - currentPoint.position).x) > 0 && (transform.position - playerColl.transform.position).x < 0) || ((transform.position - currentPoint.position).x) < 0 && (transform.position - playerColl.transform.position).x > 0)
+            if ((playerColl.transform.position.x > transform.position.x && transform.localScale.x < 0) || (playerColl.transform.position.x < transform.position.x && transform.localScale.x > 0))
             {
                 Flip();
             }
 
+            warning.SetActive(true);
+
             // wait for charge time
             yield return new WaitForSeconds(chargeTime);
+
+            warning.SetActive(false);
 
             // used to record time passed
             float elapsedTime = 0.0f;
