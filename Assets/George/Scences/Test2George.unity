@@ -1511,6 +1511,93 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 40
   currentHealth: 0
+--- !u!1001 &4361088268641058789
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.046850532
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730722, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730723, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_Name
+      value: FlyingEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269373708009, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: cooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269373708009, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: rushTime
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269373708009, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: rushSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269373708009, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: chargeTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269373708009, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: patrolSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269373708009, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361088269373708021, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
 --- !u!1001 &4779293538169118126
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1566,6 +1653,10 @@ PrefabInstance:
     - target: {fileID: 4779293538073454157, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
       propertyPath: m_Name
       value: ChargeEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779293538073454157, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4509761564447281396, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
