@@ -36,6 +36,10 @@ public class Enemy : MonoBehaviour
             {
             isChasing = false;
             }
+        if (Vector2.Distance(transform.position, playerTransform.position) < detectRange)
+            {
+                isChasing = true;
+            } 
         if (isChasing)
         {
             if (transform.position.x > playerTransform.position.x)
@@ -47,16 +51,10 @@ public class Enemy : MonoBehaviour
                 transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
             }
         }
-
         else
-        {
-            if (Vector2.Distance(transform.position, playerTransform.position) < detectRange)
-            {
-                isChasing = true;
-            }
-            
+        {               
 
-            Vector2 point = currentPoint.position - transform.position;
+            
             if (currentPoint == pointB.transform)
             {
                 rb.velocity = new Vector2(walkingSpeed, 0);
