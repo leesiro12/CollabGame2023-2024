@@ -4,56 +4,121 @@ using UnityEngine;
 
 public class ShieldEnemy : MonoBehaviour
 {
-    //movement related
-    [SerializeField] private float moveSpeed = 15.0f;
-
-    //health related variables
-    [SerializeField] private int maxHealth = 75;
-    [SerializeField] private int currentHealth;
-    private int miscHealth;
-
-    //shield function vars
-    private float shieldCooldown = 30.0f;
-    private int shieldHealth = 30;
-    private float shieldDuration = 6.0f;
-    private bool shield;
-
-    //other
+    [SerializeField] private float walkingDistance;
+    [SerializeField] private float walkingSpeed;
+    [SerializeField] public GameObject pointA;
+    [SerializeField] public GameObject pointB;
     private Rigidbody2D rb;
+    private Transform currentPoint;
 
-    
 
-    void Start()
+    //player related vars
+
+    public Transform playerTransform;
+    public bool isChasing;
+    public float detectRange;
+    public float chaseSpeed;
+
+    //shield related vars
+    private bool shieldUp = false;
+    public float shieldCooldown = 20.0f;
+
+    private void Start() //start stuff
     {
         rb = GetComponent<Rigidbody2D>();
-        currentHealth = maxHealth;
+        currentPoint = pointB.transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update() //patrol and chase
     {
-        miscHealth = currentHealth;
-        if (currentHealth <= 0)
+        
+
+        //chaseDistance = Mathf.Abs(Vector2.Distance(transform.position, playerTransform.position));
+
+        if ((Vector2.Distance(transform.position, playerTransform.position) > detectRange))
         {
-            //GameObject.SetActive(false);
+            isChasing = false;
+        }
+        if (Vector2.Distance(transform.position, playerTransform.position) < detectRange)
+        {
+            isChasing = true;
+        }
+        if (isChasing)
+        {
+            if (transform.position.x > playerTransform.position.x)
+            {
+                transform.position += Vector3.left * chaseSpeed * Time.deltaTime;
+            }
+            if (transform.position.x < playerTransform.position.x)
+            {
+                transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
+            }
+        }
+        else
+        {
+
+
+            if (currentPoint == pointB.transform)
+            {
+                rb.velocity = new Vector2(walkingSpeed, 0);
+            }
+            else
+            {
+                rb.velocity = new Vector2(-walkingSpeed, 0);
+            }
+
+            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
+            {
+                Flip();
+                currentPoint = pointA.transform;
+            }
+
+            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
+            {
+                Flip();
+                currentPoint = pointB.transform;
+            }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void Flip() //flips the sprite
     {
-        //player loses health script here
-        ///////////////////////////
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
     }
 
-
-    private IEnumerator ShieldUp()
+    private void OnDrawGizmos() //draw range around the object in editor
     {
-        if (!shield)
+        Gizmos.DrawWireSphere(pointA.transform.position, 0.5f);
+        Gizmos.DrawWireSphere(pointB.transform.position, 0.5f);
+        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(this.transform.position, detectRange);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) //apply damage to player when they touch the guy
+    {
+        if (collision.gameObject.tag == "Player")
         {
-            shield = true;
-            currentHealth = currentHealth + shieldHealth;
-            yield return new WaitForSeconds(shieldDuration);
-            currentHealth = -shieldHealth;
+            GetComponent<PlayerHealth>().TakeDamage(10);
         }
+    }
+
+    private IEnumerator ActivateShield()
+    {
+        shieldUp = true;
+
+        if(shieldUp)
+        {
+            GetComponent<EnemyHealth>().addShield();
+        }
+
+        yield return new WaitForSeconds(10);
+        
+        shieldUp = false;
+
+        
+        yield return new WaitForSeconds(shieldCooldown);
     }
 }
