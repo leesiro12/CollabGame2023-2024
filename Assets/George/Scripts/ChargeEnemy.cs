@@ -5,18 +5,18 @@ using UnityEngine;
 public class ChargeEnemy : MonoBehaviour
 {
     // defines time between attacks
-    private float attackCooldown = 1.5f;
+    [SerializeField] private float attackCooldown = 1.5f;
     // will hold reference to attack coroutine
     private Coroutine attackCoroutine;
 
     // reference to rb
     Rigidbody2D rb;
     // defines time between charges
-    private float chargeCooldown = 2.0f;
+    [SerializeField] private float chargeCooldown = 2.0f;
     // will hold reference to charge coroutine
     private Coroutine chargeCoroutine;
     // how long the player will have double damage form the start of the charge
-    private float chargeLength = 1.0f;
+    [SerializeField] private float chargeLength = 1.0f;
 
     // if touching player
     private bool inContact = false;
