@@ -33,12 +33,17 @@ public class ProjectileScript : MonoBehaviour
             Destroy(gameObject);
         }
         
-        // if the overlapped object has tag of Player and contains PlayerHealth script
-        if (collision.CompareTag("Enemies") && collision.gameObject.GetComponent<EnemyHealth>() != null)
+        // if the overlapped object has the EnemyHealth script
+        if (collision.gameObject.GetComponent<EnemyHealth>() != null)
         {
-            // apply damage
-            collision.GetComponent<EnemyHealth>().TakeDamage(10);
-            Debug.Log("damage taken");
+            if(!collision.isTrigger)
+            {
+                Debug.Log("hit enemy");
+                Debug.Log(collision);
+                // apply damage
+                collision.GetComponent<EnemyHealth>().TakeDamage(10);
+                Destroy(gameObject);
+            }
         }
     }
 }

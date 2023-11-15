@@ -34,7 +34,7 @@ public class AttackScript : MonoBehaviour
     // prefab of projectile
     public GameObject projectile;
     // speed at which we will instantiate the projectile
-    private float projectileSpeed = 10.0f;
+    [SerializeField] private float projectileSpeed = 15.0f;
 
     private void Awake()
     {
