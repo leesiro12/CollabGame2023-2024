@@ -1085,23 +1085,11 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &413999581 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4779293538073454157, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
-  m_PrefabInstance: {fileID: 4779293538169118126}
+--- !u!4 &488934706 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9112827308985015791, guid: 9afc39169e71160438ae082630025b05, type: 3}
+  m_PrefabInstance: {fileID: 866704260}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &413999582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 413999581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ea25cd552caedd438c3e88dc94b4265, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &866704260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1421,6 +1409,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   playerHealth: 0
+--- !u!114 &1172774473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172774461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd18aebe406915040a6c68da0d3919a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 488934706}
+  attackRange: 0.5
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  lightDamage: 10
+  heavyDamage: 20
+  projectile: {fileID: 4470001759152173979, guid: 08713adb313ab4043ae06f7b61c31a67, type: 3}
 --- !u!1001 &1728427135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1567,6 +1575,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyingEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4361088269115730723, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4361088269373708009, guid: 8e6ba16d9c16c514c84dde23e63711f2, type: 3}
       propertyPath: cooldown
       value: 2
@@ -1655,10 +1667,17 @@ PrefabInstance:
       value: ChargeEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 4779293538073454157, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4509761564447281396, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
+    - target: {fileID: 4779293538073454157, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779293538502162790, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: fde8d22375eac5747a30adbf8563f795, type: 3}

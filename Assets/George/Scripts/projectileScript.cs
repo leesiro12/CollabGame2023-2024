@@ -34,10 +34,11 @@ public class ProjectileScript : MonoBehaviour
         }
         
         // if the overlapped object has tag of Player and contains PlayerHealth script
-        if(!collision.CompareTag("Player") && collision.GetComponent<PlayerHealth>() != null)
+        if (collision.CompareTag("Enemies") && collision.gameObject.GetComponent<EnemyHealth>() != null)
         {
             // apply damage
-            collision.GetComponent<PlayerHealth>().TakeDamage(10);
+            collision.GetComponent<EnemyHealth>().TakeDamage(10);
+            Debug.Log("damage taken");
         }
     }
 }
