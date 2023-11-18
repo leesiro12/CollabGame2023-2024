@@ -53,6 +53,8 @@ public class ShieldEnemy : MonoBehaviour
             {
                 transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
             }
+
+            StartCoroutine("ActivateShield");
         }
         else
         {
@@ -105,7 +107,7 @@ public class ShieldEnemy : MonoBehaviour
         }
     }
 
-    private IEnumerator ActivateShield()
+    private IEnumerator ActivateShield() //shield function
     {
         shieldUp = true;
 
