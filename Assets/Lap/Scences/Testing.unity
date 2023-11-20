@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 788532003}
   - component: {fileID: 788532009}
   - component: {fileID: 788532010}
+  - component: {fileID: 788532011}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -654,7 +655,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 1.16
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -662,8 +663,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.62010956
+        value: 0.64152336
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -714,6 +715,20 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &788532011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788532002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd2b2705f85c4947a20a943c3b9cbe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  playerHealth: 0
 --- !u!1 &857190316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,6 +1834,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: attackRange
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
       propertyPath: playerTransform
       value: 

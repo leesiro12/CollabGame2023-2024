@@ -15,7 +15,10 @@ public class SlerpMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Transform currentPoint; // show the next patrol point that enemy is moving to
     private bool isFacingRight = true;
-
+    private bool isAttacking = false;
+    private bool isCharging = false;
+    private bool enemyPresent = true;
+    private Coroutine attackCoroutine;
 
     //Player informations
     [Header("Player")]
@@ -32,103 +35,142 @@ public class SlerpMovement : MonoBehaviour
         //playerTransform = GameObject.FindGameObjectsWithTag("Player");
     }
 
-    private void Update()
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        //check for facing direction
-        if (transform.localScale.x > 0)
-        {
-            // Character is facing right
-            isFacingRight = true;
-            Debug.Log("Character is facing right");
+        HealthScript script = other.GetComponent<HealthScript>();
 
-            leftLandingPoint = transform.position;
-            leftUpperPoint = new Vector3(transform.position.x + 1f, transform.position.y + 3.5f, transform.position.z);
-            rightUpperPoint = new Vector3(transform.position.x + 3f, transform.position.y + 3.5f, transform.position.z);
-            rightLandingPoint = new Vector3(transform.position.x + attackRange, transform.position.y, transform.position.z);
-        }
-        else if (transform.localScale.x < 0)
+        if (script != null)
         {
-            // Character is facing left
-            isFacingRight = false;
-            Debug.Log("Character is facing left");
+            enemyPresent = true;
 
-            leftLandingPoint = new Vector3(transform.position.x - attackRange, transform.position.y, transform.position.z);
-            leftUpperPoint = new Vector3(transform.position.x - 3f, transform.position.y + 3.5f, transform.position.z);
-            rightUpperPoint = new Vector3(transform.position.x -1f, transform.position.y + 3.5f, transform.position.z);
-            rightLandingPoint = transform.position;
+            if(attackCoroutine == null)
+            {
+
+                leftLandingPoint = transform.position * transform.localScale.x;
+                leftUpperPoint = new Vector3(transform.position.x + 1f, transform.position.y + 3.5f, transform.position.z) * transform.localScale.x;
+                rightUpperPoint = new Vector3(transform.position.x + 3f, transform.position.y + 3.5f, transform.position.z) * transform.localScale.x;
+                rightLandingPoint = new Vector3(transform.position.x + attackRange, transform.position.y, transform.position.z) * transform.localScale.x; 
+
+                attackCoroutine = StartCoroutine(ChargePlayer(leftLandingPoint, leftUpperPoint, rightUpperPoint, rightLandingPoint, 1f));
+            }
+
+            UpdateDirection(other);
         }
     }
 
-    private void FixedUpdate()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Vector2.Distance(transform.position, playerTransform.position) < attackRange)
-        {
-            isChasing = false;
+        HealthScript script = GetComponent<HealthScript>();
 
-            if (isFacingRight)
-                StartCoroutine(Attack(leftLandingPoint, leftUpperPoint, rightUpperPoint, rightLandingPoint, 1f));
-            else StartCoroutine(Attack(rightLandingPoint, rightUpperPoint, leftUpperPoint, leftLandingPoint, 1f));
+        if (script != null)
+        {
+            UpdateDirection(collision);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        HealthScript script = collision.gameObject.GetComponent<HealthScript>();
+        // if health script found
+        if (script != null)
+        {
+            // marks player is not in trigger area
+            enemyPresent = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (attackCoroutine != null)
+        {
+            // stop the coroutine form running
+            StopCoroutine(attackCoroutine);
         }
 
-        if (isChasing)
+        //warning.SetActive(false);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // get health script
+        HealthScript script = collision.gameObject.GetComponent<HealthScript>();
+        // if health script found
+        if (script != null)
         {
-            if (transform.position.x > playerTransform.position.x)
-            {                
-                transform.position += Vector3.left * chaseSpeed * Time.deltaTime;
-            }
-            if (transform.position.x < playerTransform.position.x)
+
+            if (isCharging)
             {
-                transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
-            }
-        }
-        if (Vector2.Distance(transform.position, playerTransform.position) < detectRange)
-        {
-            isChasing = true;
-        }       
-        else
-        {
-            isChasing = false;
-            if (currentPoint == rightLimit.transform)
-            {
-                rb.velocity = new Vector2(walkingSpeed, 0);
+                // apply double damage
+                script.TakeDamage(20);
+                Debug.Log("dealt 20 damage");
             }
             else
             {
-                rb.velocity = new Vector2(-walkingSpeed, 0);
+                // apply damage
+                script.TakeDamage(10);
+                Debug.Log("dealt 10 damage");
             }
 
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == rightLimit.transform)
-            {
-                Flip();
-                currentPoint = leftLimit.transform;
-            }
+            // start coroutine for timed attack and hold reference in coroutine variable
+            attackCoroutine = StartCoroutine(TimedAttack(collision));
+        }
+    }
 
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == leftLimit.transform)
+    void UpdateDirection(Collider2D collider)
+    {
+        if ((collider.transform.position.x > transform.position.x && transform.localScale.x < 0) || (collider.transform.position.x < transform.position.x && transform.localScale.x > 0))
+        {
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1;
+            transform.localScale = localScale;
+        }        
+    }
+    
+
+   
+
+    IEnumerator TimedAttack(Collision2D collision)
+    {
+
+        HealthScript script = collision.gameObject.GetComponent<HealthScript>();
+
+        if (script != null)
+        {
+            while (true)
             {
-                Flip();
-                currentPoint = rightLimit.transform;
-            }
+                yield return new WaitForSeconds(1.5f);
+
+                script.TakeDamage(10);
+
+                Debug.Log("dealt 10 damage (repeat)");
+            } 
+        }
+               
+    }
+    
+    IEnumerator ChargePlayer(Vector3 p0, Vector2 p1, Vector2 p2, Vector3 p3, float t)
+    {
+        while (enemyPresent)
+        {
+            yield return new WaitForSeconds(1f);
+
+            Vector3 a = Vector3.Lerp(p0, p1, t * Time.deltaTime);
+            Vector3 b = Vector3.Lerp(p1, p2, t * Time.deltaTime);
+            Vector3 c = Vector3.Lerp(p2, p3, t * Time.deltaTime);
+            Vector3 d = Vector3.Lerp(a, b, t * Time.deltaTime);
+            Vector3 e = Vector3.Lerp(b, c, t * Time.deltaTime);
+            Vector3 updatePos = Vector3.Lerp(d, e, t * Time.deltaTime);
+
+            transform.position = updatePos;
+            Debug.Log("Is charging");
+
+            isCharging = true;
+            yield return new WaitForSeconds(3f);
+            isCharging = false;
         }
 
-        
-    }
-
-    IEnumerator Attack(Vector3 p0, Vector2 p1, Vector2 p2, Vector3 p3, float t)
-    {
-        yield return new WaitForSeconds(1f);
-
-        Vector3 a = Vector3.Lerp(p0, p1, t *Time.deltaTime);
-        Vector3 b = Vector3.Lerp(p1, p2, t * Time.deltaTime);
-        Vector3 c = Vector3.Lerp(p2, p3, t * Time.deltaTime);
-        Vector3 d = Vector3.Lerp(a, b, t * Time.deltaTime);
-        Vector3 e = Vector3.Lerp(b, c, t * Time.deltaTime);
-        transform.position = Vector3.Lerp(d, e, t * Time.deltaTime);        
-    }
-    private void Flip()
-    {
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1;
-        transform.localScale = localScale;
+        attackCoroutine = null;
     }
 
     private void OnDrawGizmos()

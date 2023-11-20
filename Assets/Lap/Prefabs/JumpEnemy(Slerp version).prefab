@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7948362589061437313}
   - component: {fileID: 7948362589061437327}
   - component: {fileID: 7948362589061437315}
+  - component: {fileID: 2907494757497475181}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -156,8 +157,8 @@ MonoBehaviour:
   rightLimit: {fileID: 7948362588804616203}
   leftLandingPoint: {x: 0, y: 0, z: 0}
   rightLandingPoint: {x: 0, y: 0, z: 0}
-  customPoint1: {x: 0, y: 0, z: 0}
-  customPoint2: {x: 0, y: 0, z: 0}
+  leftUpperPoint: {x: 0, y: 0, z: 0}
+  rightUpperPoint: {x: 0, y: 0, z: 0}
   playerTransform: {fileID: 0}
   isChasing: 0
   detectRange: 7.9
@@ -189,6 +190,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!58 &2907494757497475181
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7948362589061437325}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 5
 --- !u!1 &7948362590207646250
 GameObject:
   m_ObjectHideFlags: 0
