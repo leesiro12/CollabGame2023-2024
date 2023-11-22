@@ -4,123 +4,164 @@ using UnityEngine;
 
 public class ShieldEnemy : MonoBehaviour
 {
-    [SerializeField] private float walkingDistance;
-    [SerializeField] private float walkingSpeed;
-    [SerializeField] public GameObject pointA;
-    [SerializeField] public GameObject pointB;
-    private Rigidbody2D rb;
-    private Transform currentPoint;
+    public float detectionRange = 10f; // Range to detect the player
+    public float chaseSpeed = 5f; // Speed during chase
+    public float idleSpeed = 2f; // Speed while idle
+    public float patrolDistance = 10f; // Distance to patrol from the starting position
+    public float shieldCooldown = 5f; // Cooldown for shield activation
+    public int maxHealth = 100;
+    public int shieldHealth = 60;
 
+    private int currentHealth;
+    private bool isShieldActive = false;
+    private float shieldCooldownTimer;
+    private bool isChasing = false;
 
-    //player related vars
+    private Transform player;
+    private Vector3 startPosition;
+    private Vector3 patrolTarget;
 
-    public Transform playerTransform;
-    public bool isChasing;
-    public float detectRange;
-    public float chaseSpeed;
+    private SpriteRenderer spriteRenderer;
 
-    //shield related vars
-    private bool shieldUp = false;
-    public float shieldCooldown = 20.0f;
-
-    private void Start() //start stuff
+    void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        currentPoint = pointB.transform;
+        currentHealth = maxHealth;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        startPosition = transform.position;
+        patrolTarget = GetRandomPointInPatrolArea();
+
+        // Get the SpriteRenderer component
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update() //patrol and chase
+    void Update()
     {
-        
-
-        //chaseDistance = Mathf.Abs(Vector2.Distance(transform.position, playerTransform.position));
-
-        if ((Vector2.Distance(transform.position, playerTransform.position) > detectRange))
+        // Check if player is within detection range
+        if (Vector3.Distance(transform.position, player.position) < detectionRange)
         {
-            isChasing = false;
-        }
-        if (Vector2.Distance(transform.position, playerTransform.position) < detectRange)
-        {
-            isChasing = true;
-        }
-        if (isChasing)
-        {
-            if (transform.position.x > playerTransform.position.x)
+            if (!isChasing)
             {
-                transform.position += Vector3.left * chaseSpeed * Time.deltaTime;
+                StartChase();
             }
-            if (transform.position.x < playerTransform.position.x)
-            {
-                transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
-            }
+        }
+        else if (isChasing)
+        {
+            StopChase();
+        }
 
-            StartCoroutine("ActivateShield");
+        // Move around within the patrol area while idle
+        if (!isChasing)
+        {
+            Patrol();
+            // Flip the sprite based on movement direction
+            FlipSprite(patrolTarget - transform.position);
         }
         else
         {
-
-
-            if (currentPoint == pointB.transform)
-            {
-                rb.velocity = new Vector2(walkingSpeed, 0);
-            }
-            else
-            {
-                rb.velocity = new Vector2(-walkingSpeed, 0);
-            }
-
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
-            {
-                Flip();
-                currentPoint = pointA.transform;
-            }
-
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
-            {
-                Flip();
-                currentPoint = pointB.transform;
-            }
+            // Flip the sprite based on movement direction during chase
+            FlipSprite(player.position - transform.position);
         }
     }
 
-    private void Flip() //flips the sprite
+    void StartChase()
     {
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1;
-        transform.localScale = localScale;
-    }
+        Debug.Log("Chasing player!");
+        isChasing = true;
 
-    private void OnDrawGizmos() //draw range around the object in editor
-    {
-        Gizmos.DrawWireSphere(pointA.transform.position, 0.5f);
-        Gizmos.DrawWireSphere(pointB.transform.position, 0.5f);
-        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(this.transform.position, detectRange);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision) //apply damage to player when they touch the guy
-    {
-        if (collision.gameObject.tag == "Player")
+        // Activate shield periodically during the chase
+        if (!isShieldActive && Time.time > shieldCooldownTimer)
         {
-            GetComponent<PlayerHealth>().TakeDamage(10);
+            ActivateShield();
         }
     }
 
-    private IEnumerator ActivateShield() //shield function
+    void StopChase()
     {
-        shieldUp = true;
+        Debug.Log("Stopping chase!");
+        isChasing = false;
+    }
 
-        if(shieldUp)
+    void ActivateShield()
+    {
+        Debug.Log("Shield activated!");
+        isShieldActive = true;
+
+        // Reset shield cooldown timer
+        shieldCooldownTimer = Time.time + shieldCooldown;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (isShieldActive)
         {
-            GetComponent<EnemyHealth>().addShield();
+            // If the shield is active, deduct damage from the shield
+            shieldHealth -= damage;
+
+            // If the shield is broken, deactivate it
+            if (shieldHealth <= 0)
+            {
+                DeactivateShield();
+            }
         }
+        else
+        {
+            // If the shield is not active, deduct damage from the enemy's health
+            currentHealth -= damage;
 
-        yield return new WaitForSeconds(10);
-        
-        shieldUp = false;
+            // Check if the enemy is defeated
+            if (currentHealth <= 0)
+            {
+                DefeatEnemy();
+            }
+        }
+    }
 
-        
-        yield return new WaitForSeconds(shieldCooldown);
+    void DeactivateShield()
+    {
+        Debug.Log("Shield deactivated!");
+        isShieldActive = false;
+        shieldHealth = 60; // Reset shield health for the next use
+    }
+
+    void DefeatEnemy()
+    {
+        Debug.Log("Enemy defeated!");
+        // Implement any actions you want to take when the enemy is defeated
+        Destroy(gameObject);
+    }
+
+    Vector3 GetRandomPointInPatrolArea()
+    {
+        // Get a random point within the patrol area
+        Vector3 randomDirection = Random.insideUnitSphere * patrolDistance;
+        randomDirection += startPosition;
+        return randomDirection;
+    }
+
+    void Patrol()
+    {
+        // Move towards the patrol target
+        transform.position = Vector3.MoveTowards(transform.position, patrolTarget, idleSpeed * Time.deltaTime);
+
+        // If reached the patrol target, get a new random target
+        if (Vector3.Distance(transform.position, patrolTarget) < 0.1f)
+        {
+            patrolTarget = GetRandomPointInPatrolArea();
+        }
+    }
+
+    void FlipSprite(Vector3 direction)
+    {
+        // Flip the sprite based on the direction
+        if (direction.x > 0)
+        {
+            // Moving right
+            spriteRenderer.flipX = false;
+        }
+        else if (direction.x < 0)
+        {
+            // Moving left
+            spriteRenderer.flipX = true;
+        }
     }
 }
