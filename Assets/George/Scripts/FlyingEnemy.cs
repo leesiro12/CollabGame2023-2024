@@ -81,7 +81,7 @@ public class FlyingEnemy : MonoBehaviour
         if (script != null)
         {
             // if rushing, stop
-            if(isRushing)
+            if (isRushing)
             {
                 isRushing = false;
                 StopCoroutine(rushCoroutine);
@@ -108,7 +108,7 @@ public class FlyingEnemy : MonoBehaviour
         // record that enemy is patrolling
         isPatrolling = true;
 
-        while(isPatrolling)
+        while (isPatrolling)
         {
             // add velocity towards the next patrol point
             rb.velocity = patrolSpeed * Vector3.Normalize(currentPoint.position - transform.position);
@@ -117,7 +117,7 @@ public class FlyingEnemy : MonoBehaviour
             if (Mathf.Abs((currentPoint.position - transform.position).magnitude) <= 0.5f)
             {
                 // switch patrol point
-                if(currentPoint == pointA)
+                if (currentPoint == pointA)
                 {
                     currentPoint = pointB;
                 }
@@ -131,13 +131,13 @@ public class FlyingEnemy : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        rb.velocity = new Vector3 (0, 0, 0);
+        rb.velocity = new Vector3(0, 0, 0);
         yield return null;
     }
 
     IEnumerator RushPlayer(Collider2D playerColl)
     {
-        while(isRushing)
+        while (isRushing)
         {
             // make sure the enemy is facing towards the player
             if ((playerColl.transform.position.x > transform.position.x && transform.localScale.x < 0) || (playerColl.transform.position.x < transform.position.x && transform.localScale.x > 0))
@@ -191,7 +191,7 @@ public class FlyingEnemy : MonoBehaviour
         HealthScript healthScript = collision.gameObject.GetComponent<HealthScript>();
 
         // if found
-        if(healthScript != null)
+        if (healthScript != null)
         {
             // apply damage
             healthScript.TakeDamage(damageAmount);

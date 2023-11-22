@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ChargeEnemy : MonoBehaviour
 {
-    // defines time between attacks
-    [SerializeField] private float attackCooldown = 1.5f;
-    // will hold reference to attack coroutine
-    private Coroutine attackCoroutine;
+    //// defines time between attacks
+    //[SerializeField] private float attackCooldown = 1.5f;
+    //// will hold reference to attack coroutine
+    //private Coroutine attackCoroutine;
 
     // reference to rb
     Rigidbody2D rb;
@@ -18,13 +18,16 @@ public class ChargeEnemy : MonoBehaviour
     // how long the player will have double damage form the start of the charge
     [SerializeField] private float chargeLength = 1.0f;
 
-    // if touching player
-    private bool inContact = false;
+    //// if touching player
+    //private bool inContact = false;
+
     // if enemy is dashing
     private bool isCharging = false;
 
     // holds reference to warning sign object
     private GameObject warning;
+
+    private float knockForce = 300f;
 
 
     private void Start()
@@ -65,12 +68,12 @@ public class ChargeEnemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(chargeCoroutine != null)
+        if (chargeCoroutine != null)
         {
             StopCoroutine(chargeCoroutine);
         }
 
-        inContact = false;
+        //inContact = false;
         warning.SetActive(false);
     }
 
@@ -83,23 +86,18 @@ public class ChargeEnemy : MonoBehaviour
         // if health script found
         if (script != null)
         {
-            inContact = true;
+            //inContact = true;
 
             if (isCharging)
             {
                 // apply double damage
                 script.TakeDamage(20);
-                Debug.Log("dealt 20 damage");
-            }
-            else
-            {
-                // apply damage
-                script.TakeDamage(10);
-                Debug.Log("dealt 10 damage");
+
+                StartCoroutine(Knockback(collision));
             }
 
-            // start coroutine for timed attack and hold reference in coroutine variable
-            attackCoroutine = StartCoroutine(TimedAttack(collision));
+            //// start coroutine for timed attack and hold reference in coroutine variable
+            //attackCoroutine = StartCoroutine(TimedAttack(collision));
         }
     }
 
@@ -107,13 +105,13 @@ public class ChargeEnemy : MonoBehaviour
     // when overlap ends
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (attackCoroutine != null)
-        { 
-            // stop the coroutine form running
-            StopCoroutine(attackCoroutine);
-        }
+        //if (attackCoroutine != null)
+        //{
+        //    // stop the coroutine form running
+        //    StopCoroutine(attackCoroutine);
+        //}
 
-        inContact = false;
+        //inContact = false;
         warning.SetActive(false);
     }
 
@@ -130,43 +128,43 @@ public class ChargeEnemy : MonoBehaviour
         }
     }
 
-    // apply damage at regular interval
-    IEnumerator TimedAttack(Collision2D collision)
-    {
+    //// apply damage at regular interval
+    //IEnumerator TimedAttack(Collision2D collision)
+    //{
 
-        // get health script
-        HealthScript script = collision.gameObject.GetComponent<HealthScript>();
-        // if health script found
-        if (script != null)
-        {
-            // keep looping while routine is active
-            while (true)
-            {
-                // delay
-                yield return new WaitForSeconds(attackCooldown);
+    //    // get health script
+    //    HealthScript script = collision.gameObject.GetComponent<HealthScript>();
+    //    // if health script found
+    //    if (script != null)
+    //    {
+    //        // keep looping while routine is active
+    //        while (true)
+    //        {
+    //            // delay
+    //            yield return new WaitForSeconds(attackCooldown);
 
-                script.TakeDamage(10);
+    //            script.TakeDamage(10);
 
-                Debug.Log("dealt 10 damage (repeat)");
-            }
-        }
-        else
-        {
-            // otherwise, stop coroutine
-            yield return null;
-        }
-    }
+    //            Debug.Log("dealt 10 damage (repeat)");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // otherwise, stop coroutine
+    //        yield return null;
+    //    }
+    //}
 
 
     // regularly charge player while they are in the trigger range
     IEnumerator ChargePlayer()
     {
         // keep looping until routine is stopped
-        while(true)
+        while (true)
         {
-            // while not touching, wait charge time, charge, wait cooldown time
-            if(!inContact)
-            {
+            //// while not touching, wait charge time, charge, wait cooldown time
+            //if (!inContact)
+            //{
                 // wait, apply warning, wait
                 yield return new WaitForSeconds(0.3f);
                 warning.SetActive(true);
@@ -184,12 +182,28 @@ public class ChargeEnemy : MonoBehaviour
                 isCharging = false;
 
                 yield return new WaitForSeconds(chargeCooldown - chargeLength);
-            }
-            else
-            {
-                // wait for contact to end without causing infinite loop
-                yield return new WaitForSeconds(0.1f);
-            }
-        }        
+            //}
+            //else
+            //{
+            //    // wait for contact to end without causing infinite loop
+            //    yield return new WaitForSeconds(0.1f);
+            //}
+        }
+    }
+
+    IEnumerator Knockback(Collision2D collision)
+    {
+        SimpleMovement movementScript = collision.gameObject.GetComponent<SimpleMovement>();
+
+        if (movementScript != null)
+        {
+            movementScript.SetKnocked(true);
+
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(transform.localScale.x * knockForce, 0, 0));
+
+            yield return new WaitForSeconds(0.3f);
+
+            movementScript.SetKnocked(false);
+        }
     }
 }
