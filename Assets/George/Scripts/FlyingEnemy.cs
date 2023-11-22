@@ -16,6 +16,8 @@ public class FlyingEnemy : MonoBehaviour
     private GameObject warning;
     // defines how forcefull the attack knockback is
     [SerializeField] private float knockForce = 300f;
+    // defines the length of the knockback
+    private float knockbackLength = 0.3f;
 
     // reference to rigidbody
     private Rigidbody2D rb;
