@@ -14,6 +14,8 @@ public class FlyingEnemy : MonoBehaviour
 
     // holds reference to warning sign object
     private GameObject warning;
+    // defines how forcefull the attack knockback is
+    [SerializeField] private float knockForce = 300f;
 
     // reference to rigidbody
     private Rigidbody2D rb;
@@ -27,6 +29,8 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeField] private float rushTime = 0.6f;
     // time between rushes
     [SerializeField] private float cooldown = 2;
+    // record time passed since last rush
+    private float elapsedTime;
 
     // the amount of damage the enemy will deal
     [SerializeField] private int damageAmount;
@@ -96,6 +100,25 @@ public class FlyingEnemy : MonoBehaviour
         }
     }
 
+    // when enemy comes into contact with the player
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // find health script
+        HealthScript healthScript = collision.gameObject.GetComponent<HealthScript>();
+
+        // if found
+        if (healthScript != null)
+        {
+            // apply damage
+            healthScript.TakeDamage(damageAmount);
+
+            // stop the current charge
+            elapsedTime = rushTime;
+
+            StartCoroutine(Knockback(collision));
+        }
+    }
+
     // change facing direction
     private void Flip()
     {
@@ -153,7 +176,7 @@ public class FlyingEnemy : MonoBehaviour
             warning.SetActive(false);
 
             // used to record time passed
-            float elapsedTime = 0.0f;
+            elapsedTime = 0.0f;
 
             // until the rush time has passed
             while (elapsedTime < rushTime)
@@ -184,17 +207,19 @@ public class FlyingEnemy : MonoBehaviour
     }
 
 
-    // when enemy comes into contact with the player
-    private void OnCollisionEnter2D(Collision2D collision)
+    IEnumerator Knockback(Collision2D collision)
     {
-        // find health script
-        HealthScript healthScript = collision.gameObject.GetComponent<HealthScript>();
+        SimpleMovement movementScript = collision.gameObject.GetComponent<SimpleMovement>();
 
-        // if found
-        if (healthScript != null)
+        if (movementScript != null)
         {
-            // apply damage
-            healthScript.TakeDamage(damageAmount);
+            movementScript.SetKnocked(true);
+
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(transform.localScale.x * knockForce, 0, 0));
+
+            yield return new WaitForSeconds(0.3f);
+
+            movementScript.SetKnocked(false);
         }
     }
 }

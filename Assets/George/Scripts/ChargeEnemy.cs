@@ -26,7 +26,8 @@ public class ChargeEnemy : MonoBehaviour
 
     // holds reference to warning sign object
     private GameObject warning;
-
+    
+    // defines how forcefull the attack knockback is
     private float knockForce = 300f;
 
 
