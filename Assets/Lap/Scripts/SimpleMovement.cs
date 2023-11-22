@@ -26,8 +26,7 @@ public class SimpleMovement : MonoBehaviour
     private bool hasDoubleJumped;
 
     float moveDirection = 0.0f;
-
-    private float speed = 8f;
+    [SerializeField] private float speed = 8f;
     [SerializeField] public float jumpingPower;
     private bool isFacingRight = true;
 

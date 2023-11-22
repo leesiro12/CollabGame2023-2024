@@ -27,16 +27,16 @@ public class ProjectileScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // if the object has tag of Block
-        if(collision.CompareTag("Block"))
+        if (collision.CompareTag("Block"))
         {
             // destroy self
             Destroy(gameObject);
         }
-        
+
         // if the overlapped object has the EnemyHealth script
         if (collision.gameObject.GetComponent<EnemyHealth>() != null)
         {
-            if(!collision.isTrigger)
+            if (!collision.isTrigger)
             {
                 Debug.Log("hit enemy");
                 Debug.Log(collision);
