@@ -115,6 +115,7 @@ public class FlyingEnemy : MonoBehaviour
             // stop the current charge
             elapsedTime = rushTime;
 
+            // run coroutine to apply knockback to player
             StartCoroutine(Knockback(collision));
         }
     }
@@ -186,6 +187,7 @@ public class FlyingEnemy : MonoBehaviour
                 // add velocity towards the player
                 rb.velocity = rushSpeed * Vector3.Normalize(playerColl.transform.position - transform.position);
 
+                // prevent issues with while loop
                 yield return new WaitForEndOfFrame();
             }
 
@@ -199,6 +201,7 @@ public class FlyingEnemy : MonoBehaviour
                 // give the enemy no velocity
                 rb.velocity = new Vector3(0, 0, 0);
 
+                // prevent issues with while loop
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -207,18 +210,25 @@ public class FlyingEnemy : MonoBehaviour
     }
 
 
+    // apply knockback effect to hit player
     IEnumerator Knockback(Collision2D collision)
     {
+        // attempt to save ref to the player's movement script
         SimpleMovement movementScript = collision.gameObject.GetComponent<SimpleMovement>();
 
+        // if script found
         if (movementScript != null)
         {
+            // set marker in script to true, indicating the player is being knocked back
             movementScript.SetKnocked(true);
 
+            // apply froce to player, creating knockback effect
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(transform.localScale.x * knockForce, 0, 0));
 
-            yield return new WaitForSeconds(0.3f);
+            // wait for length of the knockback
+            yield return new WaitForSeconds(knockbackLength);
 
+            // set marker in script to false, indicating the player is no longer being knocked back
             movementScript.SetKnocked(false);
         }
     }
