@@ -18,6 +18,7 @@ public class SimpleMovement : MonoBehaviour
 
     private bool canDash = true;
     private bool isDashing = false;
+    private bool isKnocked = false;
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
@@ -73,7 +74,7 @@ public class SimpleMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isDashing)
+        if (!isDashing && !isKnocked)
         {
             rb.velocity = new Vector2(moveDirection * speed, rb.velocity.y);
         }
@@ -130,5 +131,10 @@ public class SimpleMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+    }
+
+    public void SetKnocked(bool knocked)
+    {
+        isKnocked = knocked;
     }
 }
