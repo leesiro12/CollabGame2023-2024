@@ -216,6 +216,11 @@ Transform:
   m_Father: {fileID: 1036285349}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &480904215 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7948362588804616204, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+  m_PrefabInstance: {fileID: 7948362589916900616}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &498241486
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &784998391
 Transform:
   m_ObjectHideFlags: 0
@@ -389,6 +394,7 @@ MonoBehaviour:
       m_Flags: 8
     m_Flags: 0
   tr: {fileID: 788532010}
+  speed: 8
   jumpingPower: 10
 --- !u!58 &788532004
 CircleCollider2D:
@@ -1135,10 +1141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e7277dd47276647a572e352eddc48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 20
   target: {fileID: 788532008}
   offset: {x: 0, y: 0, z: 0}
-  damping: 0.5
+  damping: 0.2
   FreeCamIsOn: 0
 --- !u!4 &1107309450
 Transform:
@@ -1329,6 +1335,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!4 &1429123277 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 670731528709171646, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+  m_PrefabInstance: {fileID: 7948362589916900616}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1589276249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,6 +1637,16 @@ Transform:
   m_Father: {fileID: 498241487}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1850463303 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8942243307808411186, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+  m_PrefabInstance: {fileID: 7948362589916900616}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1942592261 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7948362590207646251, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+  m_PrefabInstance: {fileID: 7948362589916900616}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2008555696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1834,14 +1855,58 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2907494757497475181, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: m_Radius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948362588804616203, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: m_Name
+      value: Control Point 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948362589061437313, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948362589061437325, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: m_Name
+      value: body
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: endPoint
+      value: 
+      objectReference: {fileID: 1850463303}
+    - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: startPoint
+      value: 
+      objectReference: {fileID: 1429123277}
     - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: detectRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: walkingSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: controlPoint1
+      value: 
+      objectReference: {fileID: 1942592261}
+    - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: controlPoint2
+      value: 
+      objectReference: {fileID: 480904215}
+    - target: {fileID: 7948362589061437327, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 788532008}
+    - target: {fileID: 7948362590207646250, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: m_Name
+      value: Control Point 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7948362590565553586, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
       propertyPath: m_Name
       value: JumpEnemy(Slerp version)
