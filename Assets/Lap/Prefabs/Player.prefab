@@ -77,6 +77,8 @@ GameObject:
   - component: {fileID: 9112827308158072982}
   - component: {fileID: 9112827308158072988}
   - component: {fileID: 9112827308158072991}
+  - component: {fileID: 6437615798691278851}
+  - component: {fileID: 6400927237234649358}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -215,6 +217,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   tr: {fileID: 0}
+  speed: 8
   jumpingPower: 10
 --- !u!114 &9112827308158072988
 MonoBehaviour:
@@ -445,6 +448,41 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &6437615798691278851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112827308158072983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd2b2705f85c4947a20a943c3b9cbe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  playerHealth: 0
+--- !u!114 &6400927237234649358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112827308158072983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd18aebe406915040a6c68da0d3919a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 0}
+  attackRange: 0.5
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  lightDamage: 10
+  heavyDamage: 20
+  projectile: {fileID: 4470001759152173979, guid: 08713adb313ab4043ae06f7b61c31a67, type: 3}
+  projectileSpeed: 10
 --- !u!1 &9112827308405278225
 GameObject:
   m_ObjectHideFlags: 0
