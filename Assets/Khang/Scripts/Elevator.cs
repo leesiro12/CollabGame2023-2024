@@ -12,12 +12,7 @@ public class Elevator : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Check if the object entering the trigger has the "Player" tag
-        if (other.CompareTag("Player") && !isActivated)
-        {
-            ActivateElevator();
-            
-        }
+        
     }
 
     void Update()
