@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 7948362589061437315}
   - component: {fileID: 2907494757497475181}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -329,5 +329,5 @@ Transform:
   - {fileID: 670731528709171646}
   - {fileID: 8942243307808411186}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
