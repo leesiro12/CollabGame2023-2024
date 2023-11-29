@@ -47,8 +47,8 @@ public class SlerpMovement : MonoBehaviour
 
                 // Update Bezier curve points
                 startPoint.position = transform.position;
-                controlPoint1.position = transform.position + Vector3.up * 2f; // Adjust as needed
-                controlPoint2.position = other.transform.position + Vector3.up * 2f; // Adjust as needed
+                controlPoint1.position = transform.position + Vector3.up * 2f; 
+                controlPoint2.position = other.transform.position + Vector3.up * 2f; 
                 endPoint.position = other.transform.position;
 
                 attackCoroutine = StartCoroutine(ChargePlayer(startPoint.position, controlPoint1.position, controlPoint2.position, endPoint.position, 3f));
@@ -114,9 +114,9 @@ public class SlerpMovement : MonoBehaviour
     {
         if (attackCoroutine != null)
         {
-            Debug.Log("Player detected");
+            Debug.Log("Player is out of range.");
             // stop the coroutine form running
-            StopCoroutine(attackCoroutine);
+            //StopCoroutine(attackCoroutine);
         }
 
     }
@@ -159,28 +159,6 @@ public class SlerpMovement : MonoBehaviour
     
     IEnumerator ChargePlayer(Vector3 p0, Vector2 p1, Vector2 p2, Vector3 p3, float duration)
     {
-        //while (enemyPresent)
-        //{
-        //    yield return new WaitForSeconds(1f);
-
-        //    Vector3 a = Vector3.Lerp(p0, p1, t * Time.deltaTime);
-        //    Vector3 b = Vector3.Lerp(p1, p2, t * Time.deltaTime);
-        //    Vector3 c = Vector3.Lerp(p2, p3, t * Time.deltaTime);
-        //    Vector3 d = Vector3.Lerp(a, b, t * Time.deltaTime);
-        //    Vector3 e = Vector3.Lerp(b, c, t * Time.deltaTime);
-        //    transform.position = Vector3.Lerp(d, e, t * Time.deltaTime);
-
-
-
-       
-        //    Debug.Log("Is charging");
-
-        //    isCharging = true;
-        //    yield return new WaitForSeconds(3f);
-        //    isCharging = false;
-        //}
-
-        //attackCoroutine = null;
 
         float timeElapsed = 0f;
 
@@ -220,20 +198,7 @@ public class SlerpMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawWireSphere(leftLimit.transform.position, 0.5f);
-        //Gizmos.DrawWireSphere(rightLimit.transform.position, 0.5f);
-        //Gizmos.DrawLine(leftLimit.transform.position, rightLimit.transform.position);
-
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(this.transform.position, detectRange);
-
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(this.transform.position, attackRange);
-
-        //Gizmos.color = Color.cyan;        
-        //Gizmos.DrawWireSphere(leftLandingPoint, 0.5f);
-        //Gizmos.DrawWireSphere(rightLandingPoint, 0.5f);
-        //Gizmos.DrawLine(leftLandingPoint, rightLandingPoint);
+        
 
         Gizmos.color = Color.green;
         //Gizmos.DrawWireSphere(leftUpperPoint, 0.5f);
