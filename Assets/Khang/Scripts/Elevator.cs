@@ -10,16 +10,19 @@ public class Elevator : MonoBehaviour
 
     private bool isActivated = false;
 
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        // Check if the player presses the 'E' key to activate the elevator using the new Input System
-        if (Keyboard.current.eKey.wasPressedThisFrame && !isActivated)
+        // Check if the object entering the trigger has the "Player" tag
+        if (other.CompareTag("Player") && !isActivated)
         {
             ActivateElevator();
+            
         }
+    }
 
-        // Move the elevator towards the target position if activated
-        if (isActivated)
+    void Update()
+    {
+        if (Keyboard.current.eKey.wasPressedThisFrame && isActivated)
         {
             MoveElevator();
         }
