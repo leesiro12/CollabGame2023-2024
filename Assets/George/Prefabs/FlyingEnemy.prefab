@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4361088268844589175}
   - component: {fileID: 4361088268844589174}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PointA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4361088269115730722}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlyingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 4361088269373708011}
   - component: {fileID: 4361088269373708008}
   - component: {fileID: 4361088269373708009}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,6 +269,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 40
   currentHealth: 0
+  shieldHealth: 250
+  currentShieldHealth: 0
 --- !u!58 &4361088269373708008
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -299,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointA: {fileID: 4361088268844589175}
   pointB: {fileID: 4361088270025909988}
+  knockForce: 300
   patrolSpeed: 2
   chargeTime: 1
   rushSpeed: 12
@@ -315,7 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4361088270025909988}
   - component: {fileID: 4361088270025909991}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PointB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8936977111414204058}
   - component: {fileID: 9222714996137867255}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Warning
   m_TagString: Untagged
   m_Icon: {fileID: 0}

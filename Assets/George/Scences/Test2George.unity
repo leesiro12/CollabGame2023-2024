@@ -1098,6 +1098,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6400927237234649358, guid: 9afc39169e71160438ae082630025b05, type: 3}
+      propertyPath: attackPoint
+      value: 
+      objectReference: {fileID: 488934706}
+    - target: {fileID: 6400927237234649358, guid: 9afc39169e71160438ae082630025b05, type: 3}
+      propertyPath: attackRange
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9112827308158072982, guid: 9afc39169e71160438ae082630025b05, type: 3}
       propertyPath: tr
       value: 
@@ -1196,7 +1204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9112827308158072989, guid: 9afc39169e71160438ae082630025b05, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.479414
+      value: -3.92
       objectReference: {fileID: 0}
     - target: {fileID: 9112827308158072989, guid: 9afc39169e71160438ae082630025b05, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1390,45 +1398,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1172774461 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9112827308158072983, guid: 9afc39169e71160438ae082630025b05, type: 3}
-  m_PrefabInstance: {fileID: 866704260}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1172774467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1172774461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efd2b2705f85c4947a20a943c3b9cbe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  playerHealth: 0
---- !u!114 &1172774473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1172774461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd18aebe406915040a6c68da0d3919a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPoint: {fileID: 488934706}
-  attackRange: 0.5
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 256
-  lightDamage: 10
-  heavyDamage: 20
-  projectile: {fileID: 4470001759152173979, guid: 08713adb313ab4043ae06f7b61c31a67, type: 3}
 --- !u!1001 &1728427135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1451,7 +1420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4187368062521861029, guid: 8e475d152054c0546a86180462c51c86, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4187368062521861030, guid: 8e475d152054c0546a86180462c51c86, type: 3}
       propertyPath: m_RootOrder
@@ -1517,8 +1486,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec17219052709f8418302cf0fb89b4ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 40
+  maxHealth: 80
   currentHealth: 0
+  shieldHealth: 250
+  currentShieldHealth: 0
 --- !u!1001 &4361088268641058789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1672,7 +1643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779293538073454157, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779293538073454157, guid: fde8d22375eac5747a30adbf8563f795, type: 3}
       propertyPath: m_TagString

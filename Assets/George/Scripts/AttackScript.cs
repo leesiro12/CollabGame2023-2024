@@ -15,7 +15,7 @@ public class AttackScript : MonoBehaviour
     // where to search from on attack
     public Transform attackPoint;
     // how far to search
-    public float attackRange = 0.5f;
+    public float attackRange = 1.5f;
     // which layers to search
     public LayerMask targetLayers;
 
@@ -23,7 +23,7 @@ public class AttackScript : MonoBehaviour
     [SerializeField] int lightDamage = 10;
     [SerializeField] int heavyDamage = 20;
 
-    // define how quickly the player can apply heavy attack
+    // define how quickly the player can apply heavy attack (keep as multiple of 0.1)
     private float timeForHeavy = 0.5f;
 
     // to hold references to input actions and map
@@ -76,22 +76,31 @@ public class AttackScript : MonoBehaviour
         // play attack animation
         // 
 
+
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
 
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
         {
-            switch (attackIsLight)
+            if (enemy.isTrigger)
             {
-            // true refers to light attack
-            case true:
-                enemy.GetComponent<PlayerHealth>().TakeDamage(lightDamage);
                 break;
-            // false refers to a heavy attack
-            case false:
-                    enemy.GetComponent<PlayerHealth>().TakeDamage(heavyDamage);
-                break;
+            }
+
+            if ((transform.position - enemy.transform.position).magnitude <= attackRange)
+            {
+                switch (attackIsLight)
+                {
+                    // true refers to light attack
+                    case true:
+                        enemy.GetComponent<EnemyHealth>().TakeDamage(lightDamage);
+                        break;
+                    // false refers to a heavy attack
+                    case false:
+                        enemy.GetComponent<EnemyHealth>().TakeDamage(heavyDamage);
+                        break;
+                }
             }
         }
     }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4779293538073454152}
   - component: {fileID: 4779293538073454154}
   - component: {fileID: 4509761564447281396}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ChargeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  shieldHealth: 250
+  currentShieldHealth: 0
 --- !u!58 &4779293538073454154
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -179,6 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0161af11b957c458bf32d4b4079494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chargeCooldown: 2
+  chargeLength: 1
 --- !u!1 &4779293538502162790
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4779293538502162791}
   - component: {fileID: 4779293538502162788}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Warning
   m_TagString: Untagged
   m_Icon: {fileID: 0}

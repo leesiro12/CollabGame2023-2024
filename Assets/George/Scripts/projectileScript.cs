@@ -38,8 +38,6 @@ public class ProjectileScript : MonoBehaviour
         {
             if (!collision.isTrigger)
             {
-                Debug.Log("hit enemy");
-                Debug.Log(collision);
                 // apply damage
                 collision.GetComponent<EnemyHealth>().TakeDamage(10);
                 Destroy(gameObject);
