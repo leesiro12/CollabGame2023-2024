@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 4187368062287634670}
   - component: {fileID: 4187368062287634669}
   - component: {fileID: 4187368062287634668}
+  - component: {fileID: 6204072853114478756}
   m_Layer: 0
   m_Name: enemySquare
   m_TagString: Untagged
@@ -183,9 +184,25 @@ MonoBehaviour:
   pointB: {fileID: 4187368063345996127}
   playerTransform: {fileID: 0}
   isChasing: 0
-  detechRange: 5
+  detectRange: 0
   chaseSpeed: 2
   attackRange: 2
+--- !u!114 &6204072853114478756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4187368062287634675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec17219052709f8418302cf0fb89b4ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  shieldHealth: 250
+  currentShieldHealth: 0
 --- !u!1 &4187368062521861029
 GameObject:
   m_ObjectHideFlags: 0
