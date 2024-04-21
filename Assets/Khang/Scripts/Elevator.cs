@@ -1,43 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Elevator : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Speed of the elevator
-    public Transform targetPosition; // Target position to move to when activated
+    //vars
+    public Transform player;
+    public Transform elevatorSwitch;
+    public Transform downpos;
+    public Transform upperpos;
 
-    private bool isActivated = false;
+    public float speed;
+    bool isDown;
 
-    void OnTriggerEnter(Collider other)
+
+
+    void Start()
     {
         
     }
 
+
     void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame && isActivated)
+        StartElevator();
+    }
+
+    void StartElevator()
+    {
+        if(Vector2.Distance(player.position, elevatorSwitch.position)<0.5f && Input.GetKeyDown("e")) //input and interact
         {
-            MoveElevator();
+            if(transform.position.y <= downpos.position.y)
+            {
+                isDown = true;
+            }
+            else if(transform.position.y >= upperpos.position.y)
+            {
+                isDown = false;
+            }
         }
-    }
 
-    void ActivateElevator()
-    {
-        Debug.Log("Elevator activated!");
-        isActivated = true;
-    }
-
-    void MoveElevator()
-    {
-        // Move the elevator towards the target position
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition.position, moveSpeed * Time.deltaTime);
-
-        // Check if the elevator has reached the target position
-        if (Vector3.Distance(transform.position, targetPosition.position) < 0.1f)
+        if(isDown)
         {
-            isActivated = false;
+            transform.position = Vector2.MoveTowards(transform.position, upperpos.position, speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, downpos.position, speed * Time.deltaTime);
         }
     }
 }
