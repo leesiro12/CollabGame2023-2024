@@ -19,7 +19,7 @@ public class DialogueLine
 [System.Serializable]
 public class Dialogue
 {
-    public List<DialogueLine> lines = new List<DialogueLine>();
+    public List<DialogueLine> dialogueLines = new List<DialogueLine>();
 }
 public class DialogueTrigger : MonoBehaviour
 {
@@ -34,6 +34,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision.tag == "Player") 
         {
+            
             TriggerDialogue();
         }
     }

@@ -12,45 +12,47 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI CharacterName;
     public TextMeshProUGUI dialogueArea;
     
-    private Queue<DialogueLine> lineQueue;
+    private Queue<DialogueLine> lines;
 
     public bool isDialogueActive = false;
 
-    public float typingSpeed = 2.0f;
+    public float typingSpeed = 0.2f;
 
     public Animator animator;
+
     private void Start()
     {
         if (Instance == null)
             Instance = this;
+        lines = new Queue<DialogueLine>();
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
         isDialogueActive = true;
         animator.Play("show");
-        lineQueue.Clear();
+        lines.Clear();
 
-        foreach (DialogueLine line in dialogue.lines)
+        foreach (DialogueLine dialogueLine in dialogue.dialogueLines)
         {
-            lineQueue.Enqueue(line);
-            
+            lines.Enqueue(dialogueLine);            
         }
         DisplayNextDialogue();
     }
 
     public void DisplayNextDialogue()
     {
-        if (lineQueue.Count == 0) 
+        if (lines.Count == 0) 
         {
             EndDialogue();
             return;
         }
 
-        DialogueLine currentLine = lineQueue.Dequeue();
+        DialogueLine currentLine = lines.Dequeue();
 
         characterSprite.sprite = currentLine.character.sprite;
-        CharacterName.name = currentLine.character.name;
+        CharacterName.text = currentLine.character.name;
+        
 
         StopAllCoroutines();
 
@@ -62,7 +64,7 @@ public class DialogueManager : MonoBehaviour
         dialogueArea.text = "";
         foreach (char letter in dialogueLine.textLine.ToCharArray())
         {
-            dialogueArea.text += ;
+            dialogueArea.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }        
     }
@@ -70,6 +72,6 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         isDialogueActive = false;
-        animator.PLay("hide");
+        animator.Play("hide");
     }
 }
