@@ -79,6 +79,8 @@ GameObject:
   - component: {fileID: 9112827308158072991}
   - component: {fileID: 6437615798691278851}
   - component: {fileID: 6400927237234649358}
+  - component: {fileID: 7442570340812103456}
+  - component: {fileID: 6870927987286479669}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -483,6 +485,31 @@ MonoBehaviour:
   heavyDamage: 20
   projectile: {fileID: 4470001759152173979, guid: 08713adb313ab4043ae06f7b61c31a67, type: 3}
   projectileSpeed: 10
+--- !u!114 &7442570340812103456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112827308158072983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8635a92299480124aa9c163b2e998d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6870927987286479669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112827308158072983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491e76ed49b02b54c9664f14c3c04428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
 --- !u!1 &9112827308405278225
 GameObject:
   m_ObjectHideFlags: 0

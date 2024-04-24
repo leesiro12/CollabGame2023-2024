@@ -39,6 +39,7 @@ public class SimpleMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        tr.emitting = false;
 
         JumpAction = playerControls.Player.Jump;
         JumpAction.Enable();
