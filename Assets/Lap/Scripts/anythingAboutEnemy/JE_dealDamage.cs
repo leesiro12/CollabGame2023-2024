@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
-    bool isAttacking = false;
-    float AtkLenght;
+    //bool isAttacking = false;
+    //float AtkLenght;
     public HealthScript HSRef;
     public GameObject damageZonePrefab;
 
