@@ -35,6 +35,7 @@ public class SimpleMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerControls = new PlayerInputActions();
+        tr = GetComponent<TrailRenderer>();
     }
 
     private void OnEnable()
@@ -56,6 +57,7 @@ public class SimpleMovement : MonoBehaviour
     {
         HorizontalMove.Disable();
         JumpAction.Disable();
+        DashAction.Disable();
     }
 
     // Update is called once per frame

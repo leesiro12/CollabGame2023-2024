@@ -218,7 +218,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  tr: {fileID: 0}
+  tr: {fileID: 9112827308158072991}
   speed: 8
   jumpingPower: 10
 --- !u!114 &9112827308158072988
