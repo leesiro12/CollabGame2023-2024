@@ -6,7 +6,10 @@ using UnityEngine;
 public class DialogueCharacter
 {
     public string name; public Sprite sprite;
+    
 }
+
+
 
 [System.Serializable]
 public class DialogueLine
@@ -24,7 +27,7 @@ public class Dialogue
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
-
+    public bool canActivateDialogue = false;
     public void TriggerDialogue()
     {
         DialogueManager.Instance.StartDialogue(dialogue);
@@ -34,8 +37,11 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision.tag == "Player") 
         {
+            if (canActivateDialogue == true)
+            {
+                TriggerDialogue();
+            }
             
-            TriggerDialogue();
         }
     }
 }
