@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class PlayerLevelControl : MonoBehaviour
     // to hold references to input actions and map
     public PlayerInputActions playerControls;
     private InputAction pause;
+    private InputAction interact;
 
     [SerializeField] private Canvas pauseMenu;
 
@@ -25,11 +27,18 @@ public class PlayerLevelControl : MonoBehaviour
         pause = playerControls.Player.Pause;
         pause.Enable();
         pause.performed += OnPause;
+
+        interact = playerControls.Player.Interact;
+        interact.Enable();
+        interact.performed += OnInteract;
     }
+
+    
 
     private void OnDisable()
     {
         pause.Disable();
+        interact.Disable();
     }
 
     private void Start()
@@ -46,5 +55,10 @@ public class PlayerLevelControl : MonoBehaviour
         {
             menuScript.OnPause();
         }
+    }
+
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        //interaction happened
     }
 }
