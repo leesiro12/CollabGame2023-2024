@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 6870927987286479669}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,8 +142,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 205285295
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -216,7 +216,31 @@ MonoBehaviour:
     m_Id: 4a0ebf12-181b-402e-bc4c-06c062af7433
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings: []
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: 11d0312b-4e25-4cda-bff2-efa1ef08ed15
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal Move
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: a4a87f96-4299-4f0d-8731-42bda2a81c16
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal Move
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 6fe2720d-78bb-44ae-a746-8ea6bd31ae14
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal Move
+      m_Flags: 8
     m_Flags: 0
   tr: {fileID: 9112827308158072991}
   speed: 8
@@ -378,8 +402,8 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 205285295
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Time: 0.5
   m_Parameters:
@@ -476,8 +500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd18aebe406915040a6c68da0d3919a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 0}
-  attackRange: 0.5
+  attackPoint: {fileID: 9112827308985015791}
+  attackRange: 1
   targetLayers:
     serializedVersion: 2
     m_Bits: 256

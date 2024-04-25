@@ -138,6 +138,8 @@ public class PauseMenu : MonoBehaviour
             else
             {
                 Time.timeScale = 1.0f;
+                // reset current check point to the default check point
+                PlayerManager.lastCheckPointPos = PlayerManager.defaultCheckPointPos;
                 SceneManager.LoadScene(1);
             }
         }
@@ -161,6 +163,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Time.timeScale = 1.0f;
                 //restart from checkpoint
+                SceneManager.LoadScene(1);
             }
         }
     }
