@@ -1,34 +1,77 @@
+using DG.Tweening;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class ChargeEnemy : MonoBehaviour
 {
     // reference to rb
     Rigidbody2D rb;
+
     // defines time between charges
     [SerializeField] private float chargeCooldown = 2.0f;
     // will hold reference to charge coroutine
-    private Coroutine chargeCoroutine;
+    private Coroutine chargeCoroutine = null;
     // how long the player will have double damage form the start of the charge
     [SerializeField] private float chargeLength = 1.0f;
+    // determines the force with which the enemy will charge
+    [SerializeField] private float chargeStrength = 80.0f;
 
     // if enemy is dashing
     private bool isCharging = false;
 
     // holds reference to warning sign object
     private GameObject warning;
-    
-    // defines how forcefull the attack knockback is
+
+    // transforms for patrol points and variable hold current point enemy is moving to
+    [SerializeField] private Transform pointA;
+    [SerializeField] private Transform pointB;
+    [SerializeField] private Transform currentPoint;
+    // track if enemy is/should patrol
+    private bool isPatrolling;
+    // reference to enemy movement speed while patrolling
+    [SerializeField] private float patrolSpeed = 2;
+
+    // defines how forceful the attack knockback is
     private float knockForce = 300f;
     // defines the length of the knockback
-    private float knockbackLength = 0.3f;
+    private float knockbackLength = 0.3f;    
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        warning = transform.GetChild(0).gameObject;
+
+        Transform[] childrenTransforms = transform.parent.GetComponentsInChildren<Transform>();
+
+        // find the warning UI object and save to warning variable
+        // also find and save patrol points
+        for (int i = 0; i < childrenTransforms.Length; i++)
+        {
+            if (childrenTransforms[i].gameObject.layer == LayerMask.NameToLayer("UI"))
+            {
+                warning = childrenTransforms[i].gameObject;
+                warning.SetActive(false);
+            }
+            else if (childrenTransforms[i].gameObject.layer != LayerMask.NameToLayer("Enemies"))
+            {
+                if (pointA == null)
+                {
+                    pointA = childrenTransforms[i];
+                }
+                else if (pointB == null)
+                {
+                    pointB = childrenTransforms[i];
+                }
+            }
+        }
+
+        currentPoint = pointA;
+
+        // makes enemy start patrolling at beginning of game
+        StartCoroutine(StartPatrol());
     }
 
 
@@ -41,8 +84,17 @@ public class ChargeEnemy : MonoBehaviour
         // if health script found
         if (script != null)
         {
-            // start charging the enemy
-            chargeCoroutine = StartCoroutine(ChargePlayer());
+            // stop patrolling
+            if(isPatrolling)
+            {
+                isPatrolling = false;
+            }
+
+            if (chargeCoroutine == null)
+            {
+                // start charging the enemy
+                chargeCoroutine = StartCoroutine(ChargePlayer());
+            }
             // make sure enemy is facing player
             UpdateDirection(collider);
         }
@@ -63,14 +115,30 @@ public class ChargeEnemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (chargeCoroutine != null)
+        // get health script
+        HealthScript script = collision.gameObject.GetComponent<HealthScript>();
+        // if health script found
+        if (script != null)
         {
-            // start charging the player, at intervals
-            StopCoroutine(chargeCoroutine);
-        }
+            if (chargeCoroutine != null)
+            {
+                // start charging the player, at intervals
+                StopCoroutine(chargeCoroutine);
+                chargeCoroutine = null;
+                isCharging = false;
+            }
 
-        //inContact = false;
-        warning.SetActive(false);
+            if (warning)
+            {
+                warning.SetActive(false);
+            }
+
+            // if not patrolling, start
+            if (!isPatrolling)
+            {
+                StartCoroutine(StartPatrol());
+            }
+        }
     }
 
 
@@ -98,8 +166,10 @@ public class ChargeEnemy : MonoBehaviour
     // when overlap ends
     private void OnCollisionExit2D(Collision2D collision)
     {
-        //inContact = false;
-        warning.SetActive(false);
+        if(warning)
+        {
+            warning.SetActive(false);
+        }
     }
 
 
@@ -108,10 +178,7 @@ public class ChargeEnemy : MonoBehaviour
         // if facing the wrong way
         if ((collider.transform.position.x > transform.position.x && transform.localScale.x < 0) || (collider.transform.position.x < transform.position.x && transform.localScale.x > 0))
         {
-            // flip x scale
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1;
-            transform.localScale = localScale;
+            Flip();
         }
     }
 
@@ -124,19 +191,33 @@ public class ChargeEnemy : MonoBehaviour
         {
             // wait, apply warning, wait
             yield return new WaitForSeconds(0.3f);
-            warning.SetActive(true);
+            if (warning)
+            {
+                warning.SetActive(true);
+            }
             yield return new WaitForSeconds(0.7f);
 
             // start charge
-            rb.velocity = new Vector2(transform.localScale.x * 10, 0f);
+            rb.AddForce(new Vector2(transform.localScale.x * chargeStrength, 0));
+
+            //// make sure the enemy is facing towards the player
+            //if (rb.velocity.x > 0.0f && transform.localScale.x < 0 || rb.velocity.x < 0.0f && transform.localScale.x > 0)
+            //{
+            //    Flip();
+            //}
 
             // remove warning
-            warning.SetActive(false);
+            if (warning)
+            {
+                warning.SetActive(false);
+            }
 
             // make isCharging true for a short time
             isCharging = true;
             yield return new WaitForSeconds(chargeLength);
             isCharging = false;
+
+            rb.velocity = new Vector3(0, 0, 0);
 
             yield return new WaitForSeconds(chargeCooldown - chargeLength);
         }
@@ -163,5 +244,41 @@ public class ChargeEnemy : MonoBehaviour
             // set marker in script to false, indicating the player is no longer being knocked back
             movementScript.SetKnocked(false);
         }
+    }
+
+    IEnumerator StartPatrol()
+    {
+        // record that enemy is patrolling
+        isPatrolling = true;
+
+        while (isPatrolling)
+        {
+            rb.AddForce(new Vector2((currentPoint.position - transform.position).normalized.x * patrolSpeed,0.0f));
+
+            // if enemy has passed patrol point, change point
+            if (currentPoint.position.x > transform.position.x && currentPoint == pointA)
+            {
+                currentPoint = pointB;
+                Flip();
+            }
+            else if (currentPoint.position.x < transform.position.x && currentPoint == pointB)
+            {
+                Flip();
+                currentPoint = pointA;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb.velocity = new Vector3(0, 0, 0);
+        yield return null;
+    }
+
+    // change facing direction
+    private void Flip()
+    {
+        Debug.Log("flip");
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        return;
     }
 }
