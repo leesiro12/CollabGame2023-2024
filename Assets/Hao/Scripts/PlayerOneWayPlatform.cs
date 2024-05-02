@@ -10,13 +10,13 @@ public class PlayerOneWayPlatform : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        //{
-        //    if (currentOneWayPlatform != null)
-        //    {
-        //        StartCoroutine(DisableCollision());
-        //    }
-        //}
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (currentOneWayPlatform != null)
+            {
+                StartCoroutine(DisableCollision());
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -13,6 +13,7 @@ public class SimpleMovement : MonoBehaviour
 
     public PlayerInputActions playerControls;
     public InputAction HorizontalMove;
+    public InputAction VerticalMove;
     private InputAction JumpAction;
     private InputAction DashAction;
 
@@ -31,6 +32,9 @@ public class SimpleMovement : MonoBehaviour
     [SerializeField] public float jumpingPower;
     private bool isFacingRight = true;
 
+    [SerializeField] private GameObject currentOneWayPlatform;
+    [SerializeField] private BoxCollider2D playerCollider;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -48,6 +52,11 @@ public class SimpleMovement : MonoBehaviour
 
         HorizontalMove.Enable();
 
+        VerticalMove = playerControls.Player.OneWayPlat;
+        VerticalMove.Enable();
+        VerticalMove.performed += OneWayDown;
+
+
         DashAction = playerControls.Player.Dash;
         DashAction.Enable();
         DashAction.performed += Dash;
@@ -58,6 +67,7 @@ public class SimpleMovement : MonoBehaviour
         HorizontalMove.Disable();
         JumpAction.Disable();
         DashAction.Disable();
+        VerticalMove.Disable();
     }
 
     // Update is called once per frame
@@ -75,6 +85,36 @@ public class SimpleMovement : MonoBehaviour
         }
     }
 
+    public void OneWayDown(InputAction.CallbackContext context)
+    {
+        if (currentOneWayPlatform != null)
+        {
+            StartCoroutine(DisableCollision());
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("OneWayPlatform"))
+        {
+            currentOneWayPlatform = collision.gameObject;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        currentOneWayPlatform = null;
+    }
+
+    private IEnumerator DisableCollision()
+    {
+        BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
+
+        Physics2D.IgnoreCollision(playerCollider, platformCollider);
+        yield return new WaitForSeconds(0.5f);
+        Physics2D.IgnoreCollision(platformCollider, platformCollider, false);
+    }
+
     private void FixedUpdate()
     {
         if (!isDashing && !isKnocked)
@@ -82,7 +122,6 @@ public class SimpleMovement : MonoBehaviour
             rb.velocity = new Vector2(moveDirection * speed, rb.velocity.y);
         }
     }
-
 
     public void Jump(InputAction.CallbackContext context)
     {
