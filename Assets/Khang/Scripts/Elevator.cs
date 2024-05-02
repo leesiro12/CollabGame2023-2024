@@ -23,12 +23,12 @@ public class Elevator : MonoBehaviour
 
     void Update()
     {
-        StartElevator();
+        
     }
 
     void StartElevator()
     {
-        if(Vector2.Distance(player.position, elevatorSwitch.position)<0.5f && Input.GetKeyDown("e")) //input and interact
+        if(Vector2.Distance(player.position, elevatorSwitch.position)<0.5f) //input and interact
         {
             if(transform.position.y <= downpos.position.y)
             {
