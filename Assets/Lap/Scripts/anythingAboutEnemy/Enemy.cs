@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
         
         if ((Vector2.Distance(transform.position, playerTransform.position) > detectRange))
             {
-            isChasing = false;
+                isChasing = false;
             }
         if (Vector2.Distance(transform.position, playerTransform.position) < detectRange)
             {
@@ -53,8 +53,6 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-
-
             // move towards next point
             if ((currentPoint.position - transform.position).x < 0.0f)
             {

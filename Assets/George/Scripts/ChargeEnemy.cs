@@ -236,7 +236,7 @@ public class ChargeEnemy : MonoBehaviour
             // set marker in script to true, indicating the player is being knocked back
             movementScript.SetKnocked(true);
 
-            // apply froce to player, creating knockback effect
+            // apply force to player, creating knockback effect
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(transform.localScale.x * knockForce, 0, 0));
 
             // wait for length of the knockback
