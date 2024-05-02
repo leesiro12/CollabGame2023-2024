@@ -402,7 +402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8936977111414204058}
   - component: {fileID: 9222714996137867255}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Warning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
