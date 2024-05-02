@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 4187368062287634664}
   - component: {fileID: 4187368062287634671}
   - component: {fileID: 4187368062287634670}
-  - component: {fileID: 4187368062287634669}
   - component: {fileID: 4187368062287634668}
   - component: {fileID: 6204072853114478756}
+  - component: {fileID: 4480136157242614735}
   m_Layer: 0
   m_Name: enemySquare
   m_TagString: Untagged
@@ -140,32 +140,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &4187368062287634669
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4187368062287634675}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &4187368062287634668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +177,22 @@ MonoBehaviour:
   currentHealth: 0
   shieldHealth: 250
   currentShieldHealth: 0
+--- !u!58 &4480136157242614735
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4187368062287634675}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &4187368062521861029
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +225,7 @@ Transform:
   - {fileID: 4187368063345996120}
   - {fileID: 4187368062287634664}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4187368063345996127
 GameObject:

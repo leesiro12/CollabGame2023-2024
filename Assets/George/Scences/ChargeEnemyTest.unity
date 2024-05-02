@@ -6924,7 +6924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3198281984578038372, guid: 0c0186a5e6295264dae8316e7d0ba587, type: 3}
       propertyPath: patrolSpeed
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3198281984578038372, guid: 0c0186a5e6295264dae8316e7d0ba587, type: 3}
       propertyPath: chargeStrength
@@ -16783,7 +16783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3198281984578038372, guid: 0c0186a5e6295264dae8316e7d0ba587, type: 3}
       propertyPath: patrolSpeed
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3198281984578038372, guid: 0c0186a5e6295264dae8316e7d0ba587, type: 3}
       propertyPath: chargeStrength

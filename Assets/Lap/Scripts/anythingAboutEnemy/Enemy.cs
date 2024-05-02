@@ -52,25 +52,28 @@ public class Enemy : MonoBehaviour
             }
         }
         else
-        {               
+        {
 
-            
-            if (currentPoint == pointB.transform)
+
+            // move towards next point
+            if ((currentPoint.position - transform.position).x < 0.0f)
             {
-                rb.velocity = new Vector2(walkingSpeed, 0);
+                rb.velocity = new Vector2(-1 * walkingSpeed, rb.velocity.y);
+
             }
             else
             {
-                rb.velocity = new Vector2(-walkingSpeed, 0);
+                rb.velocity = new Vector2(walkingSpeed, rb.velocity.y);
+
             }
 
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
+            if (Mathf.Abs(currentPoint.position.x - transform.position.x) < 0.5f && currentPoint == pointB.transform)
             {
                 Flip();
                 currentPoint = pointA.transform;
             }
 
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
+            if (Mathf.Abs(currentPoint.position.x - transform.position.x) < 0.5f && currentPoint == pointA.transform)
             {
                 Flip();
                 currentPoint = pointB.transform;

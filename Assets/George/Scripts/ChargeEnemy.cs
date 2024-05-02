@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ChargeEnemy : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class ChargeEnemy : MonoBehaviour
     Rigidbody2D rb;
 
     // defines time between charges
-    [SerializeField] private float chargeCooldown = 2.0f;
+    [SerializeField] private float chargeCooldown = 2.5f;
     // will hold reference to charge coroutine
     private Coroutine chargeCoroutine = null;
     // how long the player will have double damage form the start of the charge
@@ -253,18 +254,28 @@ public class ChargeEnemy : MonoBehaviour
 
         while (isPatrolling)
         {
-            rb.AddForce(new Vector2((currentPoint.position - transform.position).normalized.x * patrolSpeed,0.0f));
+            // move towards next point
+            if ((currentPoint.position - transform.position).x < 0.0f)
+            {
+                rb.velocity = new Vector2(-1 * patrolSpeed, rb.velocity.y);
 
-            // if enemy has passed patrol point, change point
-            if (currentPoint.position.x > transform.position.x && currentPoint == pointA)
+            }
+            else
+            {
+                rb.velocity = new Vector2(patrolSpeed, rb.velocity.y);
+
+            }
+            
+            // if enemy has reached patrol point, change point
+            if (Mathf.Abs(currentPoint.position.x - transform.position.x) < 0.5f && currentPoint == pointA)
             {
                 currentPoint = pointB;
                 Flip();
             }
-            else if (currentPoint.position.x < transform.position.x && currentPoint == pointB)
+            else if (Mathf.Abs(currentPoint.position.x - transform.position.x) < 0.5f && currentPoint == pointB)
             {
-                Flip();
                 currentPoint = pointA;
+                Flip();
             }
 
             yield return new WaitForFixedUpdate();
