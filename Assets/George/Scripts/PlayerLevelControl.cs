@@ -87,6 +87,14 @@ public class PlayerLevelControl : MonoBehaviour
                 obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);               
 
             }
+
+            if (obj.gameObject.GetComponent<Elevator>())
+            {
+                Debug.Log("elevator");
+
+                obj.GetComponent<Elevator>().StartElevator();
+
+            }
         }
     }
 

@@ -26,7 +26,7 @@ public class Elevator : MonoBehaviour
         
     }
 
-    void StartElevator()
+    public void StartElevator()
     {
         if(Vector2.Distance(player.position, elevatorSwitch.position)<0.5f) //input and interact
         {

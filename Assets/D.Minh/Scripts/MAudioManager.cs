@@ -25,7 +25,7 @@ public class MAudioManager : MonoBehaviour
 
     public void PlaySFX(AudioClip audioClip, float volume, Transform transform)
     {
-        AudioSource audioSource = Instantiate(SFX, transform.position, Quaternion.identity);
+        //AudioSource audioSource = Instantiate(SFX, transform.position, Quaternion.identity);
     }
 
     public void StopSounds()
