@@ -32,7 +32,7 @@ Transform:
   - {fileID: 1427964983069737049}
   - {fileID: 612917328929168186}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1182145473060095046
 GameObject:
@@ -293,7 +293,8 @@ MonoBehaviour:
   chargeStrength: 200
   pointA: {fileID: 0}
   pointB: {fileID: 0}
-  patrolSpeed: 50
+  currentPoint: {fileID: 0}
+  patrolSpeed: 3
 --- !u!70 &6799192185491906045
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
