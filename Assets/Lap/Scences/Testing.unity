@@ -494,7 +494,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0002746582, y: -503}
+  m_AnchoredPosition: {x: -0.0002746582, y: -406}
   m_SizeDelta: {x: 510.23, y: 139.0762}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329324162
@@ -772,7 +772,8 @@ GameObject:
   - component: {fileID: 788532010}
   - component: {fileID: 788532011}
   - component: {fileID: 788532012}
-  m_Layer: 0
+  - component: {fileID: 788532013}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1049,6 +1050,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 8d4a2825-e295-4cdf-9640-74c4ba4022e3
     m_ActionName: Player/Block[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ec39bba-f76b-40dd-9a5a-35d44794d7d7
+    m_ActionName: Player/Pause[/Keyboard/p,/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1194,8 +1199,26 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.09, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &788532013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788532002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491e76ed49b02b54c9664f14c3c04428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactPoint: {fileID: 1589276250}
+  interactRange: 2
+  interactLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  pauseMenu: {fileID: 221752245}
 --- !u!1 &857190316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,9 +1745,9 @@ GameObject:
   - component: {fileID: 1227771868}
   - component: {fileID: 1227771870}
   - component: {fileID: 1227771871}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NPC_Example
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1813,11 +1836,11 @@ MonoBehaviour:
     - character:
         name: MAIN
         sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-      textLine: 'Yolooo '
+      textLine: Line 1
     - character:
         name: NPC
         sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-      textLine: nope
+      textLine: Line 2
 --- !u!61 &1227771871
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2037,7 +2060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -230, y: 104}
+  m_AnchoredPosition: {x: -230, y: 126}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1450895354

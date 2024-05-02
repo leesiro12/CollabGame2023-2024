@@ -75,7 +75,7 @@ public class AttackScript : MonoBehaviour
     private void MeleeAttack(bool attackIsLight)
     {
         // play attack animation
-        // 
+        
 
 
         // detect enemies
@@ -90,7 +90,6 @@ public class AttackScript : MonoBehaviour
             if (enemy.isTrigger)
             {
                 Debug.Log("isTrigger");
-
                 break;
             }
 

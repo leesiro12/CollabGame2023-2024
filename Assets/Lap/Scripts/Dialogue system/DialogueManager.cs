@@ -42,8 +42,9 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextDialogue()
     {
+        Debug.Log("line count: " + lines.Count);
         if (lines.Count == 0) 
-        {
+        {            
             EndDialogue();
             return;
         }
@@ -70,7 +71,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     void EndDialogue()
-    {
+    {    
         isDialogueActive = false;
         animator.Play("hide");
     }

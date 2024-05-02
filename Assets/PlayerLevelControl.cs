@@ -11,6 +11,12 @@ public class PlayerLevelControl : MonoBehaviour
     public PlayerInputActions playerControls;
     private InputAction pause;
     private InputAction interact;
+    private bool interactTriggered;
+    public Transform interactPoint;
+    public float interactRange;
+    public LayerMask interactLayers;
+
+    bool dialogueIsPlayed = false;
 
     [SerializeField] private Canvas pauseMenu;
 
@@ -59,6 +65,30 @@ public class PlayerLevelControl : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        //interaction happened
+        
+        interactTriggered = true;
+
+        Collider2D[] collideObject = Physics2D.OverlapCircleAll(interactPoint.position, interactRange, interactLayers);
+
+        foreach (Collider2D obj in collideObject)
+        {
+            Debug.Log("Interacting with " + obj.name);   
+            if (obj.isTrigger)
+            {
+                Debug.Log("is triggered");
+            }
+
+            
+
+            if (obj.gameObject.GetComponent<DialogueTrigger>())
+            {
+                Debug.Log("Can run dialogue!");
+                  
+                obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);               
+
+            }
+        }
     }
+
+   
 }

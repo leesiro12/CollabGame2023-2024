@@ -27,21 +27,21 @@ public class Dialogue
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
-    public bool canActivateDialogue = false;
-    public void TriggerDialogue()
+    
+    public void TriggerDialogue(bool dialogueIsPlaying)
     {
-        DialogueManager.Instance.StartDialogue(dialogue);
-    }
+        if (dialogue == null) Debug.Log(" Cannot found Dialogue");
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player") 
+        if (dialogueIsPlaying == true)
         {
-            if (canActivateDialogue == true)
-            {
-                TriggerDialogue();
-            }
+            DialogueManager.Instance.DisplayNextDialogue();
+        }
+        else if (dialogueIsPlaying == false)
+        {
+            DialogueManager.Instance.StartDialogue(dialogue);
             
         }
+
+
     }
 }
