@@ -33,7 +33,7 @@ public class SimpleMovement : MonoBehaviour
     private bool isFacingRight = true;
 
     [SerializeField] private GameObject currentOneWayPlatform;
-    [SerializeField] private BoxCollider2D playerCollider;
+    [SerializeField] private CapsuleCollider2D playerCollider;
 
     private void Awake()
     {
@@ -103,7 +103,10 @@ public class SimpleMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        currentOneWayPlatform = null;
+        if (collision.gameObject.CompareTag("OneWayPlatform"))
+        {
+            currentOneWayPlatform = null;
+        }
     }
 
     private IEnumerator DisableCollision()
@@ -111,8 +114,8 @@ public class SimpleMovement : MonoBehaviour
         BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
 
         Physics2D.IgnoreCollision(playerCollider, platformCollider);
-        yield return new WaitForSeconds(0.5f);
-        Physics2D.IgnoreCollision(platformCollider, platformCollider, false);
+        yield return new WaitForSeconds(0.25f);
+        Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
 
     private void FixedUpdate()
