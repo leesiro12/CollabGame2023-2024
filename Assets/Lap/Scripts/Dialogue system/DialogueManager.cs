@@ -48,9 +48,9 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
             return;
         }
-
+        
         DialogueLine currentLine = lines.Dequeue();
-
+        Debug.Log(currentLine);
         characterSprite.sprite = currentLine.character.sprite;
         CharacterName.text = currentLine.character.name;
         
@@ -75,4 +75,6 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = false;
         animator.Play("hide");
     }
+
+    
 }

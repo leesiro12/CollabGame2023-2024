@@ -482,19 +482,19 @@ RectTransform:
   m_GameObject: {fileID: 329324160}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6978125, y: 0.661537, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1450895353}
+  - {fileID: 2055838633}
   - {fileID: 633576780}
   - {fileID: 1793157679}
-  - {fileID: 2055838633}
   m_Father: {fileID: 221752246}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0002746582, y: -406}
+  m_AnchoredPosition: {x: 5, y: -283}
   m_SizeDelta: {x: 510.23, y: 139.0762}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329324162
@@ -736,7 +736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &784998391
 Transform:
   m_ObjectHideFlags: 0
@@ -829,9 +829,20 @@ MonoBehaviour:
       m_Action: Horizontal Move
       m_Flags: 8
     m_Flags: 0
+  VerticalMove:
+    m_Name: Vertical Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 950eb7bc-f45a-46f7-8d68-0ec007176d23
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   tr: {fileID: 788532010}
   speed: 8
   jumpingPower: 10
+  currentOneWayPlatform: {fileID: 0}
+  playerCollider: {fileID: 0}
 --- !u!58 &788532004
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1841,6 +1852,12 @@ MonoBehaviour:
         name: NPC
         sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
       textLine: Line 2
+    - character:
+        name: NPC
+        sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+      textLine: 'Line 3
+
+'
 --- !u!61 &1227771871
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1877,9 +1894,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1316452704}
   - component: {fileID: 1316452703}
-  - component: {fileID: 1316452702}
   - component: {fileID: 1316452701}
   - component: {fileID: 1316452705}
+  - component: {fileID: 1316452706}
   m_Layer: 0
   m_Name: Jump enemy
   m_TagString: Untagged
@@ -1908,25 +1925,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1316452702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1316452700}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b053a2c21d6a0a1489b7d4fbd126c1a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectRange: 2
-  jumpSpeed: 10
-  jumpHeight: 2
-  walkingSpeed: 3
-  pointA: {fileID: 289846243}
-  pointB: {fileID: 628373163}
-  aimPos: {fileID: 0}
 --- !u!212 &1316452703
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2020,6 +2018,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1316452706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316452700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72f22e68e264bd4c930e246d45769e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectRange: 5
+  jumpSpeed: 10
+  jumpHeight: 2
+  walkingSpeed: 3
+  pointA: {fileID: 628373163}
+  pointB: {fileID: 289846243}
+  aimPos: {fileID: 1316452704}
 --- !u!4 &1429123277 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 670731528709171646, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
@@ -2654,7 +2671,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -288.69763, w: -30.897385}
+  m_margin: {x: 0, y: -30.667583, z: -288.69763, w: -30.897385}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2848,7 +2865,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 178.6, y: -53.100098}
+  m_AnchoredPosition: {x: 175.2, y: 117.6}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2055838634
@@ -2874,9 +2891,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.20581815, g: 0.7264151, b: 0.12677999, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.9245283, g: 0.039248828, b: 0.039248828, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2895,18 +2912,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329324165}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: DisplayNextDialogue
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!114 &2055838635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3075,6 +3092,10 @@ PrefabInstance:
     - target: {fileID: 7948362590565553586, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
       propertyPath: m_Name
       value: JumpEnemy(Slerp version)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948362590565553586, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7948362590565553587, guid: 7e767e4b4612db148887f197f51a483e, type: 3}
       propertyPath: m_RootOrder

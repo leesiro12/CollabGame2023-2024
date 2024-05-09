@@ -42,10 +42,12 @@ public class Elevator : MonoBehaviour
 
         if(isDown)
         {
+            Debug.Log("Going up");
             transform.position = Vector2.MoveTowards(transform.position, upperpos.position, speed * Time.deltaTime);
         }
         else
         {
+            Debug.Log("Going Down");
             transform.position = Vector2.MoveTowards(transform.position, downpos.position, speed * Time.deltaTime);
         }
     }

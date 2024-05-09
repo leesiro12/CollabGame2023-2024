@@ -30,7 +30,7 @@ public class DialogueTrigger : MonoBehaviour
     
     public void TriggerDialogue(bool dialogueIsPlaying)
     {
-        if (dialogue == null) Debug.Log(" Cannot found Dialogue");
+        if (dialogue == null) Debug.Log("Cannot found Dialogue");
 
         if (dialogueIsPlaying == true)
         {
@@ -38,10 +38,8 @@ public class DialogueTrigger : MonoBehaviour
         }
         else if (dialogueIsPlaying == false)
         {
-            DialogueManager.Instance.StartDialogue(dialogue);
-            
+            DialogueManager.Instance.StartDialogue(dialogue);            
         }
-
-
+        
     }
 }

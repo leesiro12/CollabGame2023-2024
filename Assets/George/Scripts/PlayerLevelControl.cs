@@ -16,7 +16,7 @@ public class PlayerLevelControl : MonoBehaviour
     public float interactRange;
     public LayerMask interactLayers;
 
-    bool dialogueIsPlayed = false;
+    public static bool dialogueIsPlayed = false;
 
     [SerializeField] private Canvas pauseMenu;
 
@@ -83,17 +83,17 @@ public class PlayerLevelControl : MonoBehaviour
             if (obj.gameObject.GetComponent<DialogueTrigger>())
             {
                 Debug.Log("Can run dialogue!");
-                  
-                obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);               
-
+                if (dialogueIsPlayed == false)
+                {
+                    obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);
+                }
+                dialogueIsPlayed = true;
             }
 
             if (obj.gameObject.GetComponent<Elevator>())
             {
-                Debug.Log("elevator");
-
+                Debug.Log("Elevator detected");
                 obj.GetComponent<Elevator>().StartElevator();
-
             }
         }
     }

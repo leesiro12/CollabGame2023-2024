@@ -33,30 +33,28 @@ public class RabbitScript : MonoBehaviour
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= detectRange)
+        while (distanceToPlayer <= detectRange)
         {
+            StopCoroutine(PatrolAfterDelay());
             if (!isJumping)
             {
                 isJumping = true;
-
                 jumpCoroutine = StartCoroutine(JumpAfterDelay());
             }
         }
-        else
-        {
-            if (jumpCoroutine != null)
+        
+         if (jumpCoroutine != null)
             {
                 StopCoroutine(jumpCoroutine);
-
             }
-            StartCoroutine(PatrolAfterDelay());
-        }
+         StartCoroutine(PatrolAfterDelay());
+        
     }
 
     private IEnumerator JumpAfterDelay()
     {
         aimPos = player.transform;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         JumpToPlayer();
     }
 
@@ -86,25 +84,19 @@ public class RabbitScript : MonoBehaviour
         float verticalSpeed = Mathf.Sqrt(2f * jumpHeight * Physics2D.gravity.magnitude);
 
         GetComponent<Rigidbody2D>().velocity = new Vector2(horizontalSpeed, 6);
-
-        Invoke("FinishJumping", jumpDuration);
-
-        //rb2d.velocity = Vector2.up * jumpForce;
-        //rb2d.AddForce(new Vector2 ( , jumpForce) * 3000); Hao commented this line because it caused error
-        //lastJumpTime = Time.time;
-        Invoke("FinishJumping", 1f);
-    }
-
-    private void FinishJumping()
-    {
         isJumping = false;
     }
+
+    //private void FinishJumping()
+    //{
+    //    isJumping = false;
+    //}
 
     private void Patrol()
     {
         Vector2 point = currentPoint.position - transform.position;
 
-        if (currentPoint == pointB.transform)
+        if (currentPoint == pointB.transform )
         {
             rb.velocity = new Vector2(walkingSpeed, 0);
         }
@@ -132,15 +124,15 @@ public class RabbitScript : MonoBehaviour
         localScale.x *= -1;
         transform.localScale = localScale;
 
-        //else if (Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer))
-        //{
-        //    CanPatrol = true;
-        //    ResetJumping();
-        //} Hao commented this else if because it caused error
-
-
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isJumping = false;
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
