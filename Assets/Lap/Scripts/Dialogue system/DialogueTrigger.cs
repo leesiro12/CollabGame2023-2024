@@ -38,7 +38,8 @@ public class DialogueTrigger : MonoBehaviour
         }
         else if (dialogueIsPlaying == false)
         {
-            DialogueManager.Instance.StartDialogue(dialogue);            
+            DialogueManager.Instance.StartDialogue(dialogue);
+            dialogueIsPlaying = true;
         }
         
     }

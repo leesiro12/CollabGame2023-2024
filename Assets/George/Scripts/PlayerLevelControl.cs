@@ -86,8 +86,12 @@ public class PlayerLevelControl : MonoBehaviour
                 if (dialogueIsPlayed == false)
                 {
                     obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);
+                    dialogueIsPlayed = true;
                 }
-                dialogueIsPlayed = true;
+                else
+                {
+                    obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);                    
+                }                 
             }
 
             if (obj.gameObject.GetComponent<Elevator>())
