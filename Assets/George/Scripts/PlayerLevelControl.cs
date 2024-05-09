@@ -17,6 +17,7 @@ public class PlayerLevelControl : MonoBehaviour
     public LayerMask interactLayers;
 
     public static bool dialogueIsPlayed = false;
+    private bool elevatorIsMoving;
 
     [SerializeField] private Canvas pauseMenu;
 
@@ -97,10 +98,17 @@ public class PlayerLevelControl : MonoBehaviour
             if (obj.gameObject.GetComponent<Elevator>())
             {
                 Debug.Log("Elevator detected");
+                
+                //if (elevatorIsMoving == false)
+                //{
+                //    obj.GetComponent<Elevator>().StartElevator();
+
+                //}
                 obj.GetComponent<Elevator>().StartElevator();
+
+                //elevatorIsMoving = true;
+
             }
         }
     }
-
-   
 }

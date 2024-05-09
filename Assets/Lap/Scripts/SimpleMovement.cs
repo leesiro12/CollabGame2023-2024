@@ -20,7 +20,7 @@ public class SimpleMovement : MonoBehaviour
     private bool canDash = true;
     private bool isDashing = false;
     private bool isKnocked = false;
-    private float dashingPower = 24f;
+    private float dashingPower = 18f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
     [SerializeField] private TrailRenderer tr;
@@ -33,8 +33,9 @@ public class SimpleMovement : MonoBehaviour
     private bool isFacingRight = true;
 
     [SerializeField] private GameObject currentOneWayPlatform;
-    [SerializeField] private CapsuleCollider2D playerCollider;
+    [SerializeField] private BoxCollider2D playerCollider;
 
+    public Animator anim;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -74,14 +75,33 @@ public class SimpleMovement : MonoBehaviour
     void Update()
     {
         moveDirection = HorizontalMove.ReadValue<float>();
-
-        if (!isFacingRight && moveDirection > 0f)
+        //anim.Play("Run");
+        
+        if (moveDirection > 0f && IsGrounded())
         {
-            Flip();
+            if (!isFacingRight)
+            {
+                Flip();
+            }
+            anim.Play("Run");
         }
-        else if (isFacingRight && moveDirection < 0f)
+        if (moveDirection < 0f && IsGrounded())
         {
-            Flip();
+            if (isFacingRight)
+            {
+                Flip();
+            }
+
+            anim.Play("Run");
+        }
+        if( moveDirection == 0f && IsGrounded())
+        {
+            anim.Play("Idle");
+        }
+
+        if (!IsGrounded())
+        {
+            anim.Play("Jump");
         }
     }
 
@@ -132,6 +152,7 @@ public class SimpleMovement : MonoBehaviour
         {
             hasDoubleJumped = false;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            anim.Play("Jump");
         }
         else if (context.performed && !IsGrounded() && !hasDoubleJumped)
         {
@@ -168,7 +189,7 @@ public class SimpleMovement : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, rb.velocity.y);
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
