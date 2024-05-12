@@ -241,6 +241,7 @@ MonoBehaviour:
   jumpingPower: 12
   currentOneWayPlatform: {fileID: 0}
   playerCollider: {fileID: 7824743809671778258}
+  anim: {fileID: 0}
 --- !u!114 &9112827308158072988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,7 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd2b2705f85c4947a20a943c3b9cbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 5
   playerHealth: 0
 --- !u!114 &6400927237234649358
 MonoBehaviour:

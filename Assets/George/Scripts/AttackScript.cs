@@ -85,22 +85,16 @@ public class AttackScript : MonoBehaviour
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log("name: " + enemy.name);
 
             if (enemy.isTrigger)
             {
-                Debug.Log("isTrigger");
                 break;
             }
 
             if (enemy.GetComponent<EnemyHealth>())
             {
-                Debug.Log("has health script");
-
                 if ((transform.position - enemy.transform.position).magnitude <= attackRange)
                 {
-                    Debug.Log("within attack range");
-
                     switch (attackIsLight)
                     {
                         // true refers to light attack

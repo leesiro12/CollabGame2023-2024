@@ -35,7 +35,7 @@ public class DealDamage : MonoBehaviour
             if (script != null)
             { 
                 // apply damage
-                script.TakeDamage(10);
+                script.TakeDamage(1);
             }
             else
             {

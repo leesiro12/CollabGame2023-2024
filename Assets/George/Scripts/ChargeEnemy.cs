@@ -151,12 +151,10 @@ public class ChargeEnemy : MonoBehaviour
         // if health script found
         if (script != null)
         {
-            //inContact = true;
-
             if (isCharging)
             {
-                // apply double damage
-                script.TakeDamage(20);
+                // apply damage
+                script.TakeDamage(1);
 
                 // run coroutine to apply knockback to player
                 StartCoroutine(Knockback(collision));
@@ -288,7 +286,6 @@ public class ChargeEnemy : MonoBehaviour
     // change facing direction
     private void Flip()
     {
-        Debug.Log("flip");
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         return;
     }

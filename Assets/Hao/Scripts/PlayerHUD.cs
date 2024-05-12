@@ -1,19 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
-    public int health;
-    public int numOfHearts;
+    [SerializeField] private int health;
+    [SerializeField] private int numOfHearts;
 
-    public Image[] hearts;
-    public Sprite fullHeart;
-    public Sprite emptyHeart;
+    [SerializeField] private Image[] hearts;
+    [SerializeField] private Sprite fullHeart;
+    [SerializeField] private Sprite emptyHeart;
 
-    private void Update()
+    [SerializeField] private Image blackScreen;
+    [SerializeField] private float fadeSpeed;
+
+    private void Awake()
     {
+        hearts = GetComponentsInChildren<Image>();
+    }
+
+    private void OnEnable()
+    {
+        HealthScript.onHealthChange += HealthChange;
+        HealthScript.onPlayerDeath += PlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        HealthScript.onHealthChange -= HealthChange;
+        HealthScript.onPlayerDeath -= PlayerDeath;
+    }
+
+    private void HealthChange(int newHealth)
+    {
+        health = newHealth;
+
+        // cap health value to num of hearts
         if (health > numOfHearts)
         {
             health = numOfHearts;
@@ -21,6 +44,7 @@ public class PlayerHUD : MonoBehaviour
 
         for (int i = 0; i < hearts.Length; i++)
         {
+            // show full/empty heart according to health
             if (i < health)
             {
                 hearts[i].sprite = fullHeart;
@@ -30,14 +54,46 @@ public class PlayerHUD : MonoBehaviour
                 hearts[i].sprite = emptyHeart;
             }
 
-            if (i < numOfHearts)
+            // only show heart if within number of hearts limit
+            hearts[i].enabled = (i < numOfHearts);
+        }
+    }
+
+    private void PlayerDeath()
+    {
+        HealthChange(0);
+
+        StartCoroutine(FadeToBlack());
+        // any extra UI to display
+    }
+
+    // screen fade and slow time, then reload checkpoint
+    IEnumerator FadeToBlack()
+    {
+        float startTime = Time.realtimeSinceStartup;
+        if (blackScreen != null)
+        {
+            while (blackScreen.color.a < 1)
             {
-                hearts[i].enabled = true;
-            }
-            else
-            {
-                hearts[i].enabled = false;
+                float newAlpha = fadeSpeed * (Time.realtimeSinceStartup - startTime);
+                if (newAlpha > 1)
+                {
+                    newAlpha = 1;
+                }
+                else
+                {
+                    Time.timeScale = 1 - (newAlpha);
+                }
+                blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, newAlpha);
+                yield return null;
             }
         }
+
+        Time.timeScale = 1.0f;
+
+        yield return new WaitForSeconds(0.5f);
+
+        //restart from checkpoint
+        SceneManager.LoadScene(1);
     }
 }

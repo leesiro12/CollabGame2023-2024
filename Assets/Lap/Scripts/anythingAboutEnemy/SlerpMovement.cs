@@ -94,13 +94,13 @@ public class SlerpMovement : MonoBehaviour
             if (isCharging)
             {
                 // apply double damage
-                script.TakeDamage(20);
+                script.TakeDamage(2);
                 Debug.Log("dealt 20 damage");
             }
             else
             {
                 // apply damage
-                script.TakeDamage(10);
+                script.TakeDamage(1);
                 Debug.Log("dealt 10 damage");
             }
 
@@ -145,7 +145,7 @@ public class SlerpMovement : MonoBehaviour
             {
                 yield return new WaitForSeconds(1.5f);
 
-                script.TakeDamage(10);
+                script.TakeDamage(1);
 
                 Debug.Log("dealt 10 damage (repeat)");
             } 

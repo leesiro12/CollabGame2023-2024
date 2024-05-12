@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class HealthScript : MonoBehaviour
 {
     // set up health and max health
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int maxHealth = 5;
     [SerializeField] private int playerHealth;
 
     // set up inputs that will be used
@@ -22,6 +22,14 @@ public class HealthScript : MonoBehaviour
     private float timeSinceDeflect = 2.0f;
     // is the delfection active
     private bool deflectActive = false;
+
+    // event to handle health change functions
+    public delegate void OnHealthChange(int change);
+    public static OnHealthChange onHealthChange;
+
+    // event to handle player death functions
+    public delegate void OnPlayerDeath();
+    public static OnPlayerDeath onPlayerDeath;
 
     // activating the input and assigning it to the Deflect method
     private void OnEnable()
@@ -46,6 +54,12 @@ public class HealthScript : MonoBehaviour
         playerHealth = maxHealth;
         // allows player to use deflect for the frist time
         timeSinceDeflect = cooldown;
+    }
+
+    private void Start()
+    {
+        // setup UI
+        onHealthChange?.Invoke(playerHealth);
     }
 
     // each frame
@@ -76,16 +90,26 @@ public class HealthScript : MonoBehaviour
     public void TakeDamage(int damage)
     {
         // will not take damage unless deflectActive is false
-        if (!deflectActive)
+        if (!deflectActive && playerHealth > damage)
         {
             playerHealth -= damage;
+            onHealthChange?.Invoke(playerHealth);
+        }
+
+        if (playerHealth <= damage)
+        {
+            onPlayerDeath?.Invoke();
         }
     }
 
     // functino to increase player health
     public void Heal(int amount)
     {
-        playerHealth += amount;
+        if (playerHealth < maxHealth)
+        {
+            playerHealth += amount;
+            onHealthChange?.Invoke(playerHealth);
+        }
     }
 
     // coroutine to apply deflection ability
