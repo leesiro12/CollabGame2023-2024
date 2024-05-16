@@ -76,33 +76,54 @@ public class SimpleMovement : MonoBehaviour
     {
         moveDirection = HorizontalMove.ReadValue<float>();
         //anim.Play("Run");
+        if (!isDashing)
+        {
+            if (moveDirection > 0f)
+            {
+                if (!isFacingRight)
+                {
+                    Flip();
+
+                    if (!IsGrounded())
+                    {
+                        anim.Play("Jump");
+                    }
+                    else if(IsGrounded())
+                    {
+                        anim.Play("Run");
+                    }
+                }
+                
+            }
+            if (moveDirection < 0f)
+            {
+                if (isFacingRight)
+                {
+                    Flip();
+
+                    if (!IsGrounded())
+                    {
+                        anim.Play("Jump");
+                    }
+                    else if(IsGrounded())
+                    {
+                        anim.Play("Run");
+                    }
+                }
+
+                
+            }
+            if (moveDirection == 0f && IsGrounded())
+            {
+                anim.Play("Idle");
+            }
+
+            if (moveDirection == 0f && !IsGrounded())
+            {
+                anim.Play("Jump");
+            }
+        }
         
-        if (moveDirection > 0f && IsGrounded())
-        {
-            if (!isFacingRight)
-            {
-                Flip();
-            }
-            anim.Play("Run");
-        }
-        if (moveDirection < 0f && IsGrounded())
-        {
-            if (isFacingRight)
-            {
-                Flip();
-            }
-
-            anim.Play("Run");
-        }
-        if( moveDirection == 0f && IsGrounded())
-        {
-            anim.Play("Idle");
-        }
-
-        if (!IsGrounded())
-        {
-            anim.Play("Jump");
-        }
     }
 
     public void OneWayDown(InputAction.CallbackContext context)
@@ -158,6 +179,7 @@ public class SimpleMovement : MonoBehaviour
         {
             hasDoubleJumped = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            anim.Play("Jump");
         }
 
     }
@@ -179,7 +201,9 @@ public class SimpleMovement : MonoBehaviour
     {
         if (canDash)
         {
-            StartCoroutine(ActivateDash());
+            anim.Play("Dash");
+            StartCoroutine(ActivateDash());           
+
         }
     }
 
@@ -190,7 +214,7 @@ public class SimpleMovement : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(transform.localScale.x * dashingPower, rb.velocity.y);
-        tr.emitting = true;
+        tr.emitting = true; 
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
         rb.gravityScale = originalGravity;
