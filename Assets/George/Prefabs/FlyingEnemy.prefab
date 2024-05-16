@@ -307,7 +307,7 @@ MonoBehaviour:
   rushSpeed: 12
   rushTime: 0.5
   cooldown: 2
-  damageAmount: 5
+  damageAmount: 1
 --- !u!1 &4361088270025909989
 GameObject:
   m_ObjectHideFlags: 0
