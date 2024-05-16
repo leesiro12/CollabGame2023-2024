@@ -95,7 +95,7 @@ public class PlayerLevelControl : MonoBehaviour
                 }                 
             }
 
-            if (obj.gameObject.GetComponent<Elevator>())
+            if (obj.gameObject.GetComponent<ElevatorControl>())
             {
                 Debug.Log("Elevator detected");
                 
@@ -104,7 +104,7 @@ public class PlayerLevelControl : MonoBehaviour
                 //    obj.GetComponent<Elevator>().StartElevator();
 
                 //}
-                obj.GetComponent<Elevator>().StartElevator();
+                obj.GetComponent<ElevatorControl>().StartMoving();
 
                 //elevatorIsMoving = true;
 
