@@ -7,7 +7,8 @@ public class BossMover : MonoBehaviour
 {
     // define movement positions and assocaited attacks
     [SerializeField] Transform[] movePositions;
-    [SerializeReference] IBossAttack[] attackScripts;
+    [SerializeReference] MonoBehaviour[] attackScripts;
+    //[SerializeField] List<IBossAttack> bossAttacks;
 
     [SerializeField] float attackCooldown = 2;
     [SerializeField] float speed = 3;
@@ -15,6 +16,17 @@ public class BossMover : MonoBehaviour
 
     // track movement
     [SerializeField] private int currentPointIndex = 0;
+
+    //private void Awake()
+    //{
+    //    foreach (MonoBehaviour script in attackScripts)
+    //    {
+    //        if (script is IBossAttack)
+    //        {
+    //            bossAttacks.Add(script as IBossAttack);
+    //        }
+    //    }
+    //}
 
     private void Update()
     {
@@ -24,7 +36,7 @@ public class BossMover : MonoBehaviour
             // call attack function
             if (currentPointIndex < attackScripts.Length && attackScripts[currentPointIndex] is IBossAttack)
             {
-                attackScripts[currentPointIndex].PerformAttack();
+                (attackScripts[currentPointIndex] as IBossAttack).PerformAttack();
             }
 
             canMove = false;
@@ -44,7 +56,7 @@ public class BossMover : MonoBehaviour
         
         if(canMove)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movePositions[currentPointIndex].position, speed * 0.01f);
+            transform.position = Vector2.MoveTowards(transform.position, movePositions[currentPointIndex].position, speed * Time.deltaTime);
         }
     }
 
