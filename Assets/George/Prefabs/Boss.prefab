@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 224180377572113245}
   - component: {fileID: 4182501776391987318}
   - component: {fileID: 5505230391786760782}
+  - component: {fileID: 4137036793346049393}
   m_Layer: 0
   m_Name: BossBody
   m_TagString: Untagged
@@ -257,6 +258,25 @@ MonoBehaviour:
   currentHealth: 0
   shieldHealth: 250
   currentShieldHealth: 0
+--- !u!114 &4137036793346049393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224180377572113234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d8a868904579748ad82b84c5e530cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 1158097951834075409, guid: e5821329c791bd44d89d32d3c9d578b8, type: 3}
+  firePos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  bombPrefab: {fileID: 5351083466828089279, guid: 8a40ac4acad97db449fa3446d5045faa, type: 3}
+  launchForce: 15
 --- !u!1 &224180377743748275
 GameObject:
   m_ObjectHideFlags: 0

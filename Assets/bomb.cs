@@ -13,12 +13,10 @@ public class bomb : MonoBehaviour
     private bool hasExploded = false;
 
     
-    private void FixedUpdate()
+    private void Awake()
     {
-        if(startCountDown == true)
-        {
-            StartCoroutine(ExplodeAfterDelay());
-        }
+        GetComponent<Rigidbody2D>();
+        StartCoroutine(ExplodeAfterDelay());       
         
     }
     IEnumerator ExplodeAfterDelay()
@@ -29,6 +27,7 @@ public class bomb : MonoBehaviour
 
     void Explode()
     {
+        Debug.Log("explode check");
         if (hasExploded) return;
 
         hasExploded = true;
@@ -37,6 +36,7 @@ public class bomb : MonoBehaviour
         if (explosionEffect != null)
         {
             Instantiate(explosionEffect, transform.position, transform.rotation);
+            
         }
 
         // Detect objects within the explosion radius
@@ -61,7 +61,16 @@ public class bomb : MonoBehaviour
         }
 
         // Destroy the bomb object
+        //Destroy(explosionEffect);
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            this.transform.SetParent(collision.transform);
+        }
     }
 
     void OnDrawGizmosSelected()
