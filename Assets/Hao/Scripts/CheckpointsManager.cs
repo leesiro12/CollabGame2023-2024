@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class CheckpointsManager : MonoBehaviour
 {
     // the default check point is the starting position of the current level
     public static Vector2 defaultCheckPointPos = new Vector2(-19, -22);

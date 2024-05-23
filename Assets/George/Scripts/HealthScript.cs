@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public class HealthScript : MonoBehaviour
 {
     // set up health and max health
-    [SerializeField] private int maxHealth = 5;
-    [SerializeField] private int playerHealth;
+    public int maxHealth = 5;
+    public int playerHealth;
 
     // set up inputs that will be used
     public PlayerInputActions playerControls;
@@ -65,6 +65,7 @@ public class HealthScript : MonoBehaviour
     // each frame
     private void Update()
     {
+        
         // if the cooldown time not yet reached and the ability isn't currently active
         if (timeSinceDeflect < cooldown && !deflectActive)
         {
@@ -98,7 +99,9 @@ public class HealthScript : MonoBehaviour
 
         if (playerHealth <= damage)
         {
+            playerHealth = 0;
             onPlayerDeath?.Invoke();
+            
         }
     }
 

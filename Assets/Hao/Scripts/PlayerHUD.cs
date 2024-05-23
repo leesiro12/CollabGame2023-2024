@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
-    [SerializeField] private int health;
-    [SerializeField] private int numOfHearts;
-
+    public int health;
+    public int numOfHearts;
+    //public Animator anim;
     [SerializeField] private Image[] hearts;
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite emptyHeart;
@@ -15,6 +15,7 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] private Image blackScreen;
     [SerializeField] private float fadeSpeed;
 
+    //public Animator anim;
     private void Awake()
     {
         hearts = GetComponentsInChildren<Image>();
@@ -62,7 +63,8 @@ public class PlayerHUD : MonoBehaviour
     private void PlayerDeath()
     {
         HealthChange(0);
-
+        //Debug.Log("Health = 0. Dying now in playerHUD");
+        //anim.Play("Dead");
         StartCoroutine(FadeToBlack());
         // any extra UI to display
     }
@@ -70,6 +72,7 @@ public class PlayerHUD : MonoBehaviour
     // screen fade and slow time, then reload checkpoint
     IEnumerator FadeToBlack()
     {
+        yield return new WaitForSeconds(1f);
         float startTime = Time.realtimeSinceStartup;
         if (blackScreen != null)
         {
@@ -82,14 +85,14 @@ public class PlayerHUD : MonoBehaviour
                 }
                 else
                 {
-                    Time.timeScale = 1 - (newAlpha);
+                    //Time.timeScale = 1 - (newAlpha);
                 }
                 blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, newAlpha);
                 yield return null;
             }
         }
 
-        Time.timeScale = 1.0f;
+        //Time.timeScale = 1.0f;
 
         yield return new WaitForSeconds(0.5f);
 

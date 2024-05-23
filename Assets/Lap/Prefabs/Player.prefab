@@ -176,7 +176,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: f858683fc15ca1a42aa6ad7de883bcb9, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &9112827308158072982
 MonoBehaviour:
@@ -238,10 +238,11 @@ MonoBehaviour:
     m_Flags: 0
   tr: {fileID: 9112827308158072991}
   speed: 7
-  jumpingPower: 12
+  jumpingPower: 12.5
   currentOneWayPlatform: {fileID: 0}
   playerCollider: {fileID: 7824743809671778258}
   anim: {fileID: 0}
+  health: {fileID: 0}
 --- !u!114 &9112827308158072988
 MonoBehaviour:
   m_ObjectHideFlags: 0

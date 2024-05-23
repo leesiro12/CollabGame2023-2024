@@ -36,6 +36,8 @@ public class SimpleMovement : MonoBehaviour
     [SerializeField] private BoxCollider2D playerCollider;
 
     public Animator anim;
+    public HealthScript health;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,6 +63,9 @@ public class SimpleMovement : MonoBehaviour
         DashAction = playerControls.Player.Dash;
         DashAction.Enable();
         DashAction.performed += Dash;
+
+        
+
     }
 
     private void OnDisable()
@@ -75,55 +80,57 @@ public class SimpleMovement : MonoBehaviour
     void Update()
     {
         moveDirection = HorizontalMove.ReadValue<float>();
-        //anim.Play("Run");
-        if (!isDashing)
+        
+        if (health.playerHealth <= 0)
         {
-            if (moveDirection > 0f)
-            {
-                if (!isFacingRight)
-                {
-                    Flip();
-
-                    if (!IsGrounded())
-                    {
-                        anim.Play("Jump");
-                    }
-                    else if(IsGrounded())
-                    {
-                        anim.Play("Run");
-                    }
-                }
-                
-            }
-            if (moveDirection < 0f)
-            {
-                if (isFacingRight)
-                {
-                    Flip();
-
-                    if (!IsGrounded())
-                    {
-                        anim.Play("Jump");
-                    }
-                    else if(IsGrounded())
-                    {
-                        anim.Play("Run");
-                    }
-                }
-
-                
-            }
-            if (moveDirection == 0f && IsGrounded())
-            {
-                anim.Play("Idle");
-            }
-
-            if (moveDirection == 0f && !IsGrounded())
-            {
-                anim.Play("Jump");
-            }
+            Debug.Log("Dying Movement");
+            anim.Play("Dead");
+        }
+        else if (!isDashing && health.playerHealth > 0)
+        {
+            Flipping();
+            Jumping();
+            Running();
         }
         
+    }
+
+    public void Flipping()
+    {
+        if (moveDirection < 0f && isFacingRight)
+        {
+            Flip();
+        }
+        else if (moveDirection > 0f && !isFacingRight)
+        {
+            Flip();
+        }
+    }
+
+    public void Jumping()
+    {
+        if (!IsGrounded() && rb.velocity.y > 0)
+        {
+           // anim.Play("Dead");
+
+            anim.Play("Jump");
+        }
+        else if (!IsGrounded() && rb.velocity.y < 0)
+        {
+            anim.Play("Fall");
+        }
+    }
+
+    public void Running()
+    {
+        if (moveDirection == 0f && IsGrounded())
+        {
+            anim.Play("Idle");
+        }
+        else if (moveDirection < 0f && IsGrounded() || moveDirection > 0f && IsGrounded())
+        {
+            anim.Play("Run");
+        }
     }
 
     public void OneWayDown(InputAction.CallbackContext context)

@@ -95,19 +95,22 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9053897358146974657}
-    m_Position: {x: 260, y: 140, z: 0}
+    m_Position: {x: 260, y: 440, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7510836542160285111}
-    m_Position: {x: 250, y: 300, z: 0}
+    m_Position: {x: 260, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5916462204431919856}
-    m_Position: {x: 250, y: 370, z: 0}
+    m_Position: {x: 260, y: 380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3965239678538459996}
-    m_Position: {x: 250, y: 430, z: 0}
+    m_Position: {x: 260, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9041326161495432309}
     m_Position: {x: 260, y: 200, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1351514373566647416}
+    m_Position: {x: 260, y: 260, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -140,6 +143,32 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!1102 &1351514373566647416
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Fall
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: d03f6474faa4ae546b278b3259584195, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &3965139435065545365
 AnimatorState:
   serializedVersion: 6
