@@ -80,13 +80,13 @@ public class SimpleMovement : MonoBehaviour
     void Update()
     {
         moveDirection = HorizontalMove.ReadValue<float>();
-        
-        if (health.playerHealth <= 0)
+
+        if (health && health.playerHealth <= 0)
         {
             Debug.Log("Dying Movement");
             anim.Play("Dead");
         }
-        else if (!isDashing && health.playerHealth > 0)
+        else if (!isDashing && health && health.playerHealth > 0)
         {
             Flipping();
             Jumping();
