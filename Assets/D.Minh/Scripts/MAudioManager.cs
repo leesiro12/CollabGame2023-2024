@@ -32,10 +32,10 @@ public class MAudioManager : MonoBehaviour
     {
         SoundScript soundScript = Array.Find(musicClips, clip => clip.name == clipName);
 
-        //if (musicSource.isPlaying)
-        //{
-        //    musicSource.Stop();
-        //}
+        if (musicSource.isPlaying)
+        {
+            musicSource.Stop();
+        }
         if (soundScript == null)
         {
             Debug.LogError("SOUND NOT FOUND");
@@ -51,10 +51,10 @@ public class MAudioManager : MonoBehaviour
     {
         SoundScript soundScript = Array.Find(SFXClips, clip => clip.name == clipName);
 
-        //if (musicSource.isPlaying)
-        //{
-        //    musicSource.Stop();
-        //}
+        if (sfxSource.isPlaying)
+        {
+            sfxSource.Stop();
+        }
         if (soundScript == null)
         {
             Debug.LogError("SOUND NOT FOUND");
@@ -78,5 +78,15 @@ public class MAudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         sfxSource.volume = volume;
+    }
+
+    public void MusicMuteToggle()
+    {
+        musicSource.mute = !musicSource.mute;
+    }
+
+    public void SFXMuteToggle()
+    {
+        sfxSource.mute = !sfxSource.mute;
     }
 }
