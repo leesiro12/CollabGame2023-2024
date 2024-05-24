@@ -535,8 +535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491e76ed49b02b54c9664f14c3c04428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactPoint: {fileID: 0}
-  interactRange: 0
+  interactPoint: {fileID: 9112827308985015791}
+  interactRange: 1
   interactLayers:
     serializedVersion: 2
     m_Bits: 0

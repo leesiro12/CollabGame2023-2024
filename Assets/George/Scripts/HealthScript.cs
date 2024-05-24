@@ -96,8 +96,7 @@ public class HealthScript : MonoBehaviour
             playerHealth -= damage;
             onHealthChange?.Invoke(playerHealth);
         }
-
-        if (playerHealth <= damage)
+        else if (playerHealth <= damage)
         {
             playerHealth = 0;
             onPlayerDeath?.Invoke();

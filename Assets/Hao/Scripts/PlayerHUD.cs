@@ -63,8 +63,7 @@ public class PlayerHUD : MonoBehaviour
     private void PlayerDeath()
     {
         HealthChange(0);
-        //Debug.Log("Health = 0. Dying now in playerHUD");
-        //anim.Play("Dead");
+        
         StartCoroutine(FadeToBlack());
         // any extra UI to display
     }
@@ -83,20 +82,14 @@ public class PlayerHUD : MonoBehaviour
                 {
                     newAlpha = 1;
                 }
-                else
-                {
-                    //Time.timeScale = 1 - (newAlpha);
-                }
                 blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, newAlpha);
                 yield return null;
             }
         }
 
-        //Time.timeScale = 1.0f;
-
         yield return new WaitForSeconds(0.5f);
 
         //restart from checkpoint
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

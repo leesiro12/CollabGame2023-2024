@@ -2716,17 +2716,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &753032081 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7691304447313038973, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
-  m_PrefabInstance: {fileID: 224180377952643463}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f76d0c338211c44ea9a263b3936cf85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &791745129
 GameObject:
   m_ObjectHideFlags: 0
@@ -3148,7 +3137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9112827308158072989, guid: 9afc39169e71160438ae082630025b05, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.7
+      value: 17.9
       objectReference: {fileID: 0}
     - target: {fileID: 9112827308158072989, guid: 9afc39169e71160438ae082630025b05, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16409,7 +16398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1828910771}
-  - component: {fileID: 1828910770}
+  - component: {fileID: 1828910772}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -16417,18 +16406,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1828910770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1828910769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad10653f56a2ce479e59a78912ccc72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1828910771
 Transform:
   m_ObjectHideFlags: 0
@@ -16444,6 +16421,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1828910772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828910769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd4e9707564f4247a6478819cb3fe16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1886058784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17563,7 +17552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224180377143659017, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 156.98563
+      value: 157.04
       objectReference: {fileID: 0}
     - target: {fileID: 224180377143659017, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -17609,10 +17598,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 224180377572113232, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
-      propertyPath: m_Radius
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 224180377572113234, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -17637,10 +17622,6 @@ PrefabInstance:
       propertyPath: attackScripts.Array.data[3]
       value: 
       objectReference: {fileID: 224180377952643465}
-    - target: {fileID: 224180377572113247, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 224180377743748275, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -17673,10 +17654,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 5917572683880644346, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
-      propertyPath: attackScripts.Array.data[0]
-      value: 
-      objectReference: {fileID: 753032081}
     - target: {fileID: 7108377056847780729, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
       propertyPath: m_Icon
       value: 
@@ -17684,6 +17661,10 @@ PrefabInstance:
     - target: {fileID: 7108377056847780729, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233669406915059193, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
+      propertyPath: contactFilter.layerMask.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 7524555287835712771, guid: 23aaaf40cfcc34345a0ba28771b8adb4, type: 3}
       propertyPath: m_Layer

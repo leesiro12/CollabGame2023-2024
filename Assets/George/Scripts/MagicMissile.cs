@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicMisile : MonoBehaviour, IBossAttack
+public class MagicMissile : MonoBehaviour, IBossAttack
 {
     CircleCollider2D detectionCollider;
     Collider2D[] results;
@@ -16,8 +16,6 @@ public class MagicMisile : MonoBehaviour, IBossAttack
         contactFilter.SetLayerMask(LayerMask.GetMask("Player"));
         detectionCollider = GetComponent<CircleCollider2D>();
         results = new Collider2D[1];
-
-        Debug.Log(firePos.transform.right);
     }
 
     public void PerformAttack()
