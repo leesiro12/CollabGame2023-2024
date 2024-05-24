@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+//code refactored from Rehope Games
 public class MAudioManager : MonoBehaviour
 {
     public static MAudioManager instance;
@@ -17,11 +18,11 @@ public class MAudioManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);  //prevents gameObject from being destroy when loading another scene
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject);    //destroy any other instance of this
         }
     }
     private void Start()
@@ -30,11 +31,11 @@ public class MAudioManager : MonoBehaviour
     }
     public void PlayMusic(string clipName)
     {
-        SoundScript soundScript = Array.Find(musicClips, clip => clip.name == clipName);
+        SoundScript soundScript = Array.Find(musicClips, clip => clip.name == clipName);  //find specific audioclip by name(string)
 
         if (musicSource.isPlaying)
         {
-            musicSource.Stop();
+            musicSource.Stop(); //stop audio source from playing to prevent looping
         }
         if (soundScript == null)
         {
@@ -49,11 +50,11 @@ public class MAudioManager : MonoBehaviour
 
     public void PlaySFX(string clipName)
     {
-        SoundScript soundScript = Array.Find(SFXClips, clip => clip.name == clipName);
+        SoundScript soundScript = Array.Find(SFXClips, clip => clip.name == clipName);  //find specific audioclip by name(string)
 
         if (sfxSource.isPlaying)
         {
-            sfxSource.Stop();
+            sfxSource.Stop();   //stop audio source from playing to prevent looping
         }
         if (soundScript == null)
         {
