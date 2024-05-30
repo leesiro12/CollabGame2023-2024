@@ -37,6 +37,8 @@ public class AttackScript : MonoBehaviour
     // speed at which we will instantiate the projectile
     [SerializeField] private float projectileSpeed = 15.0f;
 
+    public Animator anim;
+    public GameObject player;
     private void Awake()
     {
         // get reference to input map
@@ -70,13 +72,14 @@ public class AttackScript : MonoBehaviour
         // start coroutine to check for input hold duration
         StartCoroutine(InputCheck(context));
     }
-
+    
     // when attack input received
     private void MeleeAttack(bool attackIsLight)
     {
+        //player.GetComponent<SimpleMovement>().attacking = true;
         // play attack animation
         
-
+        Debug.Log("Attacking");
 
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
@@ -109,8 +112,10 @@ public class AttackScript : MonoBehaviour
                 }
             }
         }
+        //player.GetComponent<SimpleMovement>().attacking = false;
+
     }
-    
+
     // when ranged attack input is received
     private void RangedAttackInput(InputAction.CallbackContext context)
     {
@@ -121,6 +126,7 @@ public class AttackScript : MonoBehaviour
     // fire a projectile
     private void RangedAttack()
     {
+        anim.Play("Ranged Attack");
         // create an instance of the projectile prefab
         GameObject p = Instantiate(projectile, transform.position, Quaternion.identity);
         // get the object's rb

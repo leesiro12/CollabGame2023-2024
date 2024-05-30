@@ -315,22 +315,22 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a5e0cdce-b75f-4941-8a3e-61d1f151c84e"",
-                    ""path"": ""<Keyboard>/j"",
+                    ""id"": ""431985ea-517d-45c3-8c5a-791821ad5dfb"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""203f8ae6-793b-48b7-9459-b82881a7aa6a"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""id"": ""959f192e-9358-402b-a547-89ed5c0340dc"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""RangedAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public class HealthScript : MonoBehaviour
 {
     // set up health and max health
-    [SerializeField] private int maxHealth = 5;
-    [SerializeField] private int playerHealth;
+    public int maxHealth = 5;
+    public int playerHealth;
 
     // set up inputs that will be used
     public PlayerInputActions playerControls;
