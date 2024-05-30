@@ -26,7 +26,6 @@ public class ProjectileEnemy : MonoBehaviour
     // when an overlap occurs
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collided with " + collision.gameObject.name);
         // if the object has tag of Block
         if (collision.CompareTag("Block"))
         {

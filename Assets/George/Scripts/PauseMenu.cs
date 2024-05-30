@@ -139,7 +139,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Time.timeScale = 1.0f;
                 // reset current check point to the default check point
-                PlayerManager.lastCheckPointPos = PlayerManager.defaultCheckPointPos;
+                CheckpointsManager.lastCheckPointPos = CheckpointsManager.defaultCheckPointPos;
                 SceneManager.LoadScene(1);
             }
         }
