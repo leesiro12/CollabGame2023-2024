@@ -38,6 +38,12 @@ public class SimpleMovement : MonoBehaviour
     public Animator anim;
     public HealthScript health;
 
+    public float footstepDelay = 0.35f;
+
+    private float nextfootstep = 0;
+
+    public bool landed;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -64,7 +70,7 @@ public class SimpleMovement : MonoBehaviour
         DashAction.Enable();
         DashAction.performed += Dash;
 
-        
+
 
     }
 
@@ -92,7 +98,6 @@ public class SimpleMovement : MonoBehaviour
             Jumping();
             Running();
         }
-        
     }
 
     public void Flipping()
@@ -109,15 +114,18 @@ public class SimpleMovement : MonoBehaviour
 
     public void Jumping()
     {
+
         if (!IsGrounded() && rb.velocity.y > 0)
         {
-           // anim.Play("Dead");
+            // anim.Play("Dead");
 
             anim.Play("Jump");
+            landed = false;
         }
         else if (!IsGrounded() && rb.velocity.y < 0)
         {
             anim.Play("Fall");
+            landed = false;
         }
     }
 
@@ -126,10 +134,28 @@ public class SimpleMovement : MonoBehaviour
         if (moveDirection == 0f && IsGrounded())
         {
             anim.Play("Idle");
+
+            if (!landed)
+            {
+                landed = true;
+                MAudioManager.instance.PlaySFX("LandThud");
+            }
         }
         else if (moveDirection < 0f && IsGrounded() || moveDirection > 0f && IsGrounded())
         {
+            PlayFootStep();
             anim.Play("Run");
+        }
+    }
+
+    public void PlayFootStep()
+    {
+        nextfootstep -= Time.deltaTime;
+
+        if (nextfootstep < 0)
+        {
+            MAudioManager.instance.PlaySFX("Footsteps");
+            nextfootstep = footstepDelay;
         }
     }
 
@@ -178,12 +204,14 @@ public class SimpleMovement : MonoBehaviour
     {
         if (context.performed && IsGrounded())
         {
+            MAudioManager.instance.PlaySFX("Jump");
             hasDoubleJumped = false;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             anim.Play("Jump");
         }
         else if (context.performed && !IsGrounded() && !hasDoubleJumped)
         {
+            MAudioManager.instance.PlaySFX("Jump");
             hasDoubleJumped = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             anim.Play("Jump");
