@@ -20,6 +20,11 @@ public class LaserAttack2 : MonoBehaviour, IBossAttack
         Lasers[currentLaser].SetActive(false);
     }
 
+    void TakeDamage()
+    {
+
+    }
+
     IEnumerator DisplayWarnings() //DISPLAY THE WARNINGS
     {
         Warnings[currentLaser].SetActive(true);
