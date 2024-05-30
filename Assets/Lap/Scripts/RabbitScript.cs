@@ -10,7 +10,7 @@ public class RabbitScript : MonoBehaviour
     [SerializeField] private float walkingSpeed = 3f;
     [SerializeField] public GameObject pointA;
     [SerializeField] public GameObject pointB;
-    [SerializeField] public Transform aimPos;
+    [SerializeField] private Transform aimPos;
 
     private Transform currentPoint;
     private Transform player;
