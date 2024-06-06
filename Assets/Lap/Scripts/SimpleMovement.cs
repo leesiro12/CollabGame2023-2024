@@ -141,7 +141,7 @@ public class SimpleMovement : MonoBehaviour
             if (!landed)
             {
                 landed = true;
-                MAudioManager.instance.PlaySFX("LandThud");
+                //MAudioManager.instance.PlaySFX("LandThud");
             }
         }
         else if (moveDirection < 0f && IsGrounded() || moveDirection > 0f && IsGrounded())
