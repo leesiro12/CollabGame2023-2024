@@ -71,7 +71,7 @@ public class BossMover : MonoBehaviour
     {
         if (phase == 1)
         {
-            attackScripts[3] = attackScripts[0];
+            attackScripts[2] = attackScripts[0];
         }
     }
 }
