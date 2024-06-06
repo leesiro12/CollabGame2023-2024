@@ -53,15 +53,15 @@ public class bomb : MonoBehaviour
             }
 
             // Check if object has a script that handles taking damage
-            //Damageable damageable = nearbyObject.GetComponent<Damageable>();
-            //if (damageable != null)
-            //{
-            //    damageable.TakeDamage(50); // Example damage value
-            //}
+            HealthScript damageable = nearbyObject.GetComponent<HealthScript>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(1); // Example damage value
+            }
         }
 
-        // Destroy the bomb object
-        //Destroy(explosionEffect);
+        //Destroy the bomb object
+        
         Destroy(gameObject);
     }
 
