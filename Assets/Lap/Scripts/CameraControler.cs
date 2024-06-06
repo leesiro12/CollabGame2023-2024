@@ -25,7 +25,7 @@ public class CameraControler : MonoBehaviour
         transform.position = pos;
     }
 
-    public void SetFixedPosition(Transform )
+    public void SetFixedPosition(Transform cameraPos)
     {
         positionIsFixed = true;
 
