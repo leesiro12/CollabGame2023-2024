@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 
+
 public class AttackScript : MonoBehaviour
 {
     private Rigidbody2D rb;
@@ -36,7 +37,7 @@ public class AttackScript : MonoBehaviour
     public GameObject projectile;
     // speed at which we will instantiate the projectile
     [SerializeField] private float projectileSpeed = 15.0f;
-
+    public Animator attackAnim;
     private void Awake()
     {
         // get reference to input map
@@ -75,8 +76,11 @@ public class AttackScript : MonoBehaviour
     private void MeleeAttack(bool attackIsLight)
     {
         // play attack animation
-        
 
+        if (GetComponent<SimpleMovement>().m_attack == false )
+        {
+            StartCoroutine(MeleeAttackAnim());
+        }
 
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
@@ -150,5 +154,16 @@ public class AttackScript : MonoBehaviour
         MeleeAttack(false);
 
         yield break;
+    }
+
+    IEnumerator MeleeAttackAnim()
+    {
+        Debug.Log("Attacking");
+        GetComponent<SimpleMovement>().m_attack = true;
+        attackAnim.Play("Melee");
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<SimpleMovement>().m_attack = false;
+        yield break;
+
     }
 }
