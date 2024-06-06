@@ -42,6 +42,10 @@ public class SimpleMovement : MonoBehaviour
 
     private float nextfootstep = 0;
 
+    public bool landed;
+    public bool m_attack;
+    //public bool m_rangedAttack;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -67,9 +71,6 @@ public class SimpleMovement : MonoBehaviour
         DashAction = playerControls.Player.Dash;
         DashAction.Enable();
         DashAction.performed += Dash;
-
-
-
     }
 
     private void OnDisable()
@@ -85,16 +86,20 @@ public class SimpleMovement : MonoBehaviour
     {
         moveDirection = HorizontalMove.ReadValue<float>();
 
-        if (health && health.playerHealth <= 0)
+        if (health.playerHealth <= 0)
         {
-            Debug.Log("Dying Movement");
+            //Debug.Log("Dying Movement");
             anim.Play("Dead");
         }
-        else if (!isDashing && health && health.playerHealth > 0)
+        else if (!isDashing && health.playerHealth > 0 )
         {
             Flipping();
-            Jumping();
-            Running();
+            if (!m_attack)
+            {
+                Jumping();
+                Running();
+            }
+            
         }
     }
 
@@ -118,10 +123,12 @@ public class SimpleMovement : MonoBehaviour
             // anim.Play("Dead");
 
             anim.Play("Jump");
+            landed = false;
         }
         else if (!IsGrounded() && rb.velocity.y < 0)
         {
             anim.Play("Fall");
+            landed = false;
         }
     }
 
@@ -130,6 +137,12 @@ public class SimpleMovement : MonoBehaviour
         if (moveDirection == 0f && IsGrounded())
         {
             anim.Play("Idle");
+
+            if (!landed)
+            {
+                landed = true;
+                MAudioManager.instance.PlaySFX("LandThud");
+            }
         }
         else if (moveDirection < 0f && IsGrounded() || moveDirection > 0f && IsGrounded())
         {
