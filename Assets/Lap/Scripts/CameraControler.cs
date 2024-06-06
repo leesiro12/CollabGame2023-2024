@@ -5,15 +5,29 @@ using UnityEngine;
 public class CameraControler : MonoBehaviour
 {
     public Transform target;
+    public bool positionIsFixed;
 
     private void Update()
     {
-        Vector3 pos = transform.position;
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (positionIsFixed)
+        {
+            return;
+        }
+
+
+        Vector3 pos = target.position;
         pos.z = -1; // lock the z asix.
         transform.position = pos;
     }
-    private void FixedUpdate()
+
+    public void SetFixedPosition(Transform )
     {
-        this.transform.position = target.position;
+        positionIsFixed = true;
+
     }
 }
