@@ -6,28 +6,29 @@ public class bomb : MonoBehaviour
 {
     public float explosionDelay = 3.0f;  // Time in seconds before the bomb explodes
     public float explosionRadius = 5.0f; // Radius of the explosion
-    public float explosionForce = 700f;  // Force of the explosion
-    private bool startCountDown = false;
+    public float explosionForce = 700000f;  // Force of the explosion
+
     public GameObject explosionEffect;   // Prefab of the explosion effect
 
     private bool hasExploded = false;
 
-    
+    private Rigidbody2D rb2d;
+
     private void Awake()
     {
-        GetComponent<Rigidbody2D>();
-        StartCoroutine(ExplodeAfterDelay());       
-        
+        rb2d = GetComponent<Rigidbody2D>();
+        StartCoroutine(ExplodeAfterDelay(explosionDelay));
     }
-    IEnumerator ExplodeAfterDelay()
+
+    IEnumerator ExplodeAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(explosionDelay);
+        yield return new WaitForSeconds(delay);
         Explode();
     }
 
     void Explode()
     {
-        Debug.Log("explode check");
+        Debug.Log("Explosion triggered");
         if (hasExploded) return;
 
         hasExploded = true;
@@ -36,7 +37,6 @@ public class bomb : MonoBehaviour
         if (explosionEffect != null)
         {
             Instantiate(explosionEffect, transform.position, transform.rotation);
-            
         }
 
         // Detect objects within the explosion radius
@@ -44,24 +44,27 @@ public class bomb : MonoBehaviour
 
         foreach (Collider2D nearbyObject in colliders)
         {
-            // Add force to objects with Rigidbody2D
-            Rigidbody2D rb = nearbyObject.GetComponent<Rigidbody2D>();
-            if (rb != null)
+
+            if (nearbyObject.gameObject.GetComponent<HealthScript>())
             {
                 Vector2 direction = nearbyObject.transform.position - transform.position;
-                rb.AddForce(direction.normalized * explosionForce);
+                Rigidbody2D rb = nearbyObject.GetComponent<Rigidbody2D>();
+                //rb.velocity = new Vector2(direction.x * explosionDelay, direction.y * explosionDelay);
+                //rb.AddForce(direction * explosionForce, ForceMode2D.Impulse);
+                rb.AddForce( new Vector2 (direction.y, 1) * explosionForce, ForceMode2D.Impulse);
             }
-
-            // Check if object has a script that handles taking damage
-            HealthScript damageable = nearbyObject.GetComponent<HealthScript>();
-            if (damageable != null)
-            {
-                damageable.TakeDamage(1); // Example damage value
-            }
+            //// Add force to objects with Rigidbody2D
+            //Rigidbody2D rb = nearbyObject.GetComponent<Rigidbody2D>();
+            //if (rb != null)
+            //{
+            //    Debug.Log(rb.gameObject);
+            //    Vector2 direction = nearbyObject.transform.position - transform.position;
+            //    rb.AddForce(direction * explosionForce, ForceMode2D.Impulse);
+                
+            //}
         }
 
-        //Destroy the bomb object
-        
+        // Destroy the bomb object
         Destroy(gameObject);
     }
 
