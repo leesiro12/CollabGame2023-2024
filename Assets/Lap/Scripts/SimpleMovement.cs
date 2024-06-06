@@ -42,8 +42,6 @@ public class SimpleMovement : MonoBehaviour
 
     private float nextfootstep = 0;
 
-    public bool landed;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -120,12 +118,10 @@ public class SimpleMovement : MonoBehaviour
             // anim.Play("Dead");
 
             anim.Play("Jump");
-            landed = false;
         }
         else if (!IsGrounded() && rb.velocity.y < 0)
         {
             anim.Play("Fall");
-            landed = false;
         }
     }
 
@@ -134,12 +130,6 @@ public class SimpleMovement : MonoBehaviour
         if (moveDirection == 0f && IsGrounded())
         {
             anim.Play("Idle");
-
-            if (!landed)
-            {
-                landed = true;
-                MAudioManager.instance.PlaySFX("LandThud");
-            }
         }
         else if (moveDirection < 0f && IsGrounded() || moveDirection > 0f && IsGrounded())
         {
