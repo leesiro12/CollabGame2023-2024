@@ -66,4 +66,12 @@ public class BossMover : MonoBehaviour
         yield return new WaitForSeconds(attackCooldown);
         canMove = true;
     }
+
+    public void SetPhase(int phase)
+    {
+        if (phase == 1)
+        {
+            attackScripts[3] = attackScripts[0];
+        }
+    }
 }

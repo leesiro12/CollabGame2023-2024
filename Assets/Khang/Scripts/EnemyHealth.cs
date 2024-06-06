@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] int maxHealth = 100;
-    [SerializeField] int currentHealth;
+    [SerializeField] protected int currentHealth;
     [SerializeField] int shieldHealth = 250;
     [SerializeField] int currentShieldHealth;
 
@@ -19,10 +19,13 @@ public class EnemyHealth : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            Destroy(this.gameObject);
+            Death();
         }
+    }
 
-        
+    protected virtual void Death()
+    {
+        Destroy(this.gameObject);
     }
 
     public void TakeDamage(int damage)

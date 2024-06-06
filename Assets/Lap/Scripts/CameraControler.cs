@@ -28,6 +28,13 @@ public class CameraControler : MonoBehaviour
     public void SetFixedPosition(Transform cameraPos)
     {
         positionIsFixed = true;
+        transform.position = cameraPos.position;
+        this.GetComponent<Camera>().orthographicSize *= 2.2f;
+    }
 
+    public void ReleaseFixedPosition()
+    {
+        positionIsFixed = false;
+        this.GetComponent<Camera>().orthographicSize /= 2.2f;
     }
 }

@@ -100,7 +100,6 @@ public class HealthScript : MonoBehaviour
         {
             playerHealth = 0;
             onPlayerDeath?.Invoke();
-            
         }
     }
 
