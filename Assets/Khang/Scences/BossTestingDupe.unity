@@ -2290,7 +2290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7567a90d057d345a6524aef76fa26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 1
   healthScript: {fileID: 0}
 --- !u!61 &623559430
 BoxCollider2D:
@@ -2647,7 +2647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7567a90d057d345a6524aef76fa26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 1
   healthScript: {fileID: 0}
 --- !u!61 &700413427
 BoxCollider2D:
@@ -17333,7 +17333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7567a90d057d345a6524aef76fa26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 1
   healthScript: {fileID: 0}
 --- !u!61 &2121957004
 BoxCollider2D:
