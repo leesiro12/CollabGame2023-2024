@@ -335,7 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 5538992134270845725, guid: c9e94467c8c87b945b86958e45d88b89, type: 3}
   firePos: {fileID: 5532664093804382661}
-  projectileSpeed: 10
+  projectileSpeed: 15
 --- !u!114 &5532664094237678578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,7 +377,7 @@ MonoBehaviour:
   - {fileID: 5532664094237678578}
   - {fileID: 5532664094237678580}
   attackCooldown: 2
-  speed: 5
+  speed: 7
   canMove: 1
   currentPointIndex: 0
 --- !u!114 &5532664094237678588
@@ -441,6 +441,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5532664094298331439}
   - component: {fileID: 5532664094298331436}
+  - component: {fileID: 3211528993183302318}
+  - component: {fileID: 6805866324734169486}
   m_Layer: 0
   m_Name: laserbeam3
   m_TagString: Untagged
@@ -515,6 +517,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &3211528993183302318
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532664094298331438}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &6805866324734169486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532664094298331438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7567a90d057d345a6524aef76fa26e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5532664094311722831
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,6 +565,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5532664094311722828}
   - component: {fileID: 5532664094311722829}
+  - component: {fileID: 8992407982421174372}
+  - component: {fileID: 2120542186695666511}
   m_Layer: 0
   m_Name: laserbeam2
   m_TagString: Untagged
@@ -599,6 +641,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &8992407982421174372
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532664094311722831}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &2120542186695666511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532664094311722831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7567a90d057d345a6524aef76fa26e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5532664094344621540
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,6 +773,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5532664094512320370}
   - component: {fileID: 5532664094512320371}
+  - component: {fileID: 2671354895064954054}
+  - component: {fileID: 6088358167299585098}
   m_Layer: 0
   m_Name: laserbeam1
   m_TagString: Untagged
@@ -767,6 +849,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &2671354895064954054
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532664094512320381}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &6088358167299585098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532664094512320381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7567a90d057d345a6524aef76fa26e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5532664094573315051
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +1068,7 @@ Transform:
   - {fileID: 5532664094573315048}
   - {fileID: 5532664094171916788}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5532664095180430776
 GameObject:

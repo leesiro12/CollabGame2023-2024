@@ -5,14 +5,18 @@ using UnityEngine;
 public class LaserDamage : MonoBehaviour
 {
     //vars
-    [SerializeField] private int damage;
-    public HealthScript healthScript;
+    private int damage = 1;
+    private HealthScript healthScript;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player")
         {
-            healthScript.TakeDamage(damage);
+            healthScript = collider.gameObject.GetComponent<HealthScript>();
+            if (healthScript != null )
+            {
+                healthScript.TakeDamage(damage);
+            }
         }
     }
 }
