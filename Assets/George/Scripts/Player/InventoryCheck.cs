@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventoryCheck : MonoBehaviour
 {
     // track if key is held
-    private bool hasKey = false;
+    public static bool hasKey = false;
 
     // check value
     public bool GetKeyStatus()

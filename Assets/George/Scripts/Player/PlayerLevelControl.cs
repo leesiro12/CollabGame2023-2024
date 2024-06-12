@@ -11,7 +11,7 @@ public class PlayerLevelControl : MonoBehaviour
     public PlayerInputActions playerControls;
     private InputAction pause;
     private InputAction interact;
-    private bool interactTriggered;
+    //private bool interactTriggered;
     public Transform interactPoint;
     public float interactRange;
     public LayerMask interactLayers;
@@ -67,7 +67,7 @@ public class PlayerLevelControl : MonoBehaviour
     private void OnInteract(InputAction.CallbackContext context)
     {
         
-        interactTriggered = true;
+        //interactTriggered = true;
 
         Collider2D[] collideObject = Physics2D.OverlapCircleAll(interactPoint.position, interactRange, interactLayers);
 

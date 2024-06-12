@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] GameObject exitScreen;
-    [SerializeField] GameObject pauseScreen;
-    [SerializeField] GameObject restartScreen;
-    [SerializeField] GameObject restartCheckpointScreen;
+    [SerializeField] private GameObject exitScreen;
+    [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private GameObject restartScreen;
+    [SerializeField] private GameObject restartCheckpointScreen;
 
     // deactivate menus at start
     void Start()
@@ -138,8 +138,9 @@ public class PauseMenu : MonoBehaviour
             else
             {
                 Time.timeScale = 1.0f;
-                // reset current check point to the default check point
+                // reset current check point and hasKey status to default values
                 CheckpointsManager.lastCheckPointPos = CheckpointsManager.defaultCheckPointPos;
+                InventoryCheck.hasKey = false;
                 SceneManager.LoadScene(1);
             }
         }

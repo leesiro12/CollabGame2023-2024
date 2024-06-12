@@ -90,6 +90,10 @@ public class SimpleMovement : MonoBehaviour
         {
             //Debug.Log("Dying Movement");
             anim.Play("Dead");
+            HorizontalMove.Disable();
+            JumpAction.Disable();
+            DashAction.Disable();
+            VerticalMove.Disable();
         }
         else if (!isDashing && health.playerHealth > 0 )
         {
@@ -240,8 +244,7 @@ public class SimpleMovement : MonoBehaviour
         if (canDash)
         {
             anim.Play("Dash");
-            StartCoroutine(ActivateDash());           
-
+            StartCoroutine(ActivateDash());
         }
     }
 
