@@ -125,6 +125,10 @@ public class AttackScript : MonoBehaviour
     // fire a projectile
     private void RangedAttack()
     {
+        if (GetComponent<SimpleMovement>().m_attack == false)
+        {
+            StartCoroutine(RangedAttackAnim());
+        }
         // create an instance of the projectile prefab
         GameObject p = Instantiate(projectile, transform.position, Quaternion.identity);
         // get the object's rb
@@ -164,6 +168,15 @@ public class AttackScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         GetComponent<SimpleMovement>().m_attack = false;
         yield break;
+    }
 
+    IEnumerator RangedAttackAnim()
+    {
+        Debug.Log("Attacking");
+        GetComponent<SimpleMovement>().m_attack = true;
+        attackAnim.Play("RangedAttack");
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<SimpleMovement>().m_attack = false;
+        yield break;
     }
 }

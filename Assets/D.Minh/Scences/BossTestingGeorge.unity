@@ -3203,10 +3203,6 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 0.8
       objectReference: {fileID: 0}
-    - target: {fileID: 6400927237234649358, guid: 9afc39169e71160438ae082630025b05, type: 3}
-      propertyPath: attackAnim
-      value: 
-      objectReference: {fileID: 914427666}
     - target: {fileID: 6870927987286479669, guid: 9afc39169e71160438ae082630025b05, type: 3}
       propertyPath: interactPoint
       value: 

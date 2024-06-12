@@ -243,6 +243,9 @@ MonoBehaviour:
   playerCollider: {fileID: 7824743809671778258}
   anim: {fileID: 0}
   health: {fileID: 0}
+  footstepDelay: 0.35
+  landed: 0
+  m_attack: 0
 --- !u!114 &9112827308158072988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +514,7 @@ MonoBehaviour:
   heavyDamage: 20
   projectile: {fileID: 4470001759152173979, guid: 08713adb313ab4043ae06f7b61c31a67, type: 3}
   projectileSpeed: 10
+  attackAnim: {fileID: 3813724481193323649}
 --- !u!114 &7442570340812103456
 MonoBehaviour:
   m_ObjectHideFlags: 0
