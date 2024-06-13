@@ -24,7 +24,7 @@ public class SC_MainMenu : MonoBehaviour
     // load level
     public void OnPlayPressed()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     // open controls menu
