@@ -10,9 +10,11 @@ public class MagicMisile : MonoBehaviour, IBossAttack
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform firePos;
     [SerializeField] float projectileSpeed = 20;
+    public Animator anim;
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         contactFilter.SetLayerMask(LayerMask.GetMask("Player"));
         detectionCollider = GetComponent<CircleCollider2D>();
         results = new Collider2D[1];
@@ -22,6 +24,7 @@ public class MagicMisile : MonoBehaviour, IBossAttack
 
     public void PerformAttack()
     {
+        anim.Play("FireBallAttackAnim");
         if (detectionCollider != null)
         {
             if (Physics2D.OverlapCollider(detectionCollider, contactFilter, results) > 0)

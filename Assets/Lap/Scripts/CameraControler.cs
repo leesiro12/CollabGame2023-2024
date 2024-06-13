@@ -6,6 +6,7 @@ public class CameraControler : MonoBehaviour
 {
     public Transform target;
     public bool positionIsFixed;
+    public float zoomMultiplier;
 
     private void Update()
     {
@@ -29,12 +30,12 @@ public class CameraControler : MonoBehaviour
     {
         positionIsFixed = true;
         transform.position = cameraPos.position;
-        this.GetComponent<Camera>().orthographicSize *= 2.2f;
+        this.GetComponent<Camera>().orthographicSize *= zoomMultiplier;
     }
 
     public void ReleaseFixedPosition()
     {
         positionIsFixed = false;
-        this.GetComponent<Camera>().orthographicSize /= 2.2f;
+        this.GetComponent<Camera>().orthographicSize /= zoomMultiplier;
     }
 }
