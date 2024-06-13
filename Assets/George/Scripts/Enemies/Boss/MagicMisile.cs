@@ -32,8 +32,8 @@ public class MagicMisile : MonoBehaviour, IBossAttack
 
                     for (int i = 0; i < firePos.childCount; i++)
                     {
-                        GameObject spawnedProjectile = Instantiate(projectilePrefab, firePos.GetChild(i).position, firePos.GetChild(i).rotation);
-                        spawnedProjectile.GetComponent<Rigidbody2D>().velocity = spawnedProjectile.transform.up * projectileSpeed;
+                        GameObject spawnedProjectile = Instantiate(projectilePrefab, firePos.GetChild(i).position, firePos.GetChild(i).rotation * Quaternion.Euler(0,0,90));
+                        spawnedProjectile.GetComponent<Rigidbody2D>().velocity = spawnedProjectile.transform.right * projectileSpeed;
                     }
                 }
             }
