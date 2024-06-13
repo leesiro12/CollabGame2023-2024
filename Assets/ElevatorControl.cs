@@ -11,10 +11,18 @@ public class ElevatorControl : MonoBehaviour
     private bool isMoving = false;
     Transform targetPoint;
 
+    [SerializeField] private GameObject colliders;
+
     private void Awake()
     {
         transform.position = points[0].position;        //Set platform to first point position
+
+        if (colliders != null)
+        {
+            colliders.SetActive(false);
+        }
     }
+
     void Update()
     {
         if (isMoving)
@@ -28,6 +36,10 @@ public class ElevatorControl : MonoBehaviour
         if (!isMoving && points.Length > 0)
         {
             isMoving = true;
+            if (colliders != null)
+            {
+                colliders.SetActive(true);
+            }
         }
     }
 
@@ -43,6 +55,11 @@ public class ElevatorControl : MonoBehaviour
         {
             isMoving = false;
             UpdateNextPointIndex();
+
+            if (colliders != null)
+            {
+                colliders.SetActive(false);
+            }
         }
     }
 
