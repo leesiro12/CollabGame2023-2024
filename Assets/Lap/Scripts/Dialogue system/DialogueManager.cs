@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     
     private Queue<DialogueLine> lines;
 
-    public static   bool isDialogueActive = false;
+    public static bool isDialogueActive = false;
 
     public float typingSpeed = 0.2f;
 
@@ -29,15 +29,19 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        isDialogueActive = true;
-        animator.Play("show");
-        lines.Clear();
-
-        foreach (DialogueLine dialogueLine in dialogue.dialogueLines)
+        if (isDialogueActive == false)
         {
-            lines.Enqueue(dialogueLine);            
+            isDialogueActive = true;
+            animator.Play("show");
+            lines.Clear();
+
+            foreach (DialogueLine dialogueLine in dialogue.dialogueLines)
+            {
+                lines.Enqueue(dialogueLine);
+            }
+            DisplayNextDialogue();
         }
-        DisplayNextDialogue();
+        
     }
 
     public void DisplayNextDialogue()
