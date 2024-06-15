@@ -141,6 +141,7 @@ public class PauseMenu : MonoBehaviour
                 // reset current check point and hasKey status to default values
                 CheckpointsManager.lastCheckPointPos = CheckpointsManager.defaultCheckPointPos;
                 InventoryCheck.hasKey = false;
+                AttackScript.canRangeAttack = false;
                 SceneManager.LoadScene(3);
             }
         }

@@ -33,6 +33,8 @@ public class AttackScript : MonoBehaviour
     private InputAction meleeAttack;
     private InputAction rangedAttack;
 
+    public static bool canRangeAttack = false;
+
     // prefab of projectile
     public GameObject projectile;
     // speed at which we will instantiate the projectile
@@ -55,7 +57,10 @@ public class AttackScript : MonoBehaviour
 
         rangedAttack = playerControls.Player.RangedAttack;
         rangedAttack.Enable();
-        rangedAttack.performed += RangedAttackInput;
+        if (canRangeAttack)
+        {
+            rangedAttack.performed += RangedAttackInput;
+        }
     }
 
     // deactivating the input
@@ -137,6 +142,15 @@ public class AttackScript : MonoBehaviour
         rbP.velocity = new Vector2(1, 0) * projectileSpeed * rb.transform.localScale;
     }
 
+    public void UnlockRangedAttack()
+    {
+        if (!canRangeAttack)
+        {
+            rangedAttack.performed += RangedAttackInput;
+            canRangeAttack = true;
+        }
+    }
+
     // checks for held down input
     IEnumerator InputCheck(InputAction.CallbackContext context)
     {
@@ -179,4 +193,5 @@ public class AttackScript : MonoBehaviour
         GetComponent<SimpleMovement>().m_attack = false;
         yield break;
     }
+
 }
