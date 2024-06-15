@@ -86,7 +86,7 @@ public class PauseMenu : MonoBehaviour
             else
             {
                 Time.timeScale = 1.0f;
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(2);
             }
         }
     }
@@ -141,7 +141,7 @@ public class PauseMenu : MonoBehaviour
                 // reset current check point and hasKey status to default values
                 CheckpointsManager.lastCheckPointPos = CheckpointsManager.defaultCheckPointPos;
                 InventoryCheck.hasKey = false;
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(3);
             }
         }
     }
@@ -164,7 +164,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Time.timeScale = 1.0f;
                 //restart from checkpoint
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(3);
             }
         }
     }
