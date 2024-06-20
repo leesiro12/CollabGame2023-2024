@@ -19,6 +19,8 @@ public class PlayerLevelControl : MonoBehaviour
     public static bool dialogueIsPlayed = false;
     private bool elevatorIsMoving;
 
+    private SimpleMovement movementScript;
+
     [SerializeField] private Canvas pauseMenu;
 
     private PauseMenu menuScript;
@@ -27,6 +29,8 @@ public class PlayerLevelControl : MonoBehaviour
     {
         // get reference to input map
         playerControls = new PlayerInputActions();
+
+        movementScript = GetComponentInParent<SimpleMovement>();
     }
 
     private void OnEnable()
@@ -73,31 +77,34 @@ public class PlayerLevelControl : MonoBehaviour
 
         foreach (Collider2D obj in collideObject)
         {
-            Debug.Log("Interacting with " + obj.name);   
-            if (obj.isTrigger)
-            {
-                Debug.Log("is triggered");
-            }
+            //Debug.Log("Interacting with " + obj.name);   
+            //if (obj.isTrigger)
+            //{
+            //    Debug.Log("is triggered");
+            //}
 
             
 
             if (obj.gameObject.GetComponent<DialogueTrigger>())
             {
-                Debug.Log("Can run dialogue!");
-                if (dialogueIsPlayed == false)
-                {
-                    obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);
-                    dialogueIsPlayed = true;
-                }
-                else
-                {
-                    obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);                    
-                }                 
+                obj.GetComponent<DialogueTrigger>().TriggerDialogue(movementScript);
+
+
+                //Debug.Log("Can run dialogue!");
+                //if (dialogueIsPlayed == false)
+                //{
+                    
+                //    dialogueIsPlayed = true;
+                //}
+                //else
+                //{
+                //    obj.GetComponent<DialogueTrigger>().TriggerDialogue(dialogueIsPlayed);                    
+                //}                 
             }
 
             if (obj.gameObject.GetComponent<ElevatorControl>())
             {
-                Debug.Log("Elevator detected");
+                //Debug.Log("Elevator detected");
                 
                 //if (elevatorIsMoving == false)
                 //{

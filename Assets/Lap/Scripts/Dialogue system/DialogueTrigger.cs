@@ -24,23 +24,60 @@ public class Dialogue
 {
     public List<DialogueLine> dialogueLines = new List<DialogueLine>();
 }
+
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
+    private bool canRun = true;
+    private int i = 0;
     
-    public void TriggerDialogue(bool dialogueIsPlaying)
+    public void TriggerDialogue(SimpleMovement movementScript)
     {
+        if (!canRun)
+        {
+            return;
+        }
+        else
+        {
+            canRun = false;
+        }
+
         if (dialogue == null) Debug.Log("Cannot found Dialogue");
 
-        if (dialogueIsPlaying == true)
+
+        if (i == 0)
         {
-            DialogueManager.Instance.DisplayNextDialogue();
-        }
-        else if (dialogueIsPlaying == false)
-        {
+            i++;
+            movementScript.IgnoreMovementInout();
             DialogueManager.Instance.StartDialogue(dialogue);
-            dialogueIsPlaying = true;
         }
+        else if (i < dialogue.dialogueLines.Count)
+        {
+           if(DialogueManager.Instance.DisplayNextDialogue())
+           {
+               i++;
+           }
+        }
+        else
+        {
+            movementScript.SubscribeToMovement();
+            //Debug.Log("maxed lines");
+            DialogueManager.Instance.EndDialogue();
+            i = 0;
+        }
+
+        canRun = true;
+        
+
+        //if (dialogueIsPlaying == true)
+        //{
+        //    DialogueManager.Instance.DisplayNextDialogue();
+        //}
+        //else if (dialogueIsPlaying == false)
+        //{
+        //    DialogueManager.Instance.StartDialogue(dialogue);
+        //    dialogueIsPlaying = true;
+        //}
         
     }
 }

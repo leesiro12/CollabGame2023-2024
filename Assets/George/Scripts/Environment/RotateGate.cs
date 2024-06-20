@@ -17,5 +17,7 @@ public class RotateGate : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        GetComponent<SwitchDialogue>()?.switchDialogue();
     }
 }

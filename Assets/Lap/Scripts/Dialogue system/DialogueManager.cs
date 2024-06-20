@@ -11,14 +11,17 @@ public class DialogueManager : MonoBehaviour
     public Image characterSprite;
     public TextMeshProUGUI CharacterName;
     public TextMeshProUGUI dialogueArea;
-    
+    private DialogueLine currentLine;
+
     private Queue<DialogueLine> lines;
 
     public static bool isDialogueActive = false;
 
-    public float typingSpeed = 0.2f;
+    public float typingTime = 0.5f;
 
     public Animator animator;
+
+    private Coroutine typingCoroutine;
 
     private void Start()
     {
@@ -44,24 +47,32 @@ public class DialogueManager : MonoBehaviour
         
     }
 
-    public void DisplayNextDialogue()
+    public bool DisplayNextDialogue()
     {
-        Debug.Log("line count: " + lines.Count);
-        if (lines.Count == 0) 
-        {            
-            EndDialogue();
-            return;
+        if (typingCoroutine != null)
+        {
+            StopAllCoroutines();
+            dialogueArea.text = currentLine.textLine;
+            typingCoroutine = null;
+            return false;
         }
-        
-        DialogueLine currentLine = lines.Dequeue();
-        Debug.Log(currentLine);
-        characterSprite.sprite = currentLine.character.sprite;
-        CharacterName.text = currentLine.character.name;
-        
+        else
+        {
+            if (lines.Count == 0)
+            {
+                EndDialogue();
+                return true;
+            }
 
-        StopAllCoroutines();
+            currentLine = lines.Dequeue();
+            //Debug.Log(currentLine);
+            characterSprite.sprite = currentLine.character.sprite;
+            CharacterName.text = currentLine.character.name;
 
-        StartCoroutine(TypeSentence(currentLine));
+            typingCoroutine = StartCoroutine(TypeSentence(currentLine));
+        }
+
+        return true;
     }
 
     IEnumerator TypeSentence(DialogueLine dialogueLine)
@@ -70,11 +81,13 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in dialogueLine.textLine.ToCharArray())
         {
             dialogueArea.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
-        }        
+            yield return new WaitForSeconds(typingTime);
+        }
+
+        typingCoroutine = null;
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {    
         isDialogueActive = false;
         animator.Play("hide");

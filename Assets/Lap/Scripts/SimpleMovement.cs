@@ -268,4 +268,20 @@ public class SimpleMovement : MonoBehaviour
     {
         isKnocked = knocked;
     }
+
+    public void IgnoreMovementInout()
+    {
+        HorizontalMove.Disable();
+        JumpAction.Disable();
+        DashAction.Disable();
+        VerticalMove.Disable();
+    }
+
+    public void SubscribeToMovement()
+    {
+        HorizontalMove.Enable();
+        JumpAction.Enable();
+        DashAction.Enable();
+        VerticalMove.Enable();
+    }
 }

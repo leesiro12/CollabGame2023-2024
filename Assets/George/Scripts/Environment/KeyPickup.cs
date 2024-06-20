@@ -17,5 +17,7 @@ public class KeyPickup : MonoBehaviour
             // destroy key
             Destroy(gameObject);
         }
+
+        GetComponent<SwitchDialogue>()?.switchDialogue();
     }
 }
