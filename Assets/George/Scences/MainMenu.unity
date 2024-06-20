@@ -220,18 +220,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1735576393}
-        m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Click
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!222 &70118908
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -287,10 +275,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1735576393}
-          m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 5
+        - m_Target: {fileID: 77127937}
+          m_TargetAssemblyTypeName: SC_MainMenu, Assembly-CSharp
+          m_MethodName: OnMouseEnter
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -962,18 +950,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1735576393}
-        m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Click
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!222 &296802196
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -999,10 +975,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1735576393}
-          m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 5
+        - m_Target: {fileID: 77127937}
+          m_TargetAssemblyTypeName: SC_MainMenu, Assembly-CSharp
+          m_MethodName: OnMouseEnter
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1473,18 +1449,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1735576393}
-        m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Click
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!222 &396711018
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1540,10 +1504,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1735576393}
-          m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 5
+        - m_Target: {fileID: 77127937}
+          m_TargetAssemblyTypeName: SC_MainMenu, Assembly-CSharp
+          m_MethodName: OnMouseEnter
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1936,18 +1900,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1735576393}
-        m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Click
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!222 &831721212
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1973,10 +1925,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1735576393}
-          m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 5
+        - m_Target: {fileID: 77127937}
+          m_TargetAssemblyTypeName: SC_MainMenu, Assembly-CSharp
+          m_MethodName: OnMouseEnter
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2679,18 +2631,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1735576393}
-        m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Click
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!222 &1547736175
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2716,10 +2656,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1735576393}
-          m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 5
+        - m_Target: {fileID: 77127937}
+          m_TargetAssemblyTypeName: SC_MainMenu, Assembly-CSharp
+          m_MethodName: OnMouseEnter
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2855,18 +2795,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1735576393}
-        m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Click
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!222 &1653107291
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2922,10 +2850,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1735576393}
-          m_TargetAssemblyTypeName: MAudioManager, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 5
+        - m_Target: {fileID: 77127937}
+          m_TargetAssemblyTypeName: SC_MainMenu, Assembly-CSharp
+          m_MethodName: OnMouseEnter
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3029,7 +2957,7 @@ GameObject:
   - component: {fileID: 1735576394}
   - component: {fileID: 1735576393}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: AudioManagerA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
