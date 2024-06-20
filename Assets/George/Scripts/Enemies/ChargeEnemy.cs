@@ -36,11 +36,12 @@ public class ChargeEnemy : MonoBehaviour
     [SerializeField] private float patrolSpeed = 2;
 
     // defines how forceful the attack knockback is
-    private float knockForce = 300f;
+    private float knockForce = 200f;
     // defines the length of the knockback
-    private float knockbackLength = 0.3f;    
+    private float knockbackLength = 0.3f;
 
-
+    public Animator anim;
+    public EnemyHealth enemyHealth;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -75,8 +76,21 @@ public class ChargeEnemy : MonoBehaviour
         StartCoroutine(StartPatrol());
     }
 
+    private void FixedUpdate()
+    {
+        if(enemyHealth.currentHealth <= 0f)
+        {
+            StartCoroutine(Death());
+        }
+    }
 
-
+    IEnumerator Death()
+    {
+        anim.Play("Dead");
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
+        yield return null;
+    }
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // get health script
@@ -198,7 +212,7 @@ public class ChargeEnemy : MonoBehaviour
 
             // start charge
             rb.AddForce(new Vector2(transform.localScale.x * chargeStrength, 0));
-
+            anim.Play("Attack");
             //// make sure the enemy is facing towards the player
             //if (rb.velocity.x > 0.0f && transform.localScale.x < 0 || rb.velocity.x < 0.0f && transform.localScale.x > 0)
             //{
@@ -249,7 +263,7 @@ public class ChargeEnemy : MonoBehaviour
     {
         // record that enemy is patrolling
         isPatrolling = true;
-
+        anim.Play("Walk");
         while (isPatrolling)
         {
             // move towards next point
