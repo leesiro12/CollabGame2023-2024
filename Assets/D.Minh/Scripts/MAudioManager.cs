@@ -15,6 +15,10 @@ public class MAudioManager : MonoBehaviour
 
     private void Awake()
     {
+        
+    }
+    private void Start()
+    {
         if (instance == null)
         {
             instance = this;
@@ -24,10 +28,6 @@ public class MAudioManager : MonoBehaviour
         {
             Destroy(gameObject);    //destroy any other instance of this
         }
-    }
-    private void Start()
-    {
-        
     }
     public void PlayMusic(string clipName)
     {

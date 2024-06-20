@@ -38,6 +38,7 @@ public class PauseMenu : MonoBehaviour
     // toggle between pause menu open/closed
     public void OnPause()
     {
+        MAudioManager.instance.PlaySFX("Click");
         if (pauseScreen != null)
         {
             if (!pauseScreen.activeSelf)
@@ -70,6 +71,7 @@ public class PauseMenu : MonoBehaviour
     // open exit menu/exit scene
     public void OnExit()
     {
+        MAudioManager.instance.PlaySFX("Click");
         if (exitScreen != null)
         {
             // if not open, open exit menu
@@ -94,6 +96,7 @@ public class PauseMenu : MonoBehaviour
     // close exit menu
     public void OnReturn()
     {
+        MAudioManager.instance.PlaySFX("Click");
         // if exit screen open, close
         if (exitScreen != null && exitScreen.activeSelf)
         {
@@ -122,6 +125,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnRestart()
     {
+        MAudioManager.instance.PlaySFX("Click");
         if (restartScreen != null)
         {
             // if not open, open restart menu
@@ -149,6 +153,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnRestartCheckpoint()
     {
+        MAudioManager.instance.PlaySFX("Click");
         if (restartCheckpointScreen != null)
         {
             // if not open, open exit menu
@@ -168,5 +173,9 @@ public class PauseMenu : MonoBehaviour
                 SceneManager.LoadScene(3);
             }
         }
+    }
+    public void OnMouseEnter()
+    {
+        MAudioManager.instance.PlaySFX("ButtonHover");
     }
 }

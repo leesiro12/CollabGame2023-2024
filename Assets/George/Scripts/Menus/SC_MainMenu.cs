@@ -7,7 +7,6 @@ public class SC_MainMenu : MonoBehaviour
 {
     [SerializeField] GameObject controlsScreen;
     [SerializeField] GameObject exitScreen;
-
     // hide controls and exit screens on load
     public void Start()
     {
@@ -24,12 +23,14 @@ public class SC_MainMenu : MonoBehaviour
     // load level
     public void OnPlayPressed()
     {
+        MAudioManager.instance.PlaySFX("Click");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     // open controls menu
     public void OnControlsPressed()
     {
+        MAudioManager.instance.PlaySFX("Click");
         if (controlsScreen != null)
         {
             controlsScreen.SetActive(true);
@@ -39,6 +40,7 @@ public class SC_MainMenu : MonoBehaviour
     // open exit menu or exit game - if menu already open
     public void OnExitPressed()
     {
+        MAudioManager.instance.PlaySFX("Click");
         if (exitScreen != null)
         {
             if (exitScreen.activeSelf)
@@ -56,6 +58,7 @@ public class SC_MainMenu : MonoBehaviour
     // turn off control screen/exit screen to return to main menu
     public void OnReturnPressed()
     {
+        MAudioManager.instance.PlaySFX("Click");
         if (controlsScreen != null)
         {
             controlsScreen.SetActive(false);
@@ -65,5 +68,9 @@ public class SC_MainMenu : MonoBehaviour
         {
             exitScreen.SetActive(false);
         }
+    }
+    public void OnMouseEnter()
+    {
+        MAudioManager.instance.PlaySFX("ButtonHover");
     }
 }
