@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
     // deactivate menus at start
     void Start()
     {
+        MAudioManager.instance.PlayMusic("BGMStart");
         if (pauseScreen != null)
         {
             pauseScreen.SetActive(false);

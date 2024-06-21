@@ -54,7 +54,7 @@ public class MAudioManager : MonoBehaviour
 
         if (sfxSource.isPlaying)
         {
-            sfxSource.Stop();   //stop audio source from playing to prevent looping
+            //sfxSource.Stop();   //stop audio source from playing to prevent looping
         }
         if (soundScript == null)
         {
