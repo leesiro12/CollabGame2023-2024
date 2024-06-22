@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShieldEnemy : MonoBehaviour
 {
-    public float detectionRange = 10f; // Range to detect the player
+    //public float detectionRange = 10f; // Range to detect the player
     public float chaseSpeed = 5f; // Speed during chase
     public float idleSpeed = 2f; // Speed while idle
     public float patrolDistance = 10f; // Distance to patrol from the starting position
@@ -16,53 +16,96 @@ public class ShieldEnemy : MonoBehaviour
     private bool isShieldActive = false;
     private float shieldCooldownTimer;
     private bool isChasing = false;
+    private bool isPatrolling;
 
     private Transform player;
-    private Vector3 startPosition;
-    private Vector3 patrolTarget;
+    // transforms for patrol points and variable hold current point enemy is moving to
+    [SerializeField] private Transform pointA;
+    [SerializeField] private Transform pointB;
+    [SerializeField] private Transform currentPoint;
 
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private float patrolSpeed = 2;
+    private Rigidbody2D rb;
+    private Coroutine activateShieldCoroutine;
+
+   
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        startPosition = transform.position;
-        patrolTarget = GetRandomPointInPatrolArea();
 
-        // Get the SpriteRenderer component
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        Transform[] childrenTransforms = transform.parent.GetComponentsInChildren<Transform>();
+
+        for (int i = 0; i < childrenTransforms.Length; i++)
+        {
+            
+            if (childrenTransforms[i].gameObject.layer != LayerMask.NameToLayer("Enemies"))
+            {
+                if (pointA == null)
+                {
+                    pointA = childrenTransforms[i];
+                }
+                else if (pointB == null)
+                {
+                    pointB = childrenTransforms[i];
+                }
+            }
+        }
+
+        currentPoint = pointA;
+
+        // makes enemy start patrolling at beginning of game
+        StartCoroutine(Patrol());
     }
 
     void Update()
     {
         // Check if player is within detection range
-        if (Vector3.Distance(transform.position, player.position) < detectionRange)
-        {
-            if (!isChasing)
-            {
-                StartChase();
-            }
-        }
-        else if (isChasing)
-        {
-            StopChase();
-        }
+        //if (Vector3.Distance(transform.position, player.position) < detectionRange)
+        //{
+        //    if (!isChasing)
+        //    {
+        //        StartChase();
+        //    }
+        //}
+        //else if (isChasing)
+        //{
+        //    StopChase();
+        //}
 
         // Move around within the patrol area while idle
-        if (!isChasing)
-        {
-            Patrol();
-            // Flip the sprite based on movement direction
-            FlipSprite(patrolTarget - transform.position);
-        }
-        else
-        {
-            // Flip the sprite based on movement direction during chase
-            FlipSprite(player.position - transform.position);
-        }
+        //if (!isChasing)
+        //{
+        //    Patrol();
+        //    // Flip the sprite based on movement direction
+        //    FlipSprite(patrolTarget - transform.position);
+        //}
+        //else
+        //{
+        //    // Flip the sprite based on movement direction during chase
+        //    FlipSprite(player.position - transform.position);
+        //}
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        HealthScript script = collision.GetComponent<HealthScript>();
+
+        if (script != null)
+        {
+            if (isPatrolling)
+            {
+                isPatrolling = false;
+
+                if (!isChasing)
+                {
+                    isChasing = true;
+                }
+            }
+        }
+    }
     void StartChase()
     {
         Debug.Log("Chasing player!");
@@ -71,7 +114,32 @@ public class ShieldEnemy : MonoBehaviour
         // Activate shield periodically during the chase
         if (!isShieldActive && Time.time > shieldCooldownTimer)
         {
-            ActivateShield();
+            //ActivateShield();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        // get health script
+        HealthScript script = collision.gameObject.GetComponent<HealthScript>();
+        // if health script found
+        if (script != null)
+        {
+            if (activateShieldCoroutine != null)
+            {
+                StopCoroutine(activateShieldCoroutine);
+                activateShieldCoroutine = null;
+                isShieldActive = false;
+            }
+            // if not patrolling, start
+            if (!isPatrolling)
+            {
+                StartCoroutine(Patrol());
+            }
+            
+            // make sure enemy is facing player
+            UpdateDirection(GetComponent<Collider2D>());
+
         }
     }
 
@@ -81,14 +149,15 @@ public class ShieldEnemy : MonoBehaviour
         isChasing = false;
     }
 
-    void ActivateShield()
-    {
-        Debug.Log("Shield activated!");
-        isShieldActive = true;
+    //IEnumerator ActivateShield(Collider2D playerColl)
+    //{
+        
+    //    Debug.Log("Shield activated!");
+    //    isShieldActive = true;
 
-        // Reset shield cooldown timer
-        shieldCooldownTimer = Time.time + shieldCooldown;
-    }
+    //    // Reset shield cooldown timer
+    //    shieldCooldownTimer = Time.time + shieldCooldown;
+    //}
 
     public void TakeDamage(int damage)
     {
@@ -123,6 +192,15 @@ public class ShieldEnemy : MonoBehaviour
         shieldHealth = 60; // Reset shield health for the next use
     }
 
+    private void UpdateDirection(Collider2D collider)
+    {
+        // if facing the wrong way
+        if ((collider.transform.position.x > transform.position.x && transform.localScale.x < 0) || (collider.transform.position.x < transform.position.x && transform.localScale.x > 0))
+        {
+            Flip();
+        }
+    }
+
     void DefeatEnemy()
     {
         Debug.Log("Enemy defeated!");
@@ -130,38 +208,45 @@ public class ShieldEnemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    Vector3 GetRandomPointInPatrolArea()
-    {
-        // Get a random point within the patrol area
-        Vector3 randomDirection = Random.insideUnitSphere * patrolDistance;
-        randomDirection += startPosition;
-        return randomDirection;
-    }
+   
 
-    void Patrol()
+    IEnumerator Patrol()
     {
-        // Move towards the patrol target
-        transform.position = Vector3.MoveTowards(transform.position, patrolTarget, idleSpeed * Time.deltaTime);
+        isPatrolling = true;
 
-        // If reached the patrol target, get a new random target
-        if (Vector3.Distance(transform.position, patrolTarget) < 0.1f)
+        while (isPatrolling)
         {
-            patrolTarget = GetRandomPointInPatrolArea();
+            // move towards next point
+            if ((currentPoint.position - transform.position).x < 0.0f)
+            {
+                rb.velocity = new Vector2(-1 * patrolSpeed, rb.velocity.y);
+
+            }
+            else
+            {
+                rb.velocity = new Vector2(patrolSpeed, rb.velocity.y);
+
+            }
+
+            // if enemy has reached patrol point, change point
+            if (Mathf.Abs(currentPoint.position.x - transform.position.x) < 0.5f && currentPoint == pointA)
+            {
+                currentPoint = pointB;
+                Flip();
+            }
+            else if (Mathf.Abs(currentPoint.position.x - transform.position.x) < 0.5f && currentPoint == pointB)
+            {
+                currentPoint = pointA;
+                Flip();
+            }
+
+            yield return new WaitForFixedUpdate();
         }
     }
 
-    void FlipSprite(Vector3 direction)
+    void Flip()
     {
-        // Flip the sprite based on the direction
-        if (direction.x > 0)
-        {
-            // Moving right
-            spriteRenderer.flipX = false;
-        }
-        else if (direction.x < 0)
-        {
-            // Moving left
-            spriteRenderer.flipX = true;
-        }
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        return;
     }
 }
