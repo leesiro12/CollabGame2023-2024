@@ -74,7 +74,7 @@ public class BossAreaControl : MonoBehaviour
     IEnumerator WaitAndRestoreCam()
     {
         yield return new WaitForSeconds(1);
-        
+        MAudioManager.instance.PlayMusic("BGMLava");
         if (camScript != null)
         {
             camScript.ReleaseFixedPosition();

@@ -89,7 +89,7 @@ public class AttackScript : MonoBehaviour
 
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
-        Debug.DrawLine(attackPoint.position, new Vector3(attackPoint.position.x + attackRange, attackPoint.position.y, attackPoint.position.z), Color.red, 5);
+        //Debug.DrawLine(attackPoint.position, new Vector3(attackPoint.position.x + attackRange, attackPoint.position.y, attackPoint.position.z), Color.red, 5);
 
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
@@ -176,7 +176,7 @@ public class AttackScript : MonoBehaviour
 
     IEnumerator MeleeAttackAnim()
     {
-        Debug.Log("Attacking");
+        //Debug.Log("Attacking");
         GetComponent<SimpleMovement>().m_attack = true;
         attackAnim.Play("Melee");
         yield return new WaitForSeconds(0.5f);
@@ -186,7 +186,7 @@ public class AttackScript : MonoBehaviour
 
     IEnumerator RangedAttackAnim()
     {
-        Debug.Log("Attacking");
+        //Debug.Log("Attacking");
         GetComponent<SimpleMovement>().m_attack = true;
         attackAnim.Play("RangedAttack");
         yield return new WaitForSeconds(0.5f);

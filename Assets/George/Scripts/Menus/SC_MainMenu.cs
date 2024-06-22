@@ -30,7 +30,6 @@ public class SC_MainMenu : MonoBehaviour
     // load level
     public void OnPlayPressed()
     {
-        //MAudioManager.instance.StopMusic();
         MAudioManager.instance.PlaySFX("Click");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -62,7 +61,7 @@ public class SC_MainMenu : MonoBehaviour
         {
             if (exitScreen.activeSelf)
             {
-                Debug.Log("Quiting Game");
+                //Debug.Log("Quiting Game");
                 Application.Quit();
             }
             else
