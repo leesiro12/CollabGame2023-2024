@@ -22,6 +22,9 @@ public class Enemy : MonoBehaviour
     public float chaseSpeed;
 
     public float attackRange;
+    public Animator anim;
+    public EnemyHealth enemyHealth;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -31,7 +34,7 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         //chaseDistance = Mathf.Abs(Vector2.Distance(transform.position, playerTransform.position));
-        
+        anim.Play("Walk");
         if ((Vector2.Distance(transform.position, playerTransform.position) > detectRange))
             {
                 isChasing = false;
@@ -53,6 +56,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            
             // move towards next point
             if ((currentPoint.position - transform.position).x < 0.0f)
             {

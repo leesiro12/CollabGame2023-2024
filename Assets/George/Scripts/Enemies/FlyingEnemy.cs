@@ -44,6 +44,8 @@ public class FlyingEnemy : MonoBehaviour
     // hold reference to rushing coroutine
     private Coroutine rushCoroutine;
 
+    public Animator anim;
+    public EnemyHealth enemyHealth;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -121,11 +123,18 @@ public class FlyingEnemy : MonoBehaviour
             StartCoroutine(Knockback(collision));
         }
     }
+    private void FixedUpdate()
+    {
+        if(enemyHealth.currentHealth <= 0f)
+        {
+            anim.Play("Dead");
+        }
+    }
 
     // change facing direction
     private void Flip()
     {
-        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z); ;
         return;
     }
 
@@ -133,6 +142,7 @@ public class FlyingEnemy : MonoBehaviour
     {
         // record that enemy is patrolling
         isPatrolling = true;
+        anim.Play("Patrol");
 
         while (isPatrolling)
         {
@@ -145,13 +155,17 @@ public class FlyingEnemy : MonoBehaviour
                 // switch patrol point
                 if (currentPoint == pointA)
                 {
-                    currentPoint = pointB;
+                    currentPoint = pointB;                    
+                                        
                 }
                 else
                 {
                     currentPoint = pointA;
+                    //this.transform.LookAt(currentPoint);
+
                 }
                 Flip();
+                
             }
 
             yield return new WaitForFixedUpdate();
@@ -188,7 +202,7 @@ public class FlyingEnemy : MonoBehaviour
 
                 // add velocity towards the player
                 rb.velocity = rushSpeed * Vector3.Normalize(playerColl.transform.position - transform.position);
-
+                anim.Play("Attack");
                 // prevent issues with while loop
                 yield return new WaitForEndOfFrame();
             }
@@ -203,6 +217,7 @@ public class FlyingEnemy : MonoBehaviour
                 // give the enemy no velocity
                 rb.velocity = new Vector3(0, 0, 0);
 
+                anim.Play("Patrol");
                 // prevent issues with while loop
                 yield return new WaitForEndOfFrame();
             }
@@ -221,10 +236,11 @@ public class FlyingEnemy : MonoBehaviour
         // if script found
         if (movementScript != null)
         {
+            
             // set marker in script to true, indicating the player is being knocked back
             movementScript.SetKnocked(true);
 
-            // apply froce to player, creating knockback effect
+            // apply force to player, creating knockback effect
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(transform.localScale.x * knockForce, 0, 0));
 
             // wait for length of the knockback

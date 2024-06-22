@@ -18,6 +18,7 @@ public class KeyPickup : MonoBehaviour
             Destroy(gameObject);
         }
 
+        MAudioManager.instance.PlaySFX("KeyPickup");
         GetComponent<SwitchDialogue>()?.switchDialogue();
     }
 }

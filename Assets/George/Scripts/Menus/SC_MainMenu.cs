@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class SC_MainMenu : MonoBehaviour
 {
+    [SerializeField] GameObject settingsScreen;
     [SerializeField] GameObject controlsScreen;
     [SerializeField] GameObject exitScreen;
     // hide controls and exit screens on load
     public void Start()
     {
+        StartCoroutine(DelayStart());
         if (controlsScreen != null)
         {
             controlsScreen.SetActive(false);
@@ -19,10 +21,16 @@ public class SC_MainMenu : MonoBehaviour
             exitScreen.SetActive(false);
         }
     }
+    IEnumerator DelayStart()
+    {
+        yield return new WaitForEndOfFrame();
+        MAudioManager.instance.PlayMusic("MenuBGM");
+    }
 
     // load level
     public void OnPlayPressed()
     {
+        //MAudioManager.instance.StopMusic();
         MAudioManager.instance.PlaySFX("Click");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -34,6 +42,15 @@ public class SC_MainMenu : MonoBehaviour
         if (controlsScreen != null)
         {
             controlsScreen.SetActive(true);
+        }
+    }
+
+    public void OnSettingsPressed()
+    {
+        MAudioManager.instance.PlaySFX("Click");
+        if (settingsScreen != null)
+        {
+            settingsScreen.SetActive(true);
         }
     }
 
@@ -62,6 +79,11 @@ public class SC_MainMenu : MonoBehaviour
         if (controlsScreen != null)
         {
             controlsScreen.SetActive(false);
+        }
+
+        if (settingsScreen != null)
+        {
+            settingsScreen.SetActive(false);
         }
 
         if (exitScreen != null)

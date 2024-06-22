@@ -161,8 +161,8 @@ public class SimpleMovement : MonoBehaviour
 
         if (nextfootstep < 0)
         {
-            MAudioManager.instance.PlaySFX("Footsteps");
             nextfootstep = footstepDelay;
+            MAudioManager.instance.PlaySFX("Footsteps");
         }
     }
 
@@ -211,17 +211,17 @@ public class SimpleMovement : MonoBehaviour
     {
         if (context.performed && IsGrounded())
         {
-            MAudioManager.instance.PlaySFX("Jump");
             hasDoubleJumped = false;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             anim.Play("Jump");
+            MAudioManager.instance.PlaySFX("Jump");
         }
         else if (context.performed && !IsGrounded() && !hasDoubleJumped)
         {
-            MAudioManager.instance.PlaySFX("Jump");
             hasDoubleJumped = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             anim.Play("Jump");
+            MAudioManager.instance.PlaySFX("Jump");
         }
 
     }
