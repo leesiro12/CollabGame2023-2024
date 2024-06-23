@@ -311,6 +311,8 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 771d2782506fbbf419c80996a3ef0e65, type: 3}
   - name: BGMLava
     audioClip: {fileID: 8300000, guid: 7f52160079126ce4793034cf7935f28e, type: 3}
+  - name: BGMBattle
+    audioClip: {fileID: 8300000, guid: 5e9510da98a5d7c418d52dda4f7380fc, type: 3}
   SFXClips:
   - name: Click
     audioClip: {fileID: 8300000, guid: 9c908b9773a587e45bdc7fd90910e2c3, type: 3}
