@@ -34,14 +34,14 @@ public class ShieldEnemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        //player = GameObject.FindGameObjectWithTag("Player").transform;
 
         Transform[] childrenTransforms = transform.parent.GetComponentsInChildren<Transform>();
 
         for (int i = 0; i < childrenTransforms.Length; i++)
         {
             
-            if (childrenTransforms[i].gameObject.layer != LayerMask.NameToLayer("Enemies"))
+            if (childrenTransforms[i].gameObject.layer == LayerMask.NameToLayer("Enemies"))
             {
                 if (pointA == null)
                 {
@@ -216,6 +216,7 @@ public class ShieldEnemy : MonoBehaviour
 
         while (isPatrolling)
         {
+            Debug.Log("Shield Enemy Patrolling");
             // move towards next point
             if ((currentPoint.position - transform.position).x < 0.0f)
             {
