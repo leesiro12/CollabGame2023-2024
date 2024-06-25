@@ -193,7 +193,7 @@ public class AttackScript : MonoBehaviour
     {
         //Debug.Log("Attacking");
         GetComponent<SimpleMovement>().m_attack = true;
-        attackAnim.Play("RangedAttack");
+        attackAnim.Play("Ranged Attack");
         yield return new WaitForSeconds(0.5f);
         GetComponent<SimpleMovement>().m_attack = false;
         yield break;

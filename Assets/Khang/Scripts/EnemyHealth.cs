@@ -9,6 +9,8 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] int shieldHealth = 250;
     [SerializeField] int currentShieldHealth;
 
+    [SerializeField] private bool isShielding = false;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -30,7 +32,10 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        if (!isShielding)
+        {
+            currentHealth -= damage;
+        }
     }
 
     public void addShield()
@@ -48,4 +53,8 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= currentShieldHealth;
     }
 
+    public void setIsShielding(bool newValue)
+    {
+        isShielding = newValue;
+    }
 }

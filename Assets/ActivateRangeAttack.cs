@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ActivateRangeAttack : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Activate(SimpleMovement playerMovement)
     {
-        if (other.GetComponent<AttackScript>() != null)
+        if (playerMovement.transform.GetComponent<AttackScript>() != null)
         {
-            other.GetComponent<AttackScript>().UnlockRangedAttack();
+            playerMovement.transform.GetComponent<AttackScript>().UnlockRangedAttack();
         }
     }
 }

@@ -64,6 +64,11 @@ public class DialogueTrigger : MonoBehaviour
             //Debug.Log("maxed lines");
             DialogueManager.Instance.EndDialogue();
             i = 0;
+
+            if (GetComponent<ActivateRangeAttack>() != null)
+            {
+                GetComponent<ActivateRangeAttack>().Activate(movementScript);
+            }
         }
 
         canRun = true;

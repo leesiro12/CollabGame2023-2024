@@ -184,8 +184,8 @@ MonoBehaviour:
   chaseSpeed: 4
   patrolSpeed: 2
   shieldCooldown: 0
-  pointA: {fileID: 7955281978416146405}
-  pointB: {fileID: 7955281977350980215}
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
   currentPoint: {fileID: 8071747994696542107}
   anim: {fileID: 5354078895380557202}
 --- !u!95 &5354078895380557202

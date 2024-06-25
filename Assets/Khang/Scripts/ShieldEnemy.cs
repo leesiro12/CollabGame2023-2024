@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShieldEnemy : MonoBehaviour
@@ -8,7 +9,8 @@ public class ShieldEnemy : MonoBehaviour
     public float chaseSpeed; // Speed during chase
     public float patrolSpeed; // Speed while patrolling
     //public float patrolDistance; // Distance to patrol from the starting position
-    public float shieldCooldown; // Cooldown for shield activation
+    public float shieldDuration = 2f;
+    private float shieldDurationTimer = 0;
 
 
     private bool isShieldActive = false;
@@ -23,15 +25,16 @@ public class ShieldEnemy : MonoBehaviour
 
     //[SerializeField] private float patrolSpeed;
     private Rigidbody2D rb;
-    //private Coroutine activateShieldCoroutine;
+    private EnemyHealth healthScript;
+    private Coroutine activateShieldCoroutine;
+    private Coroutine attackCoroutine;
 
     public Animator anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //currentHealth = maxHealth;
-        //player = GameObject.FindGameObjectWithTag("Player").transform;
+        healthScript = GetComponent<EnemyHealth>();
 
         Transform[] childrenTransforms = transform.parent.GetComponentsInChildren<Transform>();
 
@@ -59,39 +62,63 @@ public class ShieldEnemy : MonoBehaviour
 
     void Update()
     {
-        // Check if player is within detection range
-        //if (Vector3.Distance(transform.position, player.position) < detectionRange)
-        //{
-        //    if (!isChasing)
-        //    {
-        //        StartChase();
-        //    }
-        //}
-        //else if (isChasing)
-        //{
-        //    StopChase();
-        //}
+        if (isChasing && player)
+        {
+            if (isShieldActive && activateShieldCoroutine == null)
+            {
+                if (attackCoroutine == null)
+                {
+                    Debug.Log("attack starting");
+                    shieldDurationTimer = 0;
+                    attackCoroutine = StartCoroutine(Attack());
+                }
+            }
+            else if (!isShieldActive && Mathf.Abs(transform.position.x - player.transform.position.x) < 1 && attackCoroutine == null)
+            {
+                Debug.Log("shield starting");
 
-        // Move around within the patrol area while idle
-        //if (!isChasing)
-        //{
-        //    Patrol();
-        //    // Flip the sprite based on movement direction
-        //    FlipSprite(patrolTarget - transform.position);
-        //}
-        //else
-        //{
-        //    // Flip the sprite based on movement direction during chase
-        //    FlipSprite(player.position - transform.position);
-        //}
+                isShieldActive = true;
+
+                if (activateShieldCoroutine == null)
+                {
+                    activateShieldCoroutine = StartCoroutine(ActivateShield());
+                }
+            }
+            else if (!isShieldActive && transform.position.x > player.transform.position.x)
+            {
+                Debug.Log("chasing");
+
+                transform.position += Vector3.left * chaseSpeed * Time.deltaTime;
+                UpdateDirection(player);
+            }
+            else if (!isShieldActive && transform.position.x < player.transform.position.x)
+            {
+                Debug.Log("chasing");
+                transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
+                UpdateDirection(player);
+            }
+
+        }
+        else if (isChasing && !player)
+        {
+            if (activateShieldCoroutine != null)
+            {
+                StopCoroutine(activateShieldCoroutine);
+                activateShieldCoroutine = null;
+                isShieldActive = false;
+                healthScript.setIsShielding(false);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         HealthScript script = collision.GetComponent<HealthScript>();
 
         if (script != null)
         {
+            player = collision.transform;  //NEW
             if (isPatrolling)
             {
                 isPatrolling = false;
@@ -100,21 +127,13 @@ public class ShieldEnemy : MonoBehaviour
                 {
                     isChasing = true;
                 }
+
+                // make sure enemy is facing player
+                UpdateDirection(collision.transform);
             }
         }
 
     }
-    //void StartChase()
-    //{
-    //    Debug.Log("Chasing player!");
-    //    isChasing = true;
-
-    //    // Activate shield periodically during the chase
-    //    if (!isShieldActive && Time.time > shieldCooldownTimer)
-    //    {
-    //        //ActivateShield();
-    //    }
-    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -123,99 +142,57 @@ public class ShieldEnemy : MonoBehaviour
         // if health script found
         if (script != null)
         {
-            //if (activateShieldCoroutine != null)
-            //{
-            //    StopCoroutine(activateShieldCoroutine);
-            //    activateShieldCoroutine = null;
-            //    isShieldActive = false;
-            //}
+            player = null;
+            if (isChasing)
+            {
+                isChasing = false;
+            }
+
+            if (activateShieldCoroutine != null)
+            {
+                StopCoroutine(activateShieldCoroutine);
+                activateShieldCoroutine = null;
+                isShieldActive = false;
+                healthScript.setIsShielding(false);
+            }
+
             // if not patrolling, start
             if (!isPatrolling)
             {
                 StartCoroutine(Patrol());
             }
-            
-            // make sure enemy is facing player
-            UpdateDirection(GetComponent<Collider2D>());
-
         }
     }
 
-    //void StopChase()
-    //{
-    //    Debug.Log("Stopping chase!");
-    //    isChasing = false;
-    //}
-
-    //IEnumerator ActivateShield(Collider2D playerColl)
-    //{
-        
-    //    Debug.Log("Shield activated!");
-    //    isShieldActive = true;
-
-    //    // Reset shield cooldown timer
-    //    shieldCooldownTimer = Time.time + shieldCooldown;
-    //}
-
-    public void TakeDamage(int damage)
+    IEnumerator ActivateShield()
     {
-        //if (isShieldActive)
-        //{
-        //    // If the shield is active, deduct damage from the shield
-        //    shieldHealth -= damage;
+        //Debug.Log("Shield activated!");
+        //shield animation
+        isShieldActive = true;
+        healthScript.setIsShielding(true);
 
-        //    // If the shield is broken, deactivate it
-        //    if (shieldHealth <= 0)
-        //    {
-        //        DeactivateShield();
-        //    }
-        //}
-        //else
-        //{
-        //    // If the shield is not active, deduct damage from the enemy's health
-        //    currentHealth -= damage;
-
-        //    // Check if the enemy is defeated
-        //    if (currentHealth <= 0)
-        //    {
-        //        DefeatEnemy();
-        //    }
-        //}
-    }
-
-    //void DeactivateShield()
-    //{
-    //    Debug.Log("Shield deactivated!");
-    //    isShieldActive = false;
-    //    //shieldHealth = 60; // Reset shield health for the next use
-    //}
-
-    private void UpdateDirection(Collider2D collider)
-    {
-        // if facing the wrong way
-        if ((collider.transform.position.x > transform.position.x && transform.localScale.x < 0) || (collider.transform.position.x < transform.position.x && transform.localScale.x > 0))
+        while (shieldDurationTimer < shieldDuration)
         {
-            Flip();
+            yield return new WaitForSeconds(0.01f);
+            shieldDurationTimer += Time.deltaTime;
         }
+        
+        activateShieldCoroutine = null;
     }
-
-    //void DefeatEnemy()
-    //{
-    //    Debug.Log("Enemy defeated!");
-    //    // Implement any actions you want to take when the enemy is defeated
-    //    Destroy(gameObject);
-    //}
-
    
 
     IEnumerator Patrol()
     {
+        Debug.Log("start patrolling");
         isPatrolling = true;
+
+        UpdateDirection(currentPoint);
 
         while (isPatrolling)
         {
             anim.Play("Walk");
-            Debug.Log("Shield Enemy Patrolling");
+            //Debug.Log("Shield Enemy Patrolling");
+
             // move towards next point
             if ((currentPoint.position - transform.position).x < 0.0f)
             {
@@ -232,15 +209,25 @@ public class ShieldEnemy : MonoBehaviour
             if (Mathf.Abs(currentPoint.position.x - transform.position.x) < 0.5f && currentPoint == pointA)
             {
                 currentPoint = pointB;
-                Flip();
+
             }
             else if (Mathf.Abs(currentPoint.position.x - transform.position.x) < 0.5f && currentPoint == pointB)
             {
                 currentPoint = pointA;
-                Flip();
             }
 
+            UpdateDirection(currentPoint);
+
             yield return new WaitForFixedUpdate();
+        }
+    }
+    
+    private void UpdateDirection(Transform playerTransform)
+    {
+        // if facing the wrong way
+        if ((playerTransform.position.x > transform.position.x && transform.localScale.x < 0) || (playerTransform.position.x < transform.position.x && transform.localScale.x > 0))
+        {
+            Flip();
         }
     }
 
@@ -248,5 +235,33 @@ public class ShieldEnemy : MonoBehaviour
     {
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         return;
+    }
+
+    IEnumerator Attack()
+    {
+        //play anim
+        //Debug.Log("anim start");
+        yield return new WaitForSeconds(1f);
+        //Debug.Log("anim end");
+        
+        if (player && transform.position.x - player.transform.position.x < 1)
+        {
+            if (player.GetComponent<HealthScript>().playerHealth <= 1)
+            {
+                //Debug.Log("damage and kill");
+                player.GetComponent<HealthScript>().TakeDamage(1);
+                player = null;
+            }
+            else
+            {
+                //Debug.Log("damage");
+                player.GetComponent<HealthScript>().TakeDamage(1);
+            }
+        }
+
+        isShieldActive = false;
+        healthScript.setIsShielding(false);
+
+        attackCoroutine = null;
     }
 }
