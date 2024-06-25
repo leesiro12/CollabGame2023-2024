@@ -121,6 +121,10 @@ public class FlyingEnemy : MonoBehaviour
             StartCoroutine(Knockback(collision));
         }
     }
+<<<<<<< Updated upstream:Assets/George/Scripts/FlyingEnemy.cs
+=======
+   
+>>>>>>> Stashed changes:Assets/George/Scripts/Enemies/FlyingEnemy.cs
 
     // change facing direction
     private void Flip()
@@ -150,6 +154,10 @@ public class FlyingEnemy : MonoBehaviour
                 else
                 {
                     currentPoint = pointA;
+<<<<<<< Updated upstream:Assets/George/Scripts/FlyingEnemy.cs
+=======
+
+>>>>>>> Stashed changes:Assets/George/Scripts/Enemies/FlyingEnemy.cs
                 }
                 Flip();
             }

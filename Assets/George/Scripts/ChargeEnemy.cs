@@ -74,9 +74,13 @@ public class ChargeEnemy : MonoBehaviour
         // makes enemy start patrolling at beginning of game
         StartCoroutine(StartPatrol());
     }
+<<<<<<< Updated upstream:Assets/George/Scripts/ChargeEnemy.cs
 
 
 
+=======
+ 
+>>>>>>> Stashed changes:Assets/George/Scripts/Enemies/ChargeEnemy.cs
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // get health script

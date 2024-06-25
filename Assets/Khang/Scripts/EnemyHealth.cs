@@ -5,8 +5,13 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] int maxHealth = 100;
+<<<<<<< Updated upstream
     [SerializeField] int currentHealth;
     [SerializeField] int shieldHealth = 250;
+=======
+    [SerializeField] public int currentHealth;
+    [SerializeField] int shieldHealth;
+>>>>>>> Stashed changes
     [SerializeField] int currentShieldHealth;
 
     void Start()
