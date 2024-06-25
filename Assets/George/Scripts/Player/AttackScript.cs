@@ -17,7 +17,7 @@ public class AttackScript : MonoBehaviour
     // where to search from on attack
     public Transform attackPoint;
     // how far to search
-    public float attackRange = 1.5f;
+    public float attackRange;
     // which layers to search
     public LayerMask targetLayers;
 
@@ -39,6 +39,7 @@ public class AttackScript : MonoBehaviour
     public GameObject projectile;
     // speed at which we will instantiate the projectile
     [SerializeField] private float projectileSpeed = 15.0f;
+    public GameObject sword;
     public Animator attackAnim;
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class AttackScript : MonoBehaviour
         playerControls = new PlayerInputActions();
         // get reference to object's rb
         rb = GetComponent<Rigidbody2D>();
+        sword.SetActive(false);
     }
 
     // activating the inputs and assigning them to the appropriate methods
@@ -89,7 +91,7 @@ public class AttackScript : MonoBehaviour
 
         // detect enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
-        //Debug.DrawLine(attackPoint.position, new Vector3(attackPoint.position.x + attackRange, attackPoint.position.y, attackPoint.position.z), Color.red, 5);
+        Debug.DrawLine(attackPoint.position, new Vector3(attackPoint.position.x + attackRange, attackPoint.position.y, attackPoint.position.z), Color.red, 5);
 
         // damage enemies
         foreach (Collider2D enemy in hitEnemies)
@@ -178,9 +180,12 @@ public class AttackScript : MonoBehaviour
     {
         //Debug.Log("Attacking");
         GetComponent<SimpleMovement>().m_attack = true;
+        sword.SetActive(true);
         attackAnim.Play("Melee");
         yield return new WaitForSeconds(0.5f);
+        sword.SetActive(false);
         GetComponent<SimpleMovement>().m_attack = false;
+
         yield break;
     }
 

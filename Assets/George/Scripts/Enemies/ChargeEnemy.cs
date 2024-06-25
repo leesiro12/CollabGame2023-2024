@@ -41,7 +41,6 @@ public class ChargeEnemy : MonoBehaviour
     private float knockbackLength = 0.3f;
 
     public Animator anim;
-    public EnemyHealth enemyHealth;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -76,21 +75,9 @@ public class ChargeEnemy : MonoBehaviour
         StartCoroutine(StartPatrol());
     }
 
-    private void FixedUpdate()
-    {
-        if(enemyHealth.currentHealth <= 0f)
-        {
-            StartCoroutine(Death());
-        }
-    }
+    
 
-    IEnumerator Death()
-    {
-        anim.Play("Dead");
-        yield return new WaitForSeconds(2);
-        Destroy(gameObject);
-        yield return null;
-    }
+   
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // get health script

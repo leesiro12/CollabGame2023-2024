@@ -45,7 +45,6 @@ public class FlyingEnemy : MonoBehaviour
     private Coroutine rushCoroutine;
 
     public Animator anim;
-    public EnemyHealth enemyHealth;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -123,14 +122,7 @@ public class FlyingEnemy : MonoBehaviour
             StartCoroutine(Knockback(collision));
         }
     }
-    private void FixedUpdate()
-    {
-        if(enemyHealth.currentHealth <= 0f)
-        {
-            anim.Play("Dead");
-        }
-    }
-
+    
     // change facing direction
     private void Flip()
     {

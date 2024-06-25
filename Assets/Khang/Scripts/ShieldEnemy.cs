@@ -5,16 +5,13 @@ using UnityEngine;
 public class ShieldEnemy : MonoBehaviour
 {
     //public float detectionRange = 10f; // Range to detect the player
-    public float chaseSpeed = 5f; // Speed during chase
-    public float idleSpeed = 2f; // Speed while idle
-    public float patrolDistance = 10f; // Distance to patrol from the starting position
-    public float shieldCooldown = 5f; // Cooldown for shield activation
-    public int maxHealth = 100;
-    public int shieldHealth = 60;
+    public float chaseSpeed; // Speed during chase
+    public float patrolSpeed; // Speed while patrolling
+    //public float patrolDistance; // Distance to patrol from the starting position
+    public float shieldCooldown; // Cooldown for shield activation
 
-    private int currentHealth;
+
     private bool isShieldActive = false;
-    private float shieldCooldownTimer;
     private bool isChasing = false;
     private bool isPatrolling;
 
@@ -24,16 +21,16 @@ public class ShieldEnemy : MonoBehaviour
     [SerializeField] private Transform pointB;
     [SerializeField] private Transform currentPoint;
 
-    [SerializeField] private float patrolSpeed = 2;
+    //[SerializeField] private float patrolSpeed;
     private Rigidbody2D rb;
-    private Coroutine activateShieldCoroutine;
+    //private Coroutine activateShieldCoroutine;
 
-   
+    public Animator anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
         //player = GameObject.FindGameObjectWithTag("Player").transform;
 
         Transform[] childrenTransforms = transform.parent.GetComponentsInChildren<Transform>();
@@ -41,7 +38,7 @@ public class ShieldEnemy : MonoBehaviour
         for (int i = 0; i < childrenTransforms.Length; i++)
         {
             
-            if (childrenTransforms[i].gameObject.layer == LayerMask.NameToLayer("Enemies"))
+            if (childrenTransforms[i].gameObject.layer != LayerMask.NameToLayer("Enemies"))
             {
                 if (pointA == null)
                 {
@@ -105,18 +102,19 @@ public class ShieldEnemy : MonoBehaviour
                 }
             }
         }
-    }
-    void StartChase()
-    {
-        Debug.Log("Chasing player!");
-        isChasing = true;
 
-        // Activate shield periodically during the chase
-        if (!isShieldActive && Time.time > shieldCooldownTimer)
-        {
-            //ActivateShield();
-        }
     }
+    //void StartChase()
+    //{
+    //    Debug.Log("Chasing player!");
+    //    isChasing = true;
+
+    //    // Activate shield periodically during the chase
+    //    if (!isShieldActive && Time.time > shieldCooldownTimer)
+    //    {
+    //        //ActivateShield();
+    //    }
+    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -125,12 +123,12 @@ public class ShieldEnemy : MonoBehaviour
         // if health script found
         if (script != null)
         {
-            if (activateShieldCoroutine != null)
-            {
-                StopCoroutine(activateShieldCoroutine);
-                activateShieldCoroutine = null;
-                isShieldActive = false;
-            }
+            //if (activateShieldCoroutine != null)
+            //{
+            //    StopCoroutine(activateShieldCoroutine);
+            //    activateShieldCoroutine = null;
+            //    isShieldActive = false;
+            //}
             // if not patrolling, start
             if (!isPatrolling)
             {
@@ -143,11 +141,11 @@ public class ShieldEnemy : MonoBehaviour
         }
     }
 
-    void StopChase()
-    {
-        Debug.Log("Stopping chase!");
-        isChasing = false;
-    }
+    //void StopChase()
+    //{
+    //    Debug.Log("Stopping chase!");
+    //    isChasing = false;
+    //}
 
     //IEnumerator ActivateShield(Collider2D playerColl)
     //{
@@ -161,36 +159,36 @@ public class ShieldEnemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isShieldActive)
-        {
-            // If the shield is active, deduct damage from the shield
-            shieldHealth -= damage;
+        //if (isShieldActive)
+        //{
+        //    // If the shield is active, deduct damage from the shield
+        //    shieldHealth -= damage;
 
-            // If the shield is broken, deactivate it
-            if (shieldHealth <= 0)
-            {
-                DeactivateShield();
-            }
-        }
-        else
-        {
-            // If the shield is not active, deduct damage from the enemy's health
-            currentHealth -= damage;
+        //    // If the shield is broken, deactivate it
+        //    if (shieldHealth <= 0)
+        //    {
+        //        DeactivateShield();
+        //    }
+        //}
+        //else
+        //{
+        //    // If the shield is not active, deduct damage from the enemy's health
+        //    currentHealth -= damage;
 
-            // Check if the enemy is defeated
-            if (currentHealth <= 0)
-            {
-                DefeatEnemy();
-            }
-        }
+        //    // Check if the enemy is defeated
+        //    if (currentHealth <= 0)
+        //    {
+        //        DefeatEnemy();
+        //    }
+        //}
     }
 
-    void DeactivateShield()
-    {
-        Debug.Log("Shield deactivated!");
-        isShieldActive = false;
-        shieldHealth = 60; // Reset shield health for the next use
-    }
+    //void DeactivateShield()
+    //{
+    //    Debug.Log("Shield deactivated!");
+    //    isShieldActive = false;
+    //    //shieldHealth = 60; // Reset shield health for the next use
+    //}
 
     private void UpdateDirection(Collider2D collider)
     {
@@ -201,12 +199,12 @@ public class ShieldEnemy : MonoBehaviour
         }
     }
 
-    void DefeatEnemy()
-    {
-        Debug.Log("Enemy defeated!");
-        // Implement any actions you want to take when the enemy is defeated
-        Destroy(gameObject);
-    }
+    //void DefeatEnemy()
+    //{
+    //    Debug.Log("Enemy defeated!");
+    //    // Implement any actions you want to take when the enemy is defeated
+    //    Destroy(gameObject);
+    //}
 
    
 
@@ -216,6 +214,7 @@ public class ShieldEnemy : MonoBehaviour
 
         while (isPatrolling)
         {
+            anim.Play("Walk");
             Debug.Log("Shield Enemy Patrolling");
             // move towards next point
             if ((currentPoint.position - transform.position).x < 0.0f)
