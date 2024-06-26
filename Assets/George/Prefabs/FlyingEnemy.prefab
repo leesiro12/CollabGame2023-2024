@@ -270,8 +270,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 40
   currentHealth: 0
-  shieldHealth: 250
+  shieldHealth: 0
   currentShieldHealth: 0
+  isShielding: 0
 --- !u!58 &4361088269373708008
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -310,7 +311,6 @@ MonoBehaviour:
   cooldown: 2
   damageAmount: 1
   anim: {fileID: 2523373603485955168}
-  enemyHealth: {fileID: 4361088269373708011}
 --- !u!95 &2523373603485955168
 Animator:
   serializedVersion: 4
