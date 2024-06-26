@@ -23,7 +23,6 @@ public class ShieldEnemy : MonoBehaviour
     [SerializeField] private Transform pointB;
     [SerializeField] private Transform currentPoint;
 
-    //[SerializeField] private float patrolSpeed;
     private Rigidbody2D rb;
     private EnemyHealth healthScript;
     private Coroutine activateShieldCoroutine;
@@ -241,6 +240,7 @@ public class ShieldEnemy : MonoBehaviour
     {
         //play anim
         //Debug.Log("anim start");
+        anim.Play("Attack");
         yield return new WaitForSeconds(1f);
         //Debug.Log("anim end");
         

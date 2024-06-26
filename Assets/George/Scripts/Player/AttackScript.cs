@@ -41,6 +41,9 @@ public class AttackScript : MonoBehaviour
     [SerializeField] private float projectileSpeed = 15.0f;
     public GameObject sword;
     public Animator attackAnim;
+
+    private bool canAttack = true;
+
     private void Awake()
     {
         // get reference to input map
@@ -82,46 +85,64 @@ public class AttackScript : MonoBehaviour
     // when attack input received
     private void MeleeAttack(bool attackIsLight)
     {
-        // play attack animation
-
-        if (GetComponent<SimpleMovement>().m_attack == false )
+        if (canAttack)
         {
-            StartCoroutine(MeleeAttackAnim());
-        }
+            Debug.Log("attack");
+            // play attack animation
 
-        // detect enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
-        Debug.DrawLine(attackPoint.position, new Vector3(attackPoint.position.x + attackRange, attackPoint.position.y, attackPoint.position.z), Color.red, 5);
-
-        // damage enemies
-        foreach (Collider2D enemy in hitEnemies)
-        {
-
-            if (enemy.isTrigger)
+            if (GetComponent<SimpleMovement>().m_attack == false)
             {
-                break;
+                StartCoroutine(MeleeAttackAnim());
             }
 
-            if (enemy.GetComponent<EnemyHealth>())
+            // detect enemies
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
+            Debug.DrawLine(attackPoint.position, new Vector3(attackPoint.position.x + attackRange, attackPoint.position.y, attackPoint.position.z), Color.red, 5);
+
+            // damage enemies
+            foreach (Collider2D enemy in hitEnemies)
             {
-                if ((transform.position - enemy.transform.position).magnitude <= attackRange)
+
+                if (enemy.isTrigger)
                 {
-                    switch (attackIsLight)
+                    break;
+                }
+
+                if (enemy.GetComponent<EnemyHealth>())
+                {
+                    if ((transform.position - enemy.transform.position).magnitude <= attackRange)
                     {
-                        // true refers to light attack
-                        case true:
-                            enemy.GetComponent<EnemyHealth>().TakeDamage(lightDamage);
-                            break;
-                        // false refers to a heavy attack
-                        case false:
-                            enemy.GetComponent<EnemyHealth>().TakeDamage(heavyDamage);
-                            break;
+                        switch (attackIsLight)
+                        {
+                            // true refers to light attack
+                            case true:
+                                enemy.GetComponent<EnemyHealth>().TakeDamage(lightDamage);
+                                break;
+                            // false refers to a heavy attack
+                            case false:
+                                enemy.GetComponent<EnemyHealth>().TakeDamage(heavyDamage);
+                                break;
+                        }
                     }
                 }
             }
         }
+        else
+        {
+            Debug.Log("delay attack");
+        }
     }
     
+    public void StartAttackDelay()
+    {
+        canAttack = false;
+    }
+
+    public void StopAttackDelay()
+    {
+        canAttack = true;
+    }
+
     // when ranged attack input is received
     private void RangedAttackInput(InputAction.CallbackContext context)
     {
@@ -184,6 +205,7 @@ public class AttackScript : MonoBehaviour
         attackAnim.Play("Melee");
         yield return new WaitForSeconds(0.5f);
         sword.SetActive(false);
+
         GetComponent<SimpleMovement>().m_attack = false;
 
         yield break;
