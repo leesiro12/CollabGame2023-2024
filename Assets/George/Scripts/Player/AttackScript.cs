@@ -7,7 +7,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 
 public class AttackScript : MonoBehaviour
@@ -41,8 +40,6 @@ public class AttackScript : MonoBehaviour
     [SerializeField] private float projectileSpeed = 15.0f;
     public GameObject sword;
     public Animator attackAnim;
-
-    private bool canAttack = true;
 
     private void Awake()
     {
@@ -82,65 +79,55 @@ public class AttackScript : MonoBehaviour
         StartCoroutine(InputCheck(context));
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+
+    }
+
     // when attack input received
     private void MeleeAttack(bool attackIsLight)
     {
-        if (canAttack)
-        {
-            Debug.Log("attack");
-            // play attack animation
+        Debug.Log("attack");
+        // play attack animation
 
-            if (GetComponent<SimpleMovement>().m_attack == false)
+        if (GetComponent<SimpleMovement>().m_attack == false)
+        {
+            StartCoroutine(MeleeAttackAnim());
+        }
+
+        // detect enemies
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
+        Debug.DrawLine(attackPoint.position, new Vector3(attackPoint.position.x + attackRange, attackPoint.position.y, attackPoint.position.z), Color.red, 5);
+            
+        // damage enemies
+        foreach (Collider2D enemy in hitEnemies)
+        {
+
+            if (enemy.isTrigger)
             {
-                StartCoroutine(MeleeAttackAnim());
+                continue;
             }
 
-            // detect enemies
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, targetLayers);
-            Debug.DrawLine(attackPoint.position, new Vector3(attackPoint.position.x + attackRange, attackPoint.position.y, attackPoint.position.z), Color.red, 5);
-
-            // damage enemies
-            foreach (Collider2D enemy in hitEnemies)
+            if (enemy.GetComponent<EnemyHealth>())
             {
-
-                if (enemy.isTrigger)
-                {
-                    break;
-                }
-
-                if (enemy.GetComponent<EnemyHealth>())
-                {
-                    if ((transform.position - enemy.transform.position).magnitude <= attackRange)
+                //if ((transform.position - enemy.transform.position).magnitude <= attackRange)
+                //{
+                    switch (attackIsLight)
                     {
-                        switch (attackIsLight)
-                        {
-                            // true refers to light attack
-                            case true:
-                                enemy.GetComponent<EnemyHealth>().TakeDamage(lightDamage);
-                                break;
-                            // false refers to a heavy attack
-                            case false:
-                                enemy.GetComponent<EnemyHealth>().TakeDamage(heavyDamage);
-                                break;
-                        }
+                        // true refers to light attack
+                        case true:
+                            enemy.GetComponent<EnemyHealth>().TakeDamage(lightDamage);
+                            break;
+                        // false refers to a heavy attack
+                        case false:
+                            enemy.GetComponent<EnemyHealth>().TakeDamage(heavyDamage);
+                            break;
                     }
-                }
+                //}
+
             }
         }
-        else
-        {
-            Debug.Log("delay attack");
-        }
-    }
-    
-    public void StartAttackDelay()
-    {
-        canAttack = false;
-    }
-
-    public void StopAttackDelay()
-    {
-        canAttack = true;
     }
 
     // when ranged attack input is received

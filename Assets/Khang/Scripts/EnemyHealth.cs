@@ -31,7 +31,7 @@ public class EnemyHealth : MonoBehaviour
     }
 
     public void TakeDamage(int damage)
-    {
+     {
         if (!isShielding)
         {
             currentHealth -= damage;

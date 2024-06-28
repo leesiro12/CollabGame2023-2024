@@ -10,7 +10,7 @@ public class BossHealth : EnemyHealth
 
     // Update is called once per frame
     protected override void Death()
-    {
+     {
         if (currentHealth <= 0)
         {
             onBossDeath?.Invoke();
